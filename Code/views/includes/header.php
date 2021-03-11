@@ -3,20 +3,18 @@
 
 <head>
 
-
     <title>Alumni UHB</title>
-    <link rel="icon" href="Images/logo.png" type="image/png" />
+    <link rel="icon" href="<?= asset("Images/logo.png") ?>" type="image/png" />
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,shrink-to-fit=no" />
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-16" />
 
-
-    <link rel="stylesheet" href="assets/bootstrap.css" />
+    <link rel="stylesheet" href="<?= asset("css/bootstrap.min.css") ?>" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
 
-    <link rel="stylesheet" href="assets/Custome.CSS" />
+    <link rel="stylesheet" href="<?= asset("css/style.css") ?>" />
 
 
 </head>
@@ -31,7 +29,7 @@
         <div class="container d-flex justify-content-start align-items-center">
 
 
-            <img src="Images/logo.png" class="my-4" />
+            <img src="<?= asset("Images/logo.png") ?>" class="my-4" />
         </div>
 
     </div>

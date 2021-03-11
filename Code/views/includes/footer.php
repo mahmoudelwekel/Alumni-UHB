@@ -1,4 +1,4 @@
-<footer class="bg-secondary py-5">
+<footer class="bg-secondary py-5" id="footer">
 
     <div class="container text-white">
         <div class="row">
@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="col-4 d-flex justify-content-end align-items-center">
-                <img src="Images/logo3.png" class="my-4" />
+                <img src="<?= asset("Images/logo3.png") ?>" class="my-4" />
 
             </div>
         </div>
@@ -59,6 +59,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js" integrity="sha256-x3YZWtRjM8bJqf48dFAv/qmgL68SI4jqNWeSLMZaMGA=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha256-WqU1JavFxSAMcLP2WIOI+GB2zWmShMI82mTpLDcqFUg=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+<script src="<?= asset("js/script.js") ?>"></script>
 <link href="https://fonts.googleapis.com/css?family=Cairo&display=swap" rel="stylesheet" />
 
 </body>

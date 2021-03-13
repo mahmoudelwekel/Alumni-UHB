@@ -1,3 +1,8 @@
+
+        </div>
+
+
+
 <footer class="bg-secondary py-5" id="footer">
 
     <div class="container text-white">
@@ -61,6 +66,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
 <script src="<?= asset("js/script.js") ?>"></script>
 <link href="https://fonts.googleapis.com/css?family=Cairo&display=swap" rel="stylesheet" />
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
+
 
 </body>
 

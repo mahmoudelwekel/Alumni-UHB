@@ -5,5 +5,5 @@ function asset( $file ) {
 }
 
 function route( $path ) {
-	return "/alumni-uhb/Code/views/" . $path;
+	return "/views/" . $path;
 }

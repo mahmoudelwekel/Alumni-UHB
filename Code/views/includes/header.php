@@ -13,6 +13,11 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
 
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.dataTables.min.css">
+
+
     <link rel="stylesheet" href="<?= asset("css/style.css") ?>" />
 </head>
 
@@ -26,7 +31,7 @@
     </div>
 
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light font-weight-bold">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light font-weight-bold shadow">
         <div class="container">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -34,7 +39,7 @@
 
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="<?= route("courses") ?>">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link active" href="<?= route("public") ?>">Home <span class="sr-only">(current)</span></a>
                     <a class="nav-item nav-link" href="<?= route("courses") ?>">Courses</a>
                     <a class="nav-item nav-link" href="<?= route("workshops") ?>">WorkShops</a>
                     <a class="nav-item nav-link" href="<?= route("jobs") ?>">Jobs</a>
@@ -44,3 +49,6 @@
             </div>
         </div>
     </nav>
+
+
+    <div class="container py-5">

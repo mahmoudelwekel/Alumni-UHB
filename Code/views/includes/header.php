@@ -10,11 +10,13 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-16" />
 
     <link rel="stylesheet" href="<?= asset("css/bootstrap.min.css") ?>" />
+    <link rel="stylesheet" href="<?= asset("StarRating/star-rating.min.css") ?>" />
+    <link rel="stylesheet" href="<?= asset("StarRating/theme.min.css") ?>" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
 
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.dataTables.min.css">
 
 
@@ -22,6 +24,11 @@
 </head>
 
 <body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="<?= asset("StarRating/star-rating.min.js") ?>"></script>
+<script src="<?= asset("StarRating/theme.min.js") ?>"></script>
+
+
     <div style="background-image: url('<?= asset("Images/header.jpg") ?>');background-repeat: no-repeat;
     background-size: cover;
     background-position: center; ">
@@ -51,4 +58,4 @@
     </nav>
 
 
-    <div class="container py-5">
+    <div class="">

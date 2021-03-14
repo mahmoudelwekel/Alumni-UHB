@@ -94,3 +94,8 @@ body {
 .icon {
     width: 25px !important;
 }
+
+.no-text-wrap {
+    overflow: hidden;
+    white-space: nowrap;
+}

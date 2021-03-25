@@ -1,4 +1,4 @@
-<?php include "../../init/init.php"; ?>
+<?php require_once"../../init/init.php"; ?>
 <div class="table-responsive">
 
 
@@ -59,4 +59,4 @@
         </tfoot>
     </table>
 </div>
-<?php include "../includes/footer.php"; ?>
+<?php require_once"../includes/footer.php"; ?>

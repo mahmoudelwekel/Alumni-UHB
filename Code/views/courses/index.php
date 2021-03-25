@@ -1,5 +1,6 @@
-<?php include "../../init/init.php";
-
+<?php
+$page = "courses";
+require_once"../../init/init.php";
 $stmt = $con->prepare("SELECT
 								courses.*, categories.catg_name AS category, lecturers.lec_name AS lecturer
        						FROM 
@@ -16,7 +17,9 @@ $courses = $stmt->fetchAll();
 <div class="container py-5">
     <h3>Courses</h3>
     <hr />
-    <a class="btn btn-block mb-3 btn-primary" href="add.php">Add New</a>
+	<?php if(isAdmin()): ?>
+    	<a class="btn btn-block mb-3 btn-primary" href="add.php">Add New</a>
+	<?php endif; ?>
 
     <div class="table-responsive">
         <table class="table table-striped table-hover table-bordered w-100">
@@ -58,4 +61,4 @@ $courses = $stmt->fetchAll();
     </div>
 
 </div>
-<?php include "../includes/footer.php"; ?>
+<?php require_once"../includes/footer.php"; ?>

@@ -1,3 +1,11 @@
-<?php include "../../init/init.php"; ?>
+<?php
+$page = "alumnuses";
+require_once"../../init/init.php";
 
-<?php include "../includes/footer.php"; ?>
+if ( !isAdmin() ) {
+	redirect("public");
+}
+
+?>
+
+<?php require_once"../includes/footer.php"; ?>

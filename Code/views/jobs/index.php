@@ -1,4 +1,8 @@
-<?php include "../../init/init.php"; ?>
+<?php
+$page = "jobs";
+require_once"../../init/init.php";
+
+?>
 
 
 
@@ -66,4 +70,4 @@
     </div>
 
 </div>
-<?php include "../includes/footer.php"; ?>
+<?php require_once"../includes/footer.php"; ?>

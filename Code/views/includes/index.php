@@ -1,4 +1,4 @@
-<?php include "../../init/init.php"; ?>
+<?php require_once"../../init/init.php"; ?>
 
 
 <div id="carouselExampleInterval" class="carousel slide bg-white  " data-ride="carousel">
@@ -269,4 +269,4 @@
 </div>
 
 
-<?php include "footer.php"; ?>
+<?php require_once"footer.php"; ?>

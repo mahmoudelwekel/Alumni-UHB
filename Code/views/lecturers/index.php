@@ -1,5 +1,6 @@
 <?php
-require_once "../../init/init.php";
+$page = "lecturers";
+require_once"../../init/init.php";
 
 $stmt = $con->prepare("SELECT
 	lecturers.*, colleges.colg_name, departments.dept_name
@@ -26,7 +27,10 @@ for ( $i = 0; $i < sizeof( $lecturers ); $i++ ) {
 <div class="container py-5">
     <h3>Lecturers</h3>
     <hr/>
-    <a class="btn btn-block mb-3 btn-primary" href="<?= route("lecturers/add.php") ?>">Add New</a>
+
+	<?php if(isAdmin()): ?>
+		<a class="btn btn-block mb-3 btn-primary" href="<?= route("lecturers/add.php") ?>">Add New</a>
+	<?php endif; ?>
 
     <div class="table-responsive">
         <table class="table table-striped table-hover table-bordered w-100">

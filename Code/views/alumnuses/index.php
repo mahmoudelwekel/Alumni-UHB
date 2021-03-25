@@ -1,4 +1,10 @@
-<?php include "../../init/init.php";
+<?php
+$page = "alumnuses";
+require_once"../../init/init.php";
+
+if ( !isAdmin() ) {
+	redirect("public");
+}
 
 $stmt = $con->prepare("SELECT
 	alumnuses.*, colleges.colg_name, departments.dept_name
@@ -49,4 +55,4 @@ $alumnuses = $stmt->fetchAll();
 		</div>
 	</div>
 
-<?php include "../includes/footer.php"; ?>
+<?php require_once"../includes/footer.php"; ?>

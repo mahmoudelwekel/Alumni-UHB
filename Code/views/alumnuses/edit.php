@@ -1,4 +1,10 @@
-<?php include "../../init/init.php";
+<?php
+$page = "alumnuses";
+require_once"../../init/init.php";
+
+if ( !isAdmin() ) {
+	redirect("public");
+}
 
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	$id = $_POST['id'];
@@ -164,7 +170,7 @@ if ( isset( $_SESSION['msg'] ) ) {
 	</form>
 </div>
 
-<?php include "../includes/footer.php"; ?>
+<?php require_once"../includes/footer.php"; ?>
 <script>
 	getDepartments(<?= $college_id ?>);
 </script>

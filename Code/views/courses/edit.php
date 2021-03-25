@@ -1,4 +1,10 @@
-<?php include "../../init/init.php";
+<?php
+$page = "courses";
+require_once"../../init/init.php";
+
+if ( !isAdmin() ) {
+	redirect("public");
+}
 
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	/** Validating the Name */
@@ -153,4 +159,4 @@ $course = $stmt->fetch();
 		</form>
 	</div>
 
-<?php include "../includes/footer.php"; ?>
+<?php require_once"../includes/footer.php"; ?>

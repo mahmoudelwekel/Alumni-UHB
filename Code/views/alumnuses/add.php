@@ -1,4 +1,10 @@
-<?php include "../../init/init.php";
+<?php
+$page = "alumnuses";
+require_once"../../init/init.php";
+
+if ( !isAdmin() ) {
+	redirect("public");
+}
 
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	/** Validating the SSN */
@@ -135,4 +141,4 @@ $colleges = $stmt->fetchAll();
 	</div>
 
 
-<?php include "../includes/footer.php"; ?>
+<?php require_once"../includes/footer.php"; ?>

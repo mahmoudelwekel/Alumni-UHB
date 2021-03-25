@@ -1,5 +1,8 @@
 <?php
-include "../../init/init.php";
+require_once"../../init/init.php";
+if ( !isAdmin() ) {
+	redirect("public");
+}
 
 if ( isset( $_GET['id'] ) ) {
 	$stmt = $con->prepare("DELETE FROM alumnuses WHERE id = ?");

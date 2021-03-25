@@ -1,3 +1,9 @@
-<?php include "../../init/init.php"; ?>
+<?php require_once"../../init/init.php";
 
-<?php include "../includes/footer.php"; ?>
+session_unset();
+session_destroy();
+
+redirect("public");
+?>
+
+<?php require_once"../includes/footer.php"; ?>

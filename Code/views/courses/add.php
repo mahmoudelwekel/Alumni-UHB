@@ -1,4 +1,10 @@
-<?php include "../../init/init.php";
+<?php
+$page = "courses";
+require_once"../../init/init.php";
+
+if ( !isAdmin() ) {
+	redirect("public");
+}
 
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	/** Validating the Name */
@@ -50,15 +56,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	}
 }
 
-if ( isset( $_SESSION['msg'] ) ) {
-	foreach ( $_SESSION['msg'] as $msg ) {
-		?>
-		<div class="alert alert-danger col-8 offset-2"><?= $msg ?></div>
-		<?php
-	}
-	unset( $_SESSION['msg'] );
-}
-
+getErrors();
 
 $stmt = $con->prepare("SELECT * FROM categories");
 $stmt->execute();
@@ -129,4 +127,4 @@ $lecturers = $stmt->fetchAll();
 
 
 
-<?php include "../includes/footer.php"; ?>
+<?php require_once"../includes/footer.php"; ?>

@@ -46,13 +46,20 @@
 
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="<?= route("public") ?>">Home <span class="sr-only">(current)</span></a>
-                    <a class="nav-item nav-link" href="<?= route("courses") ?>">Courses</a>
-                    <a class="nav-item nav-link" href="<?= route("workshops") ?>">WorkShops</a>
-                    <a class="nav-item nav-link" href="<?= route("jobs") ?>">Jobs</a>
-                    <a class="nav-item nav-link" href="<?= route("lecturers") ?>">Lecturers</a>
-                    <a class="nav-item nav-link" href="<?= route("public/login.php") ?>">Login</a>
-                </div>
+                    <a class="nav-item nav-link <?php setActive("home"); ?>" href="<?= route("public") ?>">Home</a>
+                    <?php if( isAdmin() ): ?>
+					<a class="nav-item nav-link <?php setActive("alumnuses"); ?>" href="<?= route("alumnuses") ?>">Alumnuses</a>
+					<?php endif; ?>
+                    <a class="nav-item nav-link <?php setActive("courses"); ?>" href="<?= route("courses") ?>">Courses</a>
+                    <a class="nav-item nav-link <?php setActive("workshops"); ?>" href="<?= route("workshops") ?>">WorkShops</a>
+                    <a class="nav-item nav-link <?php setActive("jobs"); ?>" href="<?= route("jobs") ?>">Jobs</a>
+                    <a class="nav-item nav-link <?php setActive("lecturers"); ?>" href="<?= route("lecturers") ?>">Lecturers</a>
+					<?php if(isVisitor()): ?>
+                    <a class="nav-item nav-link <?php setActive("login"); ?>" href="<?= route("public/login.php") ?>">Login</a>
+					<?php else: ?>
+					<a class="nav-item nav-link" href="<?= route("public/logout.php") ?>">Logout</a>
+					<?php endif; ?>
+				</div>
             </div>
         </div>
     </nav>

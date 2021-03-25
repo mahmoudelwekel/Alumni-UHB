@@ -1,4 +1,8 @@
-<?php include "../../init/init.php"; ?>
+<?php
+$page = "jobs";
+require_once"../../init/init.php";
+
+?>
 
 <div class="" style="background-image:url('<?= asset("Images/bg/empty.jpg") ?>') ;
 background-repeat: no-repeat;
@@ -90,4 +94,4 @@ background-repeat: no-repeat;
             </div>
         </div>
     </div>
-<?php include "../includes/footer.php"; ?>
+<?php require_once"../includes/footer.php"; ?>

@@ -1,4 +1,12 @@
-<?php include "../../init/init.php"; ?>
+<?php
+$page = "workshops";
+require_once"../../init/init.php";
+
+if ( !isAdmin() ) {
+	redirect("public");
+}
+
+?>
 
 <div class="container py-5">
     <h3>
@@ -32,4 +40,4 @@
 
 
 
-<?php include "../includes/footer.php"; ?>
+<?php require_once"../includes/footer.php"; ?>

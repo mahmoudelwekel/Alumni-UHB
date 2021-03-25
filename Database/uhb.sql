@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 28, 2021 at 04:49 PM
+-- Generation Time: Mar 25, 2021 at 07:27 PM
 -- Server version: 10.4.16-MariaDB
 -- PHP Version: 7.4.12
 
@@ -20,6 +20,27 @@ SET time_zone = "+00:00";
 --
 -- Database: `uhb`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admins`
+--
+
+CREATE TABLE `admins` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `salt` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `admins`
+--
+
+INSERT INTO `admins` (`id`, `name`, `email`, `password`, `salt`) VALUES
+(1, 'Absy', 'a@a.com', 'b6ec74854fdd31c590fc2958fd69fd155baa97d5', 'ee224b109a');
 
 -- --------------------------------------------------------
 
@@ -93,6 +114,13 @@ CREATE TABLE `categories` (
   `catg_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `catg_name`) VALUES
+(1, 'catg');
+
 -- --------------------------------------------------------
 
 --
@@ -103,6 +131,15 @@ CREATE TABLE `colleges` (
   `id` int(11) NOT NULL,
   `colg_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `colleges`
+--
+
+INSERT INTO `colleges` (`id`, `colg_name`) VALUES
+(1, 'fci'),
+(2, 'engineering'),
+(3, 'medicine ');
 
 -- --------------------------------------------------------
 
@@ -118,10 +155,16 @@ CREATE TABLE `courses` (
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
   `deadline` date NOT NULL,
-  `certificate` varchar(255) DEFAULT NULL,
   `lecturer_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `courses`
+--
+
+INSERT INTO `courses` (`id`, `crs_name`, `location`, `details`, `start_date`, `end_date`, `deadline`, `lecturer_id`, `category_id`) VALUES
+(2, 'php', 'cairo', 'php course', '2021-02-01', '2021-05-01', '2021-05-25', 5, 1);
 
 -- --------------------------------------------------------
 
@@ -146,6 +189,13 @@ CREATE TABLE `departments` (
   `dept_name` varchar(255) NOT NULL,
   `college_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `departments`
+--
+
+INSERT INTO `departments` (`id`, `dept_name`, `college_id`) VALUES
+(1, 'se', 1);
 
 -- --------------------------------------------------------
 
@@ -179,6 +229,13 @@ CREATE TABLE `lecturers` (
   `department_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `lecturers`
+--
+
+INSERT INTO `lecturers` (`id`, `SSN`, `lec_name`, `email`, `password`, `salt`, `phone`, `cv`, `department_id`) VALUES
+(5, '123654', 'Amr El-Absy', 'amrelabsy55@gmail.com', 'b6ec74854fdd31c590fc2958fd69fd155baa97d5', 'ee224b109a', '01066484685', '7622767cv.pdf', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -189,7 +246,6 @@ CREATE TABLE `lecturer_workshop` (
   `id` int(11) NOT NULL,
   `lecturer_id` int(11) NOT NULL,
   `workshop_id` int(11) NOT NULL,
-  `certificate` varchar(255) DEFAULT NULL,
   `start_date` date NOT NULL,
   `end_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -224,6 +280,12 @@ CREATE TABLE `workshop_job` (
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admins`
+--
+ALTER TABLE `admins`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `alumnuses`
@@ -339,10 +401,16 @@ ALTER TABLE `workshop_job`
 --
 
 --
+-- AUTO_INCREMENT for table `admins`
+--
+ALTER TABLE `admins`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `alumnuses`
 --
 ALTER TABLE `alumnuses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `alumnus_course`
@@ -354,7 +422,7 @@ ALTER TABLE `alumnus_course`
 -- AUTO_INCREMENT for table `alumnus_lecturer_rate`
 --
 ALTER TABLE `alumnus_lecturer_rate`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `alumnus_workshop`
@@ -366,19 +434,19 @@ ALTER TABLE `alumnus_workshop`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `colleges`
 --
 ALTER TABLE `colleges`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `course_job`
@@ -390,7 +458,7 @@ ALTER TABLE `course_job`
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -402,7 +470,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `lecturers`
 --
 ALTER TABLE `lecturers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `workshops`

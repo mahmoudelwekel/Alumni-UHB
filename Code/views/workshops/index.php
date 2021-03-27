@@ -1,21 +1,46 @@
 <?php
 $page = "workshops";
 require_once "../../init/init.php";
+
+$stmt = $con->prepare("SELECT workshops.*, categories.catg_name AS category FROM workshops
+								INNER JOIN categories
+								ON categories.id = workshops.category_id");
+$stmt->execute();
+$workshops = $stmt->fetchAll();
+
+for ( $i = 0; $i < sizeof($workshops); $i++ ) {
+	$id = $workshops[$i]['id'];
+
+	$stmt = $con->prepare("SELECT lecturer_workshop.*, lecturers.lec_name AS lecturer 
+									FROM lecturer_workshop
+									INNER JOIN lecturers
+									ON lecturers.id = lecturer_workshop.lecturer_id
+									WHERE workshop_id = ?");
+	$stmt->execute([$id]);
+
+	$lecturers = $stmt->fetchAll();
+	$_lecturers = "";
+	for ( $j = 0; $j < sizeof($lecturers); $j++ ) {
+		$_lecturers .= $_lecturers[$i]['lecturer'];
+
+		if ( sizeof($lecturers) - $j > 2 ) {
+			$_lecturers .= ", ";
+		} elseif ( sizeof($lecturers) - $j == 2 ) {
+			$_lecturers .= " and ";
+		}
+	}
+
+	$workshops[$i]["lecturers"] = $_lecturers;
+}
+
 ?>
 
-
-
-
 <div class="container py-5">
-    <h3>
-        Workshop
-    </h3>
+    <h3>Workshop</h3>
     <hr />
     <a class="btn btn-block mb-3 btn-primary" href="add.php">Add New</a>
 
     <div class="table-responsive">
-
-
         <table id="example" class="table table-striped  table-hover table-bordered w-100">
             <thead>
                 <tr>
@@ -24,46 +49,29 @@ require_once "../../init/init.php";
                     <th>Location</th>
                     <th>DeadLine</th>
                     <th>Details</th>
+                    <th>Lecturers</th>
                     <th></th>
-
                 </tr>
             </thead>
             <tbody>
+			<?php foreach ($workshops as $workshop): ?>
                 <tr>
-                    <td>1</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                    <td>2011/04/25</td>
-                    <td>$320,800</td>
+                    <td><?= $workshop['id'] ?></td>
+                    <td><?= $workshop['wshop_name'] ?></td>
+                    <td><?= $workshop['location'] ?></td>
+                    <td><?= $workshop['deadline'] ?></td>
+                    <td><?= $workshop['details'] ?></td>
+                    <td><?= $workshop['lecturers'] ?></td>
                     <td>
                         <a class="btn btn-sm mb-1 btn-dark" href="show.php">Details</a>
                         <a class="btn btn-sm mb-1 btn-dark" href="edit.php">Edit</a>
                         <a class="btn btn-sm mb-1 btn-danger" href="delete.php">Delete</a>
                     </td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                    <td>2011/04/25</td>
-                    <td>$320,800</td>
-                    <td>
-                        <a class="btn btn-sm mb-1 btn-dark" href="show.php">Details</a>
-                        <a class="btn btn-sm mb-1 btn-dark" href="edit.php">Edit</a>
-                        <a class="btn btn-sm mb-1 btn-danger" href="delete.php">Delete</a>
-                    </td>
-                </tr>
+			<?php endforeach; ?>
+
             </tbody>
-            <tfoot>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Location</th>
-                    <th>DeadLine</th>
-                    <th>Details</th>
-                    <th></th>
-                </tr>
-            </tfoot>
+
         </table>
     </div>
 

@@ -12,7 +12,7 @@ function setTitle() {
 	if ( isset($title) ) {
 		echo $title;
 	} else {
-		echo "Alumnuses";
+		echo "alumni";
 	}
 }
 
@@ -95,7 +95,7 @@ function logIn( $email, $password ) {
 		return ["admin", $id];
 	} elseif ( $id = isLogInFromTable( $email, $password, "lecturers" ) > 0 ) {
 		return ["lecturer", $id];
-	} elseif ( $id = isLogInFromTable( $email, $password, "alumnuses" ) > 0 ) {
+	} elseif ( $id = isLogInFromTable( $email, $password, "alumni" ) > 0 ) {
 		return ["alumnus", $id];
 	} else {
 		return ["not valid", 0];

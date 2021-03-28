@@ -48,7 +48,7 @@
                 <div class="navbar-nav">
                     <a class="nav-item nav-link <?php setActive("home"); ?>" href="<?= route("public") ?>">Home</a>
                     <?php if( isAdmin() ): ?>
-					<a class="nav-item nav-link <?php setActive("alumnuses"); ?>" href="<?= route("alumnuses") ?>">Alumnuses</a>
+					<a class="nav-item nav-link <?php setActive("alumni"); ?>" href="<?= route("alumni") ?>">Alumni</a>
 					<?php endif; ?>
                     <a class="nav-item nav-link <?php setActive("courses"); ?>" href="<?= route("courses") ?>">Courses</a>
                     <a class="nav-item nav-link <?php setActive("workshops"); ?>" href="<?= route("workshops") ?>">WorkShops</a>

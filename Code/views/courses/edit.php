@@ -111,12 +111,12 @@ $course = $stmt->fetch();
 
 			<div class="form-group">
 				<label for="start_date">Start Date</label>
-				<input type="date" class="form-control" id="start_date" name="start_date" value="<?= $course['start_date'] ?>">
+				<input type="datetime-local" class="form-control" id="start_date" name="start_date" value="<?= $course['start_date'] ?>">
 			</div>
 
 			<div class="form-group">
 				<label for="end_date">End Date</label>
-				<input type="date" class="form-control" id="end_date" name="end_date" value="<?= $course['end_date'] ?>">
+				<input type="datetime-local" class="form-control" id="end_date" name="end_date" value="<?= $course['end_date'] ?>">
 			</div>
 
 			<div class="form-group">

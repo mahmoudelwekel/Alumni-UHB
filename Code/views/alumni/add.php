@@ -1,5 +1,5 @@
 <?php
-$page = "alumnuses";
+$page = "alumni";
 require_once"../../init/init.php";
 
 if ( !isAdmin() ) {
@@ -11,7 +11,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	if( $_POST['ssn'] != "" ) {
 		$ssn = filter_var($_POST['ssn'], FILTER_SANITIZE_STRING);
 
-		if ( isExistIn($ssn, "alumnuses", "SSN") ) {
+		if ( isExistIn($ssn, "alumni", "SSN") ) {
 			$_SESSION['msg'][] = "The SSN Must Be Unique";
 		}
 	} else {
@@ -29,7 +29,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	if( $_POST['email'] != "" ) {
 		$email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
 
-		if ( isExistIn($email, "alumnuses", "email") ) {
+		if ( isExistIn($email, "alumni", "email") ) {
 			$_SESSION['msg'][] = "The Email Must Be Unique";
 		}
 	} else {
@@ -54,7 +54,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	if( $_POST['phone'] != "" ) {
 		$phone = filter_var($_POST['phone'], FILTER_SANITIZE_STRING);
 
-		if ( isExistIn($phone, "alumnuses", "phone") ) {
+		if ( isExistIn($phone, "alumni", "phone") ) {
 			$_SESSION['msg'][] = "The SSN Must Be Unique";
 		}
 	} else {
@@ -64,10 +64,10 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	if ( empty( $_SESSION['msg'] ) ) {
 		$salt = md5( rand() );
 		$password = sha1( $password . $salt );
-		$stmt = $con->prepare("INSERT INTO alumnuses(SSN, alu_name, email, password, salt, phone, department_id) VALUES(?, ?, ?, ?, ?, ?, ?)");
+		$stmt = $con->prepare("INSERT INTO alumni(SSN, alu_name, email, password, salt, phone, department_id) VALUES(?, ?, ?, ?, ?, ?, ?)");
 		$stmt->execute([$ssn, $name, $email, $password, $salt, $phone, $department]);
 
-		redirect("alumnuses");
+		redirect("alumni");
 	}
 }
 

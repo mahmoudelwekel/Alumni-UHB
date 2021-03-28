@@ -1,5 +1,5 @@
 <?php
-$page = "alumnuses";
+$page = "alumni";
 require_once"../../init/init.php";
 
 if ( !isAdmin() ) {
@@ -7,21 +7,21 @@ if ( !isAdmin() ) {
 }
 
 $stmt = $con->prepare("SELECT
-	alumnuses.*, colleges.colg_name, departments.dept_name
+	alumni.*, colleges.colg_name, departments.dept_name
 	FROM 
-	    alumnuses 
-    INNER JOIN departments ON alumnuses.department_id = departments.id 
+	    alumni 
+    INNER JOIN departments ON alumni.department_id = departments.id 
     INNER JOIN colleges ON departments.college_id = colleges.id");
 $stmt->execute();
 
-$alumnuses = $stmt->fetchAll();
+$alumni = $stmt->fetchAll();
 
 ?>
 
 	<div class="container py-5">
-		<h3>Lecturers</h3>
+		<h3>Alumni</h3>
 		<hr/>
-		<a class="btn btn-block mb-3 btn-primary" href="<?= route("alumnuses/add.php") ?>">Add New</a>
+		<a class="btn btn-block mb-3 btn-primary" href="<?= route("alumni/add.php") ?>">Add New</a>
 
 		<div class="table-responsive">
 			<table class="table table-striped table-hover table-bordered w-100">
@@ -37,7 +37,7 @@ $alumnuses = $stmt->fetchAll();
 				</thead>
 
 				<tbody>
-					<?php foreach ( $alumnuses as $alumnus ): ?>
+					<?php foreach ( $alumni as $alumnus ): ?>
 						<tr>
 							<td><?= $alumnus['id'] ?></td>
 							<td><?= $alumnus['alu_name'] ?></td>
@@ -45,8 +45,8 @@ $alumnuses = $stmt->fetchAll();
 							<td><?= $alumnus['email'] ?></td>
 							<td><?= $alumnus['phone'] ?></td>
 							<td>
-								<a class="btn btn-sm mb-1 btn-dark" href="<?= route("alumnuses/edit.php?id=" . $alumnus['id'] )?>">Edit</a>
-								<a class="btn btn-sm mb-1 btn-danger" href="<?= route("alumnuses/delete.php?id=" . $alumnus['id'] )?>">Delete</a>
+								<a class="btn btn-sm mb-1 btn-dark" href="<?= route("alumni/edit.php?id=" . $alumnus['id'] )?>">Edit</a>
+								<a class="btn btn-sm mb-1 btn-danger" href="<?= route("alumni/delete.php?id=" . $alumnus['id'] )?>">Delete</a>
 							</td>
 						</tr>
 					<?php endforeach; ?>

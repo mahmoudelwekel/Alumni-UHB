@@ -1,5 +1,5 @@
 <?php
-$page = "alumnuses";
+$page = "alumni";
 require_once"../../init/init.php";
 
 if ( !isAdmin() ) {
@@ -12,7 +12,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	if( $_POST['ssn'] != "" ) {
 		$ssn = filter_var($_POST['ssn'], FILTER_SANITIZE_STRING);
 
-		if ( isExistInExcept($ssn, "alumnuses", "SSN", $id) ) {
+		if ( isExistInExcept($ssn, "alumni", "SSN", $id) ) {
 			$_SESSION['msg'][] = "The SSN Must Be Unique";
 		}
 	} else {
@@ -30,7 +30,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	if( $_POST['email'] != "" ) {
 		$email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
 
-		if ( isExistInExcept($email, "alumnuses", "email", $id) ) {
+		if ( isExistInExcept($email, "alumni", "email", $id) ) {
 			$_SESSION['msg'][] = "The Email Must Be Unique";
 		}
 	} else {
@@ -44,8 +44,8 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		$salt = md5( rand() );
 		$password = sha1( $password . $salt );
 	} else {
-		$password = getColumn('alumnuses', "password", $id);
-		$salt = getColumn('alumnuses', "salt", $id);
+		$password = getColumn('alumni', "password", $id);
+		$salt = getColumn('alumni', "salt", $id);
 	}
 
 	/** Validating the SSN */
@@ -59,7 +59,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	if( $_POST['phone'] != "" ) {
 		$phone = filter_var($_POST['phone'], FILTER_SANITIZE_STRING);
 
-		if ( isExistInExcept($phone, "alumnuses", "phone", $id) ) {
+		if ( isExistInExcept($phone, "alumni", "phone", $id) ) {
 			$_SESSION['msg'][] = "The SSN Must Be Unique";
 		}
 	} else {
@@ -67,7 +67,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	}
 
 	if ( empty( $_SESSION['msg'] ) ) {
-		$stmt = $con->prepare("UPDATE alumnuses SET 
+		$stmt = $con->prepare("UPDATE alumni SET 
 						 SSN = ?, 
 						 alu_name = ?, 
 						 email = ?, 
@@ -79,7 +79,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
                      	id = ?");
 		$stmt->execute([$ssn, $name, $email, $password, $salt, $phone, $department, $id]);
 
-		redirect("alumnuses");
+		redirect("alumni");
 	}
 }
 
@@ -89,12 +89,12 @@ $stmt->execute();
 $colleges = $stmt->fetchAll();
 
 if ( isset( $_GET['id'] ) ) {
-	$stmt = $con->prepare("SELECT * FROM alumnuses WHERE id = ? LIMIT 1");
+	$stmt = $con->prepare("SELECT * FROM alumni WHERE id = ? LIMIT 1");
 	$stmt->execute([$_GET['id']]);
 
 	$alumnus = $stmt->fetch();
 
-	$college_id = getCollegeId( $alumnus['id'], "alumnuses" );
+	$college_id = getCollegeId( $alumnus['id'], "alumni" );
 } else {
 	$_SESSION['msg'][] = "Error in the URL, You Must Pass the ID";
 }

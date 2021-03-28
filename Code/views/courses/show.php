@@ -9,7 +9,7 @@ background-repeat: no-repeat;
     background-color: #e5f1ed;">
 
     <div class="container h1 py-5">
-        Cources
+        Courses
     </div>
 </div>
 
@@ -22,7 +22,7 @@ background-repeat: no-repeat;
     background-color: #e5f1ed;">
 
         <div class="card-body font-weight-bold">
-            <h4 class="card-title font-weight-bold h3 text-dark text-left">Cource Title</h4>
+            <h4 class="card-title font-weight-bold h3 text-dark text-left">Course Title</h4>
             <hr />
             <p class="card-text text-decoration-none text-secondary  h5  font-weight-bold my-4">
                 <i class="icon fas fa-map-marker-alt "></i> Location
@@ -58,7 +58,7 @@ background-repeat: no-repeat;
             <div class="row card-text">
                 <div class="col-md-9 ">
 
-                    <h4 class="card-title font-weight-bold h3 text-dark text-left">Cource Title</h4>
+                    <h4 class="card-title font-weight-bold h3 text-dark text-left">Course Title</h4>
                     <p class="card-text text-decoration-none text-secondary  h5  font-weight-bold my-4">
                         <i class="icon fas fa-map-marker-alt "></i> Location
                     </p>

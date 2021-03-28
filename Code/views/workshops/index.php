@@ -21,7 +21,7 @@ for ( $i = 0; $i < sizeof($workshops); $i++ ) {
 	$lecturers = $stmt->fetchAll();
 	$_lecturers = "";
 	for ( $j = 0; $j < sizeof($lecturers); $j++ ) {
-		$_lecturers .= $_lecturers[$i]['lecturer'];
+		$_lecturers .= $lecturers[$i]['lecturer'];
 
 		if ( sizeof($lecturers) - $j > 2 ) {
 			$_lecturers .= ", ";
@@ -65,7 +65,7 @@ for ( $i = 0; $i < sizeof($workshops); $i++ ) {
                     <td>
                         <a class="btn btn-sm mb-1 btn-dark" href="show.php">Details</a>
                         <a class="btn btn-sm mb-1 btn-dark" href="edit.php">Edit</a>
-                        <a class="btn btn-sm mb-1 btn-danger" href="delete.php">Delete</a>
+                        <a class="btn btn-sm mb-1 btn-danger" href="delete.php?id=<?= $workshop['id'] ?>">Delete</a>
                     </td>
                 </tr>
 			<?php endforeach; ?>

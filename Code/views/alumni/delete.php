@@ -5,8 +5,8 @@ if ( !isAdmin() ) {
 }
 
 if ( isset( $_GET['id'] ) ) {
-	$stmt = $con->prepare("DELETE FROM alumnuses WHERE id = ?");
+	$stmt = $con->prepare("DELETE FROM alumni WHERE id = ?");
 	$stmt->execute([$_GET['id']]);
 }
 
-redirect("alumnuses");
+redirect("alumni");

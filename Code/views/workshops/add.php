@@ -6,6 +6,7 @@ if ( !isAdmin() ) {
 	redirect("public");
 }
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+	var_dump($_POST);
 	/** Validating the Name */
 	if( $_POST['name'] != "" ) {
 		$name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);

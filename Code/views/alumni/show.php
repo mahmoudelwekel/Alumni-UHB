@@ -1,5 +1,5 @@
 <?php
-$page = "alumnuses";
+$page = "alumni";
 require_once"../../init/init.php";
 
 if ( !isAdmin() ) {

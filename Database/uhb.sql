@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 25, 2021 at 07:27 PM
+-- Generation Time: Mar 28, 2021 at 03:49 PM
 -- Server version: 10.4.16-MariaDB
 -- PHP Version: 7.4.12
 
@@ -40,15 +40,15 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `name`, `email`, `password`, `salt`) VALUES
-(1, 'Absy', 'a@a.com', 'b6ec74854fdd31c590fc2958fd69fd155baa97d5', 'ee224b109a');
+(1, 'Nawal', 'admin', 'cb69e004b3c23a929e5f1718afbd7e897008ad1d', 'ee224b109a');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `alumnuses`
+-- Table structure for table `alumni`
 --
 
-CREATE TABLE `alumnuses` (
+CREATE TABLE `alumni` (
   `id` int(11) NOT NULL,
   `SSN` varchar(255) NOT NULL,
   `alu_name` varchar(255) NOT NULL,
@@ -58,6 +58,16 @@ CREATE TABLE `alumnuses` (
   `phone` varchar(25) NOT NULL,
   `department_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `alumni`
+--
+
+INSERT INTO `alumni` (`id`, `SSN`, `alu_name`, `email`, `password`, `salt`, `phone`, `department_id`) VALUES
+(2, '108546322', 'Amjad Lafi Almutiri', 's2171003385@uhb.edu.sa', 'df079270fd982a014b7247553536140cfafc788b', 'bd85aa5285', '0509125111', 1),
+(3, '108546321', 'Nawal Faisal Al Enazy', 'e2171003267@uhb.edu.sa', '2ee9cb7249275a591f745f3b6bafb63e90b04356', '5136e4e6f7', '0509125222', 1),
+(4, '108546323', 'Abeer Faisal Alenizy', 's2171003269@uhb.edu.sa', '739bc664f358635e353f67546732d0153c19079f', '7b88fb8c90', '0509125333', 1),
+(5, '108546324', 'Noura Saleh Alharbi', 's2171003373@uhb.edu.sa', '69e868e966c3542892f2bb8b18502cade5a0544f', 'c21e46305d', '0509125444', 1);
 
 -- --------------------------------------------------------
 
@@ -119,7 +129,11 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `catg_name`) VALUES
-(1, 'catg');
+(1, 'General Health'),
+(2, 'Social Affair'),
+(3, 'Science'),
+(4, 'Engineering'),
+(5, 'Computer Science');
 
 -- --------------------------------------------------------
 
@@ -137,9 +151,8 @@ CREATE TABLE `colleges` (
 --
 
 INSERT INTO `colleges` (`id`, `colg_name`) VALUES
-(1, 'fci'),
-(2, 'engineering'),
-(3, 'medicine ');
+(1, 'Computer Science and Engineering College'),
+(2, 'Science');
 
 -- --------------------------------------------------------
 
@@ -152,8 +165,8 @@ CREATE TABLE `courses` (
   `crs_name` varchar(255) NOT NULL,
   `location` varchar(255) NOT NULL,
   `details` text NOT NULL,
-  `start_date` date NOT NULL,
-  `end_date` date NOT NULL,
+  `start_date` datetime NOT NULL,
+  `end_date` datetime NOT NULL,
   `deadline` date NOT NULL,
   `lecturer_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL
@@ -164,7 +177,7 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`id`, `crs_name`, `location`, `details`, `start_date`, `end_date`, `deadline`, `lecturer_id`, `category_id`) VALUES
-(2, 'php', 'cairo', 'php course', '2021-02-01', '2021-05-01', '2021-05-25', 5, 1);
+(2, 'php', 'cairo', 'php course', '2021-02-01 00:00:00', '2021-05-01 00:00:00', '2021-05-25', 5, 1);
 
 -- --------------------------------------------------------
 
@@ -195,7 +208,14 @@ CREATE TABLE `departments` (
 --
 
 INSERT INTO `departments` (`id`, `dept_name`, `college_id`) VALUES
-(1, 'se', 1);
+(1, 'Computer Science', 1),
+(2, 'Data Science', 1),
+(3, 'Cyber Security', 1),
+(4, 'Software Programming', 1),
+(5, 'Mathematics', 2),
+(6, 'Biology', 2),
+(7, 'Chemistry', 2),
+(8, 'Physics ', 2);
 
 -- --------------------------------------------------------
 
@@ -234,7 +254,8 @@ CREATE TABLE `lecturers` (
 --
 
 INSERT INTO `lecturers` (`id`, `SSN`, `lec_name`, `email`, `password`, `salt`, `phone`, `cv`, `department_id`) VALUES
-(5, '123654', 'Amr El-Absy', 'amrelabsy55@gmail.com', 'b6ec74854fdd31c590fc2958fd69fd155baa97d5', 'ee224b109a', '01066484685', '7622767cv.pdf', 1);
+(5, '1012345678', 'Manal Hassan', 'manal@uhb.edu.sa', 'b6ec74854fdd31c590fc2958fd69fd155baa97d5', 'ee224b109a', '0501234567', '7622767cv.pdf', 1),
+(6, '1234567890', 'Alaa Al Harbi', 'alaa@uhb.edu.sa', '3e1ca33085245e6b60e957b5369ce41de0ee76c5', '24a8a4f2fe', '0507654321', '3547111cv.pdf', 1);
 
 -- --------------------------------------------------------
 
@@ -250,6 +271,14 @@ CREATE TABLE `lecturer_workshop` (
   `end_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `lecturer_workshop`
+--
+
+INSERT INTO `lecturer_workshop` (`id`, `lecturer_id`, `workshop_id`, `start_date`, `end_date`) VALUES
+(1, 5, 4, '0000-00-00', '0000-00-00'),
+(2, 6, 4, '0000-00-00', '0000-00-00');
+
 -- --------------------------------------------------------
 
 --
@@ -264,6 +293,13 @@ CREATE TABLE `workshops` (
   `details` text NOT NULL,
   `category_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `workshops`
+--
+
+INSERT INTO `workshops` (`id`, `wshop_name`, `deadline`, `location`, `details`, `category_id`) VALUES
+(4, 'Software intensive student projects', '2021-05-04', 'Al Yasmin Campus', '..', 5);
 
 -- --------------------------------------------------------
 
@@ -288,9 +324,9 @@ ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `alumnuses`
+-- Indexes for table `alumni`
 --
-ALTER TABLE `alumnuses`
+ALTER TABLE `alumni`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`),
   ADD UNIQUE KEY `SSN` (`SSN`),
@@ -407,10 +443,10 @@ ALTER TABLE `admins`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `alumnuses`
+-- AUTO_INCREMENT for table `alumni`
 --
-ALTER TABLE `alumnuses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `alumni`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `alumnus_course`
@@ -434,7 +470,7 @@ ALTER TABLE `alumnus_workshop`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `colleges`
@@ -458,7 +494,7 @@ ALTER TABLE `course_job`
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -470,13 +506,19 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `lecturers`
 --
 ALTER TABLE `lecturers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `lecturer_workshop`
+--
+ALTER TABLE `lecturer_workshop`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `workshops`
 --
 ALTER TABLE `workshops`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `workshop_job`
@@ -489,23 +531,23 @@ ALTER TABLE `workshop_job`
 --
 
 --
--- Constraints for table `alumnuses`
+-- Constraints for table `alumni`
 --
-ALTER TABLE `alumnuses`
+ALTER TABLE `alumni`
   ADD CONSTRAINT `alumnus_department` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `alumnus_course`
 --
 ALTER TABLE `alumnus_course`
-  ADD CONSTRAINT `alumnus_course_alumnus` FOREIGN KEY (`alumnus_id`) REFERENCES `alumnuses` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `alumnus_course_alumnus` FOREIGN KEY (`alumnus_id`) REFERENCES `alumni` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `alumnus_course_course` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `alumnus_lecturer_rate`
 --
 ALTER TABLE `alumnus_lecturer_rate`
-  ADD CONSTRAINT `alumnus_lecturer_alumnus` FOREIGN KEY (`alumnus_id`) REFERENCES `alumnuses` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `alumnus_lecturer_alumnus` FOREIGN KEY (`alumnus_id`) REFERENCES `alumni` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `alumnus_lecturer_course` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `alumnus_lecturer_lecturer` FOREIGN KEY (`lecturer_id`) REFERENCES `lecturers` (`id`) ON DELETE CASCADE;
 
@@ -513,7 +555,7 @@ ALTER TABLE `alumnus_lecturer_rate`
 -- Constraints for table `alumnus_workshop`
 --
 ALTER TABLE `alumnus_workshop`
-  ADD CONSTRAINT `alumnus_workshop_alumnus` FOREIGN KEY (`alumnus_id`) REFERENCES `alumnuses` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `alumnus_workshop_alumnus` FOREIGN KEY (`alumnus_id`) REFERENCES `alumni` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `alumnus_workshop_workshop` FOREIGN KEY (`workshop_id`) REFERENCES `workshops` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --

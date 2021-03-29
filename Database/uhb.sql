@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 28, 2021 at 03:49 PM
+-- Generation Time: Mar 29, 2021 at 04:21 PM
 -- Server version: 10.4.16-MariaDB
 -- PHP Version: 7.4.12
 
@@ -177,7 +177,7 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`id`, `crs_name`, `location`, `details`, `start_date`, `end_date`, `deadline`, `lecturer_id`, `category_id`) VALUES
-(2, 'php', 'cairo', 'php course', '2021-02-01 00:00:00', '2021-05-01 00:00:00', '2021-05-25', 5, 1);
+(5, 'Technical writing skills', 'AL Yasmin campus ', '..', '2021-03-20 07:06:00', '1970-01-01 01:33:41', '2021-04-01', 5, 5);
 
 -- --------------------------------------------------------
 
@@ -482,7 +482,7 @@ ALTER TABLE `colleges`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `course_job`

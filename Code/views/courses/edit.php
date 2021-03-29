@@ -42,8 +42,8 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		$_SESSION['msg'][] = "You Must Select the Lecturer";
 	}
 
-	$start_date = $_POST['start_date'];
-	$end_date = $_POST['end_date'];
+	$start_date = date("Y-m-d H:i:s", strtotime( $_POST['start_date'] ) );
+	$end_date = date("Y-m-d H:i:s", strtotime( $_POST['end_date'] ) );
 	$deadline = $_POST['deadline'];
 	$id = $_POST['id'];
 

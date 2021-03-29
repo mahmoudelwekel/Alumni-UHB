@@ -7,6 +7,7 @@ if ( !isAdmin() ) {
 }
 
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+	var_dump($_POST);
 	/** Validating the Name */
 	if( $_POST['name'] != "" ) {
 		$name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
@@ -42,8 +43,8 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		$_SESSION['msg'][] = "You Must Select the Lecturer";
 	}
 
-	$start_date = $_POST['start_date'];
-	$end_date = $_POST['end_date'];
+	$start_date = date("Y-m-d H:i:s", strtotime( $_POST['start_date'] ) );
+	$end_date = date("Y-m-d H:i:s", strtotime( $_POST['end_date'] ) );
 	$deadline = $_POST['deadline'];
 
 	if ( empty( $_SESSION['msg'] ) ) {

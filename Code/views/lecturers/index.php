@@ -33,7 +33,7 @@ for ( $i = 0; $i < sizeof( $lecturers ); $i++ ) {
 	<?php endif; ?>
 
     <div class="table-responsive">
-        <table class="table table-striped table-hover table-bordered w-100">
+	<table id="example" class="table table-striped  table-hover table-bordered w-100">
             <thead>
                 <tr>
                     <th>#</th>

@@ -15,6 +15,15 @@ $(document).ready(function () {
 	});
 });
 
+$('.SeeMore').simpleLoadMore({
+	count: 1,
+	itemsToLoad: 2,
+	item: '.item',
+	btnHTML: '<h4 class="text-center"><i class="fas fa-chevron-down"></i></h4>'
+
+});
+
+
 $("#college").change(function(  ) {
 	var college_id =  $("#college").find(":selected").val();
 	getDepartments( college_id );

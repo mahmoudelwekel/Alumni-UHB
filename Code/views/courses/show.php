@@ -1,6 +1,6 @@
 <?php
 $page = "courses";
-require_once"../../init/init.php"; ?>
+require_once "../../init/init.php"; ?>
 
 <div class="" style="background-image:url('<?= asset("Images/bg/empty.jpg") ?>') ;
 background-repeat: no-repeat;
@@ -89,46 +89,52 @@ background-repeat: no-repeat;
             <div class="col-12 ">
 
                 <h4 class="text-center">
-                    Comments
                     <br />
-                    <i class="fas fa-chevron-down"></i>
+                    Comments
+                    <hr class="w-50" />
                 </h4>
 
-                <div class="media mb-3 bg-light shadow rounded p-3">
-                    <a href="#"><img class="mr-3" src="<?= asset("Images/logo.png") ?>" width="30px" height="30px" alt="Generic placeholder image"></a>
-                    <div class="media-body">
-                        <h4 class="">Mahmoud Elwekel</h4>
-                        <p class=""> 14/3/2021 15:21:35</p>
-                        <p class="text-muted">Very nice</p>
+                <div class="SeeMore">
+
+                    <div class="media mb-3 bg-light shadow rounded p-3 item">
+                        <a href="#"><img class="mr-3" src="<?= asset("Images/logo.png") ?>" width="30px" height="30px" alt="Generic placeholder image"></a>
+                        <div class="media-body">
+                            <h4 class="">Mahmoud Elwekel</h4>
+                            <p class=""> 14/3/2021 15:21:35</p>
+                            <p class="text-muted">Very nice</p>
+                        </div>
                     </div>
+
+                    <div class="media mb-3 bg-light shadow rounded p-3 item">
+                        <a href="#"><img class="mr-3" src="<?= asset("Images/logo.png") ?>" width="30px" height="30px" alt="Generic placeholder image"></a>
+                        <div class="media-body">
+                            <h4 class="">Mahmoud Elwekel</h4>
+                            <p class=""> 14/3/2021 15:21:35</p>
+                            <p class="text-muted">Very nice</p>
+                        </div>
+                    </div>
+
+                    <div class="media mb-3 bg-light shadow rounded p-3 item">
+                        <a href="#"><img class="mr-3" src="<?= asset("Images/logo.png") ?>" width="30px" height="30px" alt="Generic placeholder image"></a>
+                        <div class="media-body">
+                            <h4 class="">Mahmoud Elwekel</h4>
+                            <p class=""> 14/3/2021 15:21:35</p>
+                            <p class="text-muted">Very nice</p>
+                        </div>
+                    </div>
+
+                    <div class="media mb-3 bg-light shadow rounded p-3 item">
+                        <a href="#"><img class="mr-3" src="<?= asset("Images/logo.png") ?>" width="30px" height="30px" alt="Generic placeholder image"></a>
+                        <div class="media-body">
+                            <h4 class="">Mahmoud Elwekel</h4>
+                            <p class=""> 14/3/2021 15:21:35</p>
+                            <p class="text-muted">Very nice</p>
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="media mb-3 bg-light shadow rounded p-3">
-                    <a href="#"><img class="mr-3" src="<?= asset("Images/logo.png") ?>" width="30px" height="30px" alt="Generic placeholder image"></a>
-                    <div class="media-body">
-                        <h4 class="">Mahmoud Elwekel</h4>
-                        <p class=""> 14/3/2021 15:21:35</p>
-                        <p class="text-muted">Very nice</p>
-                    </div>
-                </div>
 
-                <div class="media mb-3 bg-light shadow rounded p-3">
-                    <a href="#"><img class="mr-3" src="<?= asset("Images/logo.png") ?>" width="30px" height="30px" alt="Generic placeholder image"></a>
-                    <div class="media-body">
-                        <h4 class="">Mahmoud Elwekel</h4>
-                        <p class=""> 14/3/2021 15:21:35</p>
-                        <p class="text-muted">Very nice</p>
-                    </div>
-                </div>
-
-                <div class="media mb-3 bg-light shadow rounded p-3">
-                    <a href="#"><img class="mr-3" src="<?= asset("Images/logo.png") ?>" width="30px" height="30px" alt="Generic placeholder image"></a>
-                    <div class="media-body">
-                        <h4 class="">Mahmoud Elwekel</h4>
-                        <p class=""> 14/3/2021 15:21:35</p>
-                        <p class="text-muted">Very nice</p>
-                    </div>
-                </div>
             </div>
 
 
@@ -184,4 +190,4 @@ background-repeat: no-repeat;
 
 
 
-<?php require_once"../includes/footer.php"; ?>
+<?php require_once "../includes/footer.php"; ?>

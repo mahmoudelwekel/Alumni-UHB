@@ -17,7 +17,7 @@ $stmt = $con->prepare("SELECT * FROM workshops
 $stmt->execute();
 $workshops = $stmt->fetchAll();
 
-$stmt = $con->prepare("Select lecturers.* , COUNT(courses.id), COUNT(lecturer_workshop.id), ( COUNT(courses.id) + COUNT(lecturer_workshop.id) ) as shares
+$stmt = $con->prepare("Select lecturers.*, ( COUNT(courses.id) + COUNT(lecturer_workshop.id) ) as shares
 								From lecturers
 								LEFT JOIN courses
 								ON lecturers.id = courses.lecturer_id

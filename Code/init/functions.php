@@ -91,11 +91,11 @@ function getErrors() {
 }
 
 function logIn( $email, $password ) {
-	if ( $id = isLogInFromTable( $email, $password, "admins" ) > 0 ) {
+	if ( ( $id = isLogInFromTable( $email, $password, "admins" ) ) > 0 ) {
 		return ["admin", $id];
-	} elseif ( $id = isLogInFromTable( $email, $password, "lecturers" ) > 0 ) {
+	} elseif ( ( $id = isLogInFromTable( $email, $password, "lecturers" ) ) > 0 ) {
 		return ["lecturer", $id];
-	} elseif ( $id = isLogInFromTable( $email, $password, "alumni" ) > 0 ) {
+	} elseif ( ( $id = isLogInFromTable( $email, $password, "alumni" ) ) > 0 ) {
 		return ["alumnus", $id];
 	} else {
 		return ["not valid", 0];

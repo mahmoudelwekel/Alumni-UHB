@@ -61,6 +61,9 @@
                     <?php if (isVisitor()) : ?>
                         <a class="nav-item nav-link <?php setActive("login"); ?>" href="<?= route("public/login.php") ?>">Login</a>
                     <?php else : ?>
+						<?php if(!isAdmin()): ?>
+							<a class="nav-item nav-link" href="<?= route("profile") ?>">My Profile</a>
+						<?php endif; ?>
                         <a class="nav-item nav-link" href="<?= route("public/logout.php") ?>">Logout</a>
                     <?php endif; ?>
                 </div>

@@ -75,6 +75,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	} else {
 		$cvName = getColumn("lecturers", 'cv', $id);
 	}
+	$gender = $_POST['gender'];
 
 	if ( empty( $_SESSION['msg'] ) ) {
 		$stmt = $con->prepare("UPDATE lecturers SET 
@@ -86,9 +87,10 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
                      phone = ?, 
                      cv = ?,
                      department_id = ?
+					 gender = ?
                      WHERE 
                      id = ?");
-		$stmt->execute([$ssn, $name, $email, $password, $salt, $phone, $cvName, $department, $id]);
+		$stmt->execute([$ssn, $name, $email, $password, $salt, $phone, $cvName, $department, $gender, $id]);
 
 		redirect("lecturers");
 	}
@@ -174,6 +176,14 @@ if ( isset( $_SESSION['msg'] ) ) {
 		<div class="form-group">
 			<label for="phone">Phone</label>
 			<input type="text" class="form-control" id="phone" name="phone" value="<?= $lecturer['phone'] ?>" required>
+		</div>
+
+		<div class="form-group">
+			<label for="gender">Gender</label>
+			<select class="form-control" id="gender" name="gender">
+				<option value="0">Male</option>
+				<option value="1" <? if($lecturer['gender']) echo "selected"; ?> >Female</option>
+			</select>
 		</div>
 
 		<div class="form-group">

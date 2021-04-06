@@ -74,11 +74,13 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		$_SESSION['msg'][] = "You Must Upload The CV";
 	}
 
+	$gender = $_POST['gender'];
+
 	if ( empty( $_SESSION['msg'] ) ) {
 		$salt = md5( rand() );
 		$password = sha1( $password . $salt );
-		$stmt = $con->prepare("INSERT INTO lecturers(SSN, lec_name, email, password, salt, phone, cv, department_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
-		$stmt->execute([$ssn, $name, $email, $password, $salt, $phone, $cvName, $department]);
+		$stmt = $con->prepare("INSERT INTO lecturers(SSN, lec_name, email, password, salt, phone, cv, department_id, gender) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		$stmt->execute([$ssn, $name, $email, $password, $salt, $phone, $cvName, $department, $gender]);
 
 		redirect("lecturers");
 	}
@@ -146,6 +148,14 @@ $colleges = $stmt->fetchAll();
 			<div class="form-group">
 				<label for="phone">Phone</label>
 				<input type="text" class="form-control" id="phone" name="phone" required>
+			</div>
+
+			<div class="form-group">
+				<label for="gender">Gender</label>
+				<select class="form-control" id="gender" name="gender">
+					<option value="0">Male</option>
+					<option value="1">Female</option>
+				</select>
 			</div>
 
 			<div class="form-group">

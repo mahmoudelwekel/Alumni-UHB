@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 29, 2021 at 04:21 PM
+-- Generation Time: Apr 06, 2021 at 10:56 AM
 -- Server version: 10.4.16-MariaDB
 -- PHP Version: 7.4.12
 
@@ -84,6 +84,13 @@ CREATE TABLE `alumnus_course` (
   `certificate` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `alumnus_course`
+--
+
+INSERT INTO `alumnus_course` (`id`, `alumnus_id`, `course_id`, `comment`, `rate`, `certificate`) VALUES
+(1, 3, 5, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -112,6 +119,14 @@ CREATE TABLE `alumnus_workshop` (
   `rate` tinyint(3) DEFAULT NULL,
   `certificate` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `alumnus_workshop`
+--
+
+INSERT INTO `alumnus_workshop` (`id`, `alumnus_id`, `workshop_id`, `comment`, `rate`, `certificate`) VALUES
+(1, 3, 4, NULL, NULL, NULL),
+(2, 2, 4, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -177,7 +192,7 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`id`, `crs_name`, `location`, `details`, `start_date`, `end_date`, `deadline`, `lecturer_id`, `category_id`) VALUES
-(5, 'Technical writing skills', 'AL Yasmin campus ', '..', '2021-03-20 07:06:00', '1970-01-01 01:33:41', '2021-04-01', 5, 5);
+(5, 'Technical writing skills', 'AL Yasmin campus ', '..', '2021-03-20 07:06:00', '1970-01-01 01:33:41', '2021-04-14', 5, 5);
 
 -- --------------------------------------------------------
 
@@ -231,6 +246,13 @@ CREATE TABLE `jobs` (
   `link` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `jobs`
+--
+
+INSERT INTO `jobs` (`id`, `job_name`, `company`, `details`, `link`) VALUES
+(1, 'job1', 'company1', 'a lot of details', 'link.com');
+
 -- --------------------------------------------------------
 
 --
@@ -246,16 +268,17 @@ CREATE TABLE `lecturers` (
   `salt` varchar(10) NOT NULL,
   `phone` varchar(25) NOT NULL,
   `cv` varchar(255) NOT NULL,
-  `department_id` int(11) NOT NULL
+  `department_id` int(11) NOT NULL,
+  `gender` tinyint(1) NOT NULL COMMENT '0: male, 1:female'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `lecturers`
 --
 
-INSERT INTO `lecturers` (`id`, `SSN`, `lec_name`, `email`, `password`, `salt`, `phone`, `cv`, `department_id`) VALUES
-(5, '1012345678', 'Manal Hassan', 'manal@uhb.edu.sa', 'b6ec74854fdd31c590fc2958fd69fd155baa97d5', 'ee224b109a', '0501234567', '7622767cv.pdf', 1),
-(6, '1234567890', 'Alaa Al Harbi', 'alaa@uhb.edu.sa', '3e1ca33085245e6b60e957b5369ce41de0ee76c5', '24a8a4f2fe', '0507654321', '3547111cv.pdf', 1);
+INSERT INTO `lecturers` (`id`, `SSN`, `lec_name`, `email`, `password`, `salt`, `phone`, `cv`, `department_id`, `gender`) VALUES
+(5, '1012345678', 'Manal Hassan', 'manal@uhb.edu.sa', 'b6ec74854fdd31c590fc2958fd69fd155baa97d5', 'ee224b109a', '0501234567', '7622767cv.pdf', 1, 1),
+(6, '1234567890', 'Alaa Al Harbi', 'alaa@uhb.edu.sa', '3e1ca33085245e6b60e957b5369ce41de0ee76c5', '24a8a4f2fe', '0507654321', '3547111cv.pdf', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -300,18 +323,6 @@ CREATE TABLE `workshops` (
 
 INSERT INTO `workshops` (`id`, `wshop_name`, `deadline`, `location`, `details`, `category_id`) VALUES
 (4, 'Software intensive student projects', '2021-05-04', 'Al Yasmin Campus', '..', 5);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `workshop_job`
---
-
-CREATE TABLE `workshop_job` (
-  `id` int(11) NOT NULL,
-  `workshop_id` int(11) NOT NULL,
-  `job_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
@@ -425,14 +436,6 @@ ALTER TABLE `workshops`
   ADD KEY `workshop_category` (`category_id`);
 
 --
--- Indexes for table `workshop_job`
---
-ALTER TABLE `workshop_job`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `workshop_job_workshop` (`workshop_id`),
-  ADD KEY `workshop_job_job` (`job_id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -452,7 +455,7 @@ ALTER TABLE `alumni`
 -- AUTO_INCREMENT for table `alumnus_course`
 --
 ALTER TABLE `alumnus_course`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `alumnus_lecturer_rate`
@@ -464,7 +467,7 @@ ALTER TABLE `alumnus_lecturer_rate`
 -- AUTO_INCREMENT for table `alumnus_workshop`
 --
 ALTER TABLE `alumnus_workshop`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -500,7 +503,7 @@ ALTER TABLE `departments`
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `lecturers`
@@ -519,12 +522,6 @@ ALTER TABLE `lecturer_workshop`
 --
 ALTER TABLE `workshops`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `workshop_job`
---
-ALTER TABLE `workshop_job`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -596,13 +593,6 @@ ALTER TABLE `lecturer_workshop`
 --
 ALTER TABLE `workshops`
   ADD CONSTRAINT `workshop_category` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `workshop_job`
---
-ALTER TABLE `workshop_job`
-  ADD CONSTRAINT `workshop_job_job` FOREIGN KEY (`job_id`) REFERENCES `jobs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `workshop_job_workshop` FOREIGN KEY (`workshop_id`) REFERENCES `workshops` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

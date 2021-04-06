@@ -2,6 +2,9 @@
 $page = "colleges";
 require_once "../../init/init.php";
 
+if ( !isAdmin() ) {
+	redirect("public");
+}
 $stmt = $con->prepare("SELECT * FROM colleges");
 $stmt->execute();
 $colleges = $stmt->fetchAll();
@@ -14,7 +17,7 @@ $colleges = $stmt->fetchAll();
     <a class="btn btn-block mb-3 btn-primary" href="add.php">Add New</a>
 
     <div class="table-responsive">
-        <table id="example" class="table table-striped  table-hover table-bordered w-100">
+        <table class="table table-striped table-hover table-bordered w-100">
             <thead>
                 <tr>
                     <th>ID</th>

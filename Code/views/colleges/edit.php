@@ -39,7 +39,7 @@ $college = $stmt->fetch();
 		<input type="hidden" name="id" value="<?= $college['id'] ?>">
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" value="<?= $college['colg_name'] ?>">
+            <input type="text" class="form-control" id="name" name="name" value="<?= $college['colg_name'] ?>" required>
         </div>
         <button type="submit" class="btn btn-primary ">Save</button>
         <a href="index.php" class="btn btn-secondary ml-3">Close</a>

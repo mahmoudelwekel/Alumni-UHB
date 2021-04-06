@@ -17,14 +17,13 @@ $stmt->execute();
 $alumni = $stmt->fetchAll();
 
 ?>
-
 	<div class="container py-5">
 		<h3>Alumni</h3>
 		<hr/>
 		<a class="btn btn-block mb-3 btn-primary" href="<?= route("alumni/add.php") ?>">Add New</a>
 
 		<div class="table-responsive">
-        <table id="example" class="table table-striped  table-hover table-bordered w-100">
+        <table class="table table-striped table-hover table-bordered w-100">
 				<thead>
 				<tr>
 					<th>#</th>

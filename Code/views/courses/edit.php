@@ -96,42 +96,41 @@ $course = $stmt->fetch();
 		<form action="<?= $_SERVER['REQUEST_URI'] ?>" method="post">
 			<div class="form-group">
 				<label for="title">Title</label>
-				<input type="text" class="form-control" id="title" name="name" value="<?= $course['crs_name'] ?>">
+				<input type="text" class="form-control" id="title" name="name" value="<?= $course['crs_name'] ?>" required>
 			</div>
 
 			<div class="form-group">
 				<label for="location">Location</label>
-				<input type="text" class="form-control" id="location" name="location" value="<?= $course['location'] ?>">
+				<input type="text" class="form-control" id="location" name="location" value="<?= $course['location'] ?>" required>
 			</div>
 
 			<div class="form-group">
 				<label for="details">Details</label>
-				<textarea id="details" class="form-control" name="details"><?= $course['details'] ?></textarea>
+				<textarea id="details" class="form-control" name="details" required><?= $course['details'] ?></textarea>
 			</div>
 
 			<div class="form-group">
 				<label for="start_date">Start Date</label>
-				<input type="datetime-local" class="form-control" id="start_date" name="start_date" value="<?= $course['start_date'] ?>">
+				<input type="datetime-local" class="form-control" id="start_date" name="start_date" value="<?= $course['start_date'] ?>" required>
 			</div>
 
 			<div class="form-group">
 				<label for="end_date">End Date</label>
-				<input type="datetime-local" class="form-control" id="end_date" name="end_date" value="<?= $course['end_date'] ?>">
+				<input type="datetime-local" class="form-control" id="end_date" name="end_date" value="<?= $course['end_date'] ?>" required>
 			</div>
 
 			<div class="form-group">
 				<label for="deadline">DeadLine</label>
-				<input type="date" class="form-control" id="deadline" name="deadline" value="<?= $course['deadline'] ?>">
+				<input type="date" class="form-control" id="deadline" name="deadline" value="<?= $course['deadline'] ?>" required>
 			</div>
 
 			<div class="form-group">
 				<label for="category">Category</label>
 				<select class="form-control" id="category" name="category">
+					<option value="0">...</option>
 					<?php foreach ($categories as $category): ?>
 						<option value="<?= $category['id'] ?>"
-							<?php if ( $category['id'] == $course['category_id'] ): ?>
-								selected
-							<?php endif; ?>
+							<?php if ( $category['id'] == $course['category_id'] ) echo "selected"; ?>
 						>
 							<?= $category['catg_name'] ?>
 						</option>
@@ -142,6 +141,7 @@ $course = $stmt->fetch();
 			<div class="form-group">
 				<label for="lecturer">Lecturer</label>
 				<select class="form-control" id="lecturer" name="lecturer">
+					<option value="0">...</option>
 					<?php foreach ($lecturers as $lecturer): ?>
 						<option value="<?= $lecturer['id'] ?>"
 							<?php if ( $lecturer['id'] == $course['lecturer_id'] ): ?>

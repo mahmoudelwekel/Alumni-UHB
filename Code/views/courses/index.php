@@ -1,6 +1,11 @@
 <?php
 $page = "courses";
 require_once"../../init/init.php";
+
+if (!isAdmin()) {
+	redirect("courses/show.php");
+}
+
 $stmt = $con->prepare("SELECT
 								courses.*, categories.catg_name AS category, lecturers.lec_name AS lecturer
        						FROM 
@@ -17,9 +22,7 @@ $courses = $stmt->fetchAll();
 <div class="container py-5">
     <h3>Courses</h3>
     <hr />
-	<?php if(isAdmin()): ?>
-    	<a class="btn btn-block mb-3 btn-primary" href="add.php">Add New</a>
-	<?php endif; ?>
+	<a class="btn btn-block mb-3 btn-primary" href="add.php">Add New</a>
 
     <div class="table-responsive">
 	<table id="example" class="table table-striped  table-hover table-bordered w-100">

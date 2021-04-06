@@ -2,6 +2,9 @@
 $page = "lecturers";
 require_once"../../init/init.php";
 
+if( !isAdmin() ) {
+	redirect("lecturers/show.php");
+}
 $stmt = $con->prepare("SELECT
 	lecturers.*, colleges.colg_name, departments.dept_name
 	FROM 

@@ -49,12 +49,13 @@ $colleges = $stmt->fetchAll();
 		<input type="hidden" name="id" value="<?= $department['id'] ?>">
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" value="<?= $department['dept_name'] ?>">
+            <input type="text" class="form-control" id="name" name="name" value="<?= $department['dept_name'] ?>" required>
         </div>
 
 		<div class="form-group">
 			<label for="category">Category</label>
 			<select class="form-control" id="category" name="category">
+				<option value="0">...</option>
 				<?php foreach ($colleges as $college): ?>
 					<option value="<?= $college['id'] ?>"
 							<?php if ( $college['id'] == $department['college_id'] ): ?>

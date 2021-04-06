@@ -2,6 +2,10 @@
 $page = "departments";
 require_once "../../init/init.php";
 
+if( isAdmin() ) {
+	redirect("public");
+}
+
 $stmt = $con->prepare("SELECT departments.*, colleges.colg_name AS college FROM departments INNER JOIN colleges ON colleges.id = departments.college_id");
 $stmt->execute();
 $departments = $stmt->fetchAll();
@@ -9,12 +13,12 @@ $departments = $stmt->fetchAll();
 ?>
 
 <div class="container py-5">
-    <h3>Depatments</h3>
+    <h3>Departments</h3>
     <hr />
     <a class="btn btn-block mb-3 btn-primary" href="add.php">Add New</a>
 
     <div class="table-responsive">
-        <table id="example" class="table table-striped  table-hover table-bordered w-100">
+        <table class="table table-striped table-hover table-bordered w-100">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -35,9 +39,7 @@ $departments = $stmt->fetchAll();
                     </td>
                 </tr>
 			<?php endforeach; ?>
-
             </tbody>
-
         </table>
     </div>
 

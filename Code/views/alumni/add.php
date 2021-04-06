@@ -87,25 +87,23 @@ $colleges = $stmt->fetchAll();
 ?>
 
 	<div class="container py-5">
-		<h3>
-			Add Alumnus
-		</h3>
+		<h3>Add Alumnus</h3>
 		<hr/>
 
 		<form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="ssn">SSN</label>
-				<input type="text" class="form-control" id="ssn" name="ssn">
+				<input type="text" class="form-control" id="ssn" name="ssn" required>
 			</div>
 
 			<div class="form-group">
 				<label for="name">Name</label>
-				<input type="text" class="form-control" id="name" name="name">
+				<input type="text" class="form-control" id="name" name="name" required>
 			</div>
 
 			<div class="form-group">
 				<label for="password">Password</label>
-				<input type="password" class="form-control" id="password" name="password">
+				<input type="password" class="form-control" id="password" name="password" required>
 			</div>
 
 			<div class="form-group">
@@ -127,12 +125,12 @@ $colleges = $stmt->fetchAll();
 
 			<div class="form-group">
 				<label for="email">Email</label>
-				<input type="email" class="form-control" id="email" name="email">
+				<input type="email" class="form-control" id="email" name="email" required>
 			</div>
 
 			<div class="form-group">
 				<label for="phone">Phone</label>
-				<input type="text" class="form-control" id="phone" name="phone">
+				<input type="text" class="form-control" id="phone" name="phone" required>
 			</div>
 
 			<button type="submit" class="btn btn-primary">Save</button>

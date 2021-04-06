@@ -35,27 +35,15 @@ if( $_SERVER['REQUEST_METHOD'] == "POST" ) {
 		$_SESSION['msg'][] = "You Must Enter The Details";
 	}
 
-	$workshops = array_unique($_POST['workshops']);
 
 	if ( empty($_SESSION['msg']) ) {
 		$stmt = $con->prepare("INSERT INTO jobs(job_name, company, details, link) VALUES (?, ?, ?, ?)");
 		$stmt->execute([$name, $company, $details, $link]);
-
-		$id = $con->lastInsertId();
-		foreach ($workshops as $workshop) {
-			$stmt = $con->prepare("INSERT INTO workshop_job(workshop_id, job_id) VALUES(?, ?)");
-			$stmt->execute([$workshop, $id]);
-		}
-
 		redirect("jobs");
 	}
 }
 
 getErrors();
-
-$stmt = $con->prepare("SELECT * FROM workshops");
-$stmt->execute();
-$workshops = $stmt->fetchAll();
 ?>
 
 	<div class="container py-5">
@@ -80,43 +68,8 @@ $workshops = $stmt->fetchAll();
             <textarea class="form-control" id="details" name="details" rows="3" required></textarea>
         </div>
 
-		<fieldset class="p-2 border rounded mb-3" id="workshopsContainer">
-			<legend style="width: auto!important;">Workshops</legend>
-			<div class="form-row workshopDiv" id="workshopDiv">
-				<div class="col-4 mb-3">
-					<label for="workshops">Workshop</label>
-					<select class="form-control" name="workshops[]" id="workshops">
-						<?php foreach ($workshops as $workshop) : ?>
-							<option value="<?= $workshop['id'] ?>"><?= $workshop['wshop_name'] ?></option>
-						<?php endforeach; ?>
-					</select>
-				</div>
-				<div class="col-2 d-flex align-items-end mb-3">
-					<span  class="btn btn-primary btn-block addWorkshop" onclick="addWorkshop()"><i class="fas fa-plus"></i></span>
-				</div>
-				<div class="col-2 d-flex align-items-end mb-3">
-					<span  class="btn btn-danger btn-block addWorkshop" onclick="RemoveWorkshop(this)"><i class="fas fa-times"></i></span>
-				</div>
-			</div>
-		</fieldset>
-
-
 		<button type="submit" class="btn btn-primary ">Save</button>
         <a href="index.php" class="btn btn-secondary ml-3">Close</a>
     </form>
 </div>
-
-	<script>
-		function addWorkshop () {
-			$("#workshopDiv").clone().insertAfter("div.workshopDiv:last");
-		}
-
-		function RemoveWorkshop (lem) {
-			if( $('.workshopDiv').length !== 1 ) {
-
-				$(lem).parent().parent().remove();
-			}
-		}
-	</script>
-
 <?php require_once"../includes/footer.php"; ?>

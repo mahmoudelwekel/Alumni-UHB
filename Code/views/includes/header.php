@@ -51,10 +51,10 @@
                     <?php if (isAdmin()) : ?>
                         <a class="nav-item nav-link <?php setActive("alumni"); ?>" href="<?= route("alumni") ?>">Alumni</a>
                         <a class="nav-item nav-link <?php setActive("categories"); ?>" href="<?= route("categories") ?>">Categories</a>
-						<a class="nav-item nav-link <?php setActive("courses"); ?>" href="<?= route("courses") ?>">Courses</a>
 						<a class="nav-item nav-link <?php setActive("colleges"); ?>" href="<?= route("colleges") ?>">Colleges</a>
 						<a class="nav-item nav-link <?php setActive("departments"); ?>" href="<?= route("departments") ?>">Departments</a>
 					<?php endif; ?>
+					<a class="nav-item nav-link <?php setActive("courses"); ?>" href="<?= route("courses") ?>">Courses</a>
 					<a class="nav-item nav-link <?php setActive("workshops"); ?>" href="<?= route("workshops") ?>">WorkShops</a>
                     <a class="nav-item nav-link <?php setActive("jobs"); ?>" href="<?= route("jobs") ?>">Jobs</a>
                     <a class="nav-item nav-link <?php setActive("lecturers"); ?>" href="<?= route("lecturers") ?>">Lecturers</a>

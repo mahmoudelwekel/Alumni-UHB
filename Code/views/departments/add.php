@@ -45,7 +45,7 @@ $colleges = $stmt->fetchAll();
     <form method="post" action="<?= $_SERVER['PHP_SELF'] ?>">
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name">
+            <input type="text" class="form-control" id="name" name="name" required>
         </div>
 
 		<div class="form-group">

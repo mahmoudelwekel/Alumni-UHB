@@ -5,29 +5,6 @@ $stmt = $con->prepare("SELECT * FROM jobs");
 $stmt->execute();
 $jobs = $stmt->fetchAll();
 
-for( $i = 0; $i < sizeof($jobs); $i++ ) {
-	$id = $jobs[$i]['id'];
-	$stmt = $con->prepare("SELECT workshop_job.*, workshops.* 
-									FROM workshop_job
-									INNER JOIN workshops
-									ON workshop_job.workshop_id = workshops.id
-									WHERE job_id = ?");
-	$stmt->execute([$id]);
-	$workshops = $stmt->fetchAll();
-
-	$_workshops = "";
-	for ( $j = 0; $j < sizeof($workshops); $j++ ) {
-		$_workshops .= $workshops[$i]['wshop_name'];
-
-		if ( sizeof($workshops) - $j > 2 ) {
-			$_workshops .= ", ";
-		} elseif ( sizeof($workshops) - $j == 2 ) {
-			$_workshops .= " and ";
-		}
-	}
-
-	$jobs[$i]['workshops'] = $_workshops;
-}
 ?>
 
 <div class="container py-5">
@@ -44,7 +21,6 @@ for( $i = 0; $i < sizeof($jobs); $i++ ) {
                     <th>Company</th>
                     <th>Link</th>
                     <th>Details</th>
-                    <th>Workshops</th>
 					<?php if( isAdmin() ): ?>
                     	<th></th>
 					<?php endif; ?>
@@ -59,7 +35,6 @@ for( $i = 0; $i < sizeof($jobs); $i++ ) {
 						<td><?= $job['company'] ?></td>
 						<td><?= $job['link'] ?></td>
 						<td><?= $job['details'] ?></td>
-						<td><?= $job['workshops'] ?></td>
 
 						<?php if( isAdmin() ): ?>
 							<td>

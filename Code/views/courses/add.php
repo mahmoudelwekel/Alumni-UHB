@@ -7,7 +7,6 @@ if ( !isAdmin() ) {
 }
 
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
-	var_dump($_POST);
 	/** Validating the Name */
 	if( $_POST['name'] != "" ) {
 		$name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
@@ -75,37 +74,38 @@ $lecturers = $stmt->fetchAll();
     <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
         <div class="form-group">
             <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" name="name">
+            <input type="text" class="form-control" id="title" name="name" required>
         </div>
 
         <div class="form-group">
             <label for="location">Location</label>
-            <input type="text" class="form-control" id="location" name="location">
+            <input type="text" class="form-control" id="location" name="location" required>
         </div>
 
         <div class="form-group">
             <label for="details">Details</label>
-			<textarea id="details" class="form-control" name="details"></textarea>
+			<textarea id="details" class="form-control" name="details" required></textarea>
         </div>
 
         <div class="form-group">
 			<label for="start_date">Start Date</label>
-			<input type="datetime-local" class="form-control" id="start_date" name="start_date">
+			<input type="datetime-local" class="form-control" id="start_date" name="start_date" required>
 		</div>
 
 		<div class="form-group">
 			<label for="end_date">End Date</label>
-			<input type="datetime-local" class="form-control" id="end_date" name="end_date">
+			<input type="datetime-local" class="form-control" id="end_date" name="end_date" required>
 		</div>
 
 		<div class="form-group">
 			<label for="deadline">DeadLine</label>
-			<input type="date" class="form-control" id="deadline" name="deadline">
+			<input type="date" class="form-control" id="deadline" name="deadline" required>
 		</div>
 
 		<div class="form-group">
             <label for="category">Category</label>
             <select class="form-control" id="category" name="category">
+				<option value="0">...</option>
 				<?php foreach ($categories as $category): ?>
 					<option value="<?= $category['id'] ?>"><?= $category['catg_name'] ?></option>
 				<?php endforeach; ?>
@@ -114,7 +114,8 @@ $lecturers = $stmt->fetchAll();
 
         <div class="form-group">
             <label for="lecturer">Lecturer</label>
-            <select class="form-control" id="lecturer" name="lecturer">
+			<select class="form-control" id="lecturer" name="lecturer">
+				<option value="0">...</option>
 				<?php foreach ($lecturers as $lecturer): ?>
 					<option value="<?= $lecturer['id'] ?>"><?= $lecturer['lec_name'] ?></option>
 				<?php endforeach; ?>

@@ -118,12 +118,12 @@ if ( isset( $_SESSION['msg'] ) ) {
 
 		<div class="form-group">
 			<label for="ssn">SSN</label>
-			<input type="text" class="form-control" id="ssn" name="ssn" value="<?= $alumnus['SSN'] ?>">
+			<input type="text" class="form-control" id="ssn" name="ssn" value="<?= $alumnus['SSN'] ?>" required>
 		</div>
 
 		<div class="form-group">
 			<label for="name">Name</label>
-			<input type="text" class="form-control" id="name" name="name" value="<?= $alumnus['alu_name'] ?>">
+			<input type="text" class="form-control" id="name" name="name" value="<?= $alumnus['alu_name'] ?>" required>
 		</div>
 
 		<div class="form-group">
@@ -138,9 +138,7 @@ if ( isset( $_SESSION['msg'] ) ) {
 				<?php foreach ($colleges as $college): ?>
 					<option
 						value="<?= $college['id'] ?>"
-						<?php if( $college['id'] == $college_id ): ?>
-							selected
-						<?php endif; ?>
+						<?php if( $college['id'] == $college_id ) echo "selected"; ?>
 					>
 						<?= $college['colg_name'] ?>
 					</option>
@@ -157,12 +155,12 @@ if ( isset( $_SESSION['msg'] ) ) {
 
 		<div class="form-group">
 			<label for="email">Email</label>
-			<input type="email" class="form-control" id="email" name="email" value="<?= $alumnus['email'] ?>">
+			<input type="email" class="form-control" id="email" name="email" value="<?= $alumnus['email'] ?>" required>
 		</div>
 
 		<div class="form-group">
 			<label for="phone">Phone</label>
-			<input type="text" class="form-control" id="phone" name="phone" value="<?= $alumnus['phone'] ?>">
+			<input type="text" class="form-control" id="phone" name="phone" value="<?= $alumnus['phone'] ?>" required>
 		</div>
 
 		<button type="submit" class="btn btn-primary">Save</button>

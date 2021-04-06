@@ -107,7 +107,7 @@ if ( isset( $_GET['id'] ) ) {
 
 	$college_id = getCollegeId($lecturer['id']);
 } else {
-	$_SESSION['msg'][] = "Error in the URL, You Must Pass the ID";
+	redirect("lecturers");
 }
 
 if ( isset( $_SESSION['msg'] ) ) {
@@ -125,16 +125,16 @@ if ( isset( $_SESSION['msg'] ) ) {
     <hr />
 
 	<form action="<?= $_SERVER['REQUEST_URI'] ?>" method="post" enctype="multipart/form-data">
-		<input type="hidden" value="<?= $lecturer['id'] ?>" name="id">
+		<input type="hidden" value="<?= $lecturer['id'] ?>" name="id" required>
 
 		<div class="form-group">
 			<label for="ssn">SSN</label>
-			<input type="text" class="form-control" id="ssn" name="ssn" value="<?= $lecturer['SSN'] ?>">
+			<input type="text" class="form-control" id="ssn" name="ssn" value="<?= $lecturer['SSN'] ?>" required>
 		</div>
 
 		<div class="form-group">
 			<label for="name">Name</label>
-			<input type="text" class="form-control" id="name" name="name" value="<?= $lecturer['lec_name'] ?>">
+			<input type="text" class="form-control" id="name" name="name" value="<?= $lecturer['lec_name'] ?>" required>
 		</div>
 
 		<div class="form-group">
@@ -168,12 +168,12 @@ if ( isset( $_SESSION['msg'] ) ) {
 
 		<div class="form-group">
 			<label for="email">Email</label>
-			<input type="email" class="form-control" id="email" name="email" value="<?= $lecturer['email'] ?>">
+			<input type="email" class="form-control" id="email" name="email" value="<?= $lecturer['email'] ?>" required>
 		</div>
 
 		<div class="form-group">
 			<label for="phone">Phone</label>
-			<input type="text" class="form-control" id="phone" name="phone" value="<?= $lecturer['phone'] ?>">
+			<input type="text" class="form-control" id="phone" name="phone" value="<?= $lecturer['phone'] ?>" required>
 		</div>
 
 		<div class="form-group">

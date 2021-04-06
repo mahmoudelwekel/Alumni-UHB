@@ -1,52 +1,63 @@
 <?php
 $page = "courses";
-require_once "../../init/init.php"; ?>
+require_once "../../init/init.php";
+
+$stmt = $con->prepare("SELECT
+								courses.*, categories.catg_name AS category, lecturers.lec_name AS lecturer
+       						FROM 
+       						     courses
+       						INNER JOIN categories
+       						ON categories.id = courses.category_id
+       						INNER JOIN lecturers
+       						ON lecturers.id = courses.lecturer_id");
+$stmt->execute();
+
+$courses = $stmt->fetchAll();
+?>
 
 	<div class="" style="background-image:url('<?= asset("Images/bg/empty.jpg") ?>') ;
 			background-repeat: no-repeat;
 			background-size: contain;
 			background-position: right;
 			background-color: #e5f1ed;">
-
-		<div class="container h1 py-5">
-			Courses
-		</div>
+		<div class="container h1 py-5">Courses</div>
 	</div>
 
 	<div class="container  py-5">
 
-		<div class="card shadow" style="background-image:url('<?= asset("Images/bg/empty.jpg") ?>') ;
-				background-repeat: no-repeat;
-				background-size: contain;
-				background-position: right;
-				background-color: #e5f1ed;">
-
-			<div class="card-body font-weight-bold">
-				<h4 class="card-title font-weight-bold h3 text-dark text-left">Course Title</h4>
-				<hr/>
-				<p class="card-text text-decoration-none text-secondary  h5  font-weight-bold my-4">
-					<i class="icon fas fa-map-marker-alt "></i> Location
-				</p>
-				<div class="row card-text">
-					<div class="col h5  font-weight-bold no-text-wrap">
-						<i class="icon fas fa-layer-group "></i> Category
-					</div>
-					<div class="col h5  font-weight-bold no-text-wrap">
-						<i class="icon far fa-clock "></i> Time
-					</div>
-					<div class="col h5  font-weight-bold no-text-wrap">
-						<i class="icon fas fa-envelope-open-text "></i> Details
-					</div>
-					<div class="col h5  font-weight-bold no-text-wrap  text-center">
-						<button class="btn btn-sm btn-dark" type="submit">Apply</button>
+		<?php foreach ($courses as $course): ?>
+			<div class="card shadow" style="background-image:url('<?= asset("Images/bg/empty.jpg") ?>') ;
+					background-repeat: no-repeat;
+					background-size: contain;
+					background-position: right;
+					background-color: #e5f1ed;">
+				<div class="card-body font-weight-bold">
+					<h4 class="card-title font-weight-bold h3 text-dark text-left"><?= $course['crs_name'] ?></h4>
+					<hr/>
+					<p class="card-text text-decoration-none text-secondary  h5  font-weight-bold my-4">
+						<i class="icon fas fa-map-marker-alt "></i> <?= $course['location'] ?>
+					</p>
+					<div class="row card-text">
+						<div class="col h5  font-weight-bold no-text-wrap">
+							<i class="icon fas fa-layer-group "></i> <?= $course['category'] ?>
+						</div>
+						<div class="col h5  font-weight-bold no-text-wrap">
+							<i class="icon far fa-clock "></i> <?= $course['deadline'] ?>
+						</div>
+						<div class="col h5  font-weight-bold no-text-wrap">
+							<i class="icon fas fa-envelope-open-text "></i> <?= $course['details'] ?>
+						</div>
+						<?php if ($course['deadline'] > date("Y-m-d") ): ?>
+						<div class="col h5  font-weight-bold no-text-wrap  text-center">
+							<a href="#" class="btn btn-sm btn-dark" type="submit">Apply</a>
+						</div>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>
-		</div>
-
-		<br/>
-		<br/>
-		<br/>
+			<br/>
+			<br/>
+		<?php endforeach; ?>
 
 		<div class="card shadow" style="background-image:url('<?= asset("Images/bg/empty.jpg") ?>') ;
 				background-repeat: no-repeat;

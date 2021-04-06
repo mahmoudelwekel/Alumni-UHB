@@ -6,7 +6,6 @@ if (!isAdmin()) {
 	redirect("public");
 }
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	var_dump($_POST);
 	/** Validating the Name */
 	if ($_POST['name'] != "") {
 		$name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
@@ -81,7 +80,6 @@ getErrors();
 	<hr />
 
 	<form method="post" action="<?= $_SERVER['PHP_SELF'] ?>">
-
 		<div class="form-group">
 			<label for="title">Title</label>
 			<input type="text" class="form-control" id="title" name="name">
@@ -115,20 +113,19 @@ getErrors();
 			<div class="form-row lecturerDiv" id="lecturerDiv">
 				<div class="col-4 mb-3">
 					<label for="lecturers">Lecturer</label>
-					<select class="form-control " data-live-search="true" >
+					<select class="form-control " data-live-search="true" name="lecturers[]">
 						<?php foreach ($lecturers as $lecturer) : ?>
 							<option value="<?= $lecturer['id'] ?>"><?= $lecturer['lec_name'] ?></option>
 						<?php endforeach; ?>
 					</select>
 				</div>
 				<div class="col-2 mb-3">
-					<label for="validationDefault04">start </label>
-					<input type="time" class="form-control" id="deadline" name="deadline">
-
+					<label for="lecturers_start">Start</label>
+					<input type="time" class="form-control" id="lecturers_start" name="lecturer_start[]" required>
 				</div>
 				<div class="col-2 mb-3">
-					<label for="validationDefault05">end</label>
-					<input type="time" class="form-control" id="deadline" name="deadline">
+					<label for="lecturers_end">End</label>
+					<input type="time" class="form-control" id="lecturers_end" name="lecturers_end[]" required>
 				</div>
 				<div class="col-2 d-flex align-items-end mb-3">
 					<span  class="btn btn-primary btn-block addLecturer" onclick="addLecturer()"><i class="fas fa-plus"></i></span>
@@ -147,14 +144,14 @@ getErrors();
 <script>
 	function addLecturer () {
 		$("#lecturerDiv").clone().insertAfter("div.lecturerDiv:last");
-	};
+	}
 
 	function RemoveLecturer (lem) {
-		if($('.lecturerDiv').length!=1){
+		if( $('.lecturerDiv').length !== 1 ) {
 
-			$(lem).parent().parent().remove();;
+			$(lem).parent().parent().remove();
 		}
-	};
+	}
 </script>
 
 <?php require_once "../includes/footer.php"; ?>

@@ -16,7 +16,7 @@ $(document).ready(function () {
 });
 
 $('.SeeMore').simpleLoadMore({
-	count: 1,
+	count: 0,
 	itemsToLoad: 2,
 	item: '.item',
 	btnHTML: '<h4 class="text-center"><i class="fas fa-chevron-down"></i></h4>'

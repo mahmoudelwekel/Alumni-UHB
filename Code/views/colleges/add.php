@@ -17,7 +17,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		$stmt = $con->prepare("INSERT INTO colleges(colg_name) VALUES (?)");
 		$stmt->execute([$name]);
 
-		redirect("college");
+		redirect("colleges");
 	}
 }
 

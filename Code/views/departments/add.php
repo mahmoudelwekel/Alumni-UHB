@@ -50,7 +50,7 @@ $colleges = $stmt->fetchAll();
 
 		<div class="form-group">
 			<label for="college">College</label>
-			<select class="form-control" id="college">
+			<select class="form-control" id="college" name="college">
 				<option value="0">...</option>
 				<?php foreach ($colleges as $college): ?>
 					<option value="<?= $college['id'] ?>"><?= $college['colg_name'] ?></option>

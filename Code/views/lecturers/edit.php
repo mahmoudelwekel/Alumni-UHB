@@ -112,14 +112,7 @@ if ( isset( $_GET['id'] ) ) {
 	redirect("lecturers");
 }
 
-if ( isset( $_SESSION['msg'] ) ) {
-	foreach ( $_SESSION['msg'] as $msg ) {
-		?>
-		<div class="alert alert-danger col-8 offset-2"><?= $msg ?></div>
-		<?php
-	}
-	unset( $_SESSION['msg'] );
-}
+getErrors();
 ?>
 
 <div class="container py-5">
@@ -131,12 +124,12 @@ if ( isset( $_SESSION['msg'] ) ) {
 
 		<div class="form-group">
 			<label for="ssn">SSN</label>
-			<input type="text" class="form-control" id="ssn" name="ssn" value="<?= $lecturer['SSN'] ?>" required>
+			<input type="text" class="form-control" id="ssn" name="ssn" value="<?= $_POST['ssn'] ?? $lecturer['SSN'] ?>" required>
 		</div>
 
 		<div class="form-group">
 			<label for="name">Name</label>
-			<input type="text" class="form-control" id="name" name="name" value="<?= $lecturer['lec_name'] ?>" required>
+			<input type="text" class="form-control" id="name" name="name" value="<?= $_POST['name'] ?? $lecturer['lec_name'] ?>" required>
 		</div>
 
 		<div class="form-group">
@@ -170,12 +163,12 @@ if ( isset( $_SESSION['msg'] ) ) {
 
 		<div class="form-group">
 			<label for="email">Email</label>
-			<input type="email" class="form-control" id="email" name="email" value="<?= $lecturer['email'] ?>" required>
+			<input type="email" class="form-control" id="email" name="email" value="<?= $_POST['email'] ?? $lecturer['email'] ?>" required>
 		</div>
 
 		<div class="form-group">
 			<label for="phone">Phone</label>
-			<input type="text" class="form-control" id="phone" name="phone" value="<?= $lecturer['phone'] ?>" required>
+			<input type="text" class="form-control" id="phone" name="phone" value="<?= $_POST['phone'] ?? $lecturer['phone'] ?>" required>
 		</div>
 
 		<div class="form-group">

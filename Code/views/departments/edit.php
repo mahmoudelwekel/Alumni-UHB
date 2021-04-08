@@ -39,6 +39,7 @@ $stmt = $con->prepare("SELECT * FROM colleges");
 $stmt->execute();
 $colleges = $stmt->fetchAll();
 
+getErrors();
 ?>
 
 <div class="container py-5">
@@ -49,7 +50,7 @@ $colleges = $stmt->fetchAll();
 		<input type="hidden" name="id" value="<?= $department['id'] ?>">
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" value="<?= $department['dept_name'] ?>" required>
+            <input type="text" class="form-control" id="name" name="name" value="<?= $_POST['name'] ?? $department['dept_name'] ?>" required>
         </div>
 
 		<div class="form-group">

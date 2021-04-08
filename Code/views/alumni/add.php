@@ -15,7 +15,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			$_SESSION['msg'][] = "The SSN Must Be Unique";
 		}
 
-		if ( preg_match("/^[12]([0-9]{9})$/", $ssn) ) {
+		if ( !preg_match("/^[12]([0-9]{9})$/", $ssn) ) {
 			$_SESSION['msg'][] = "The SSN is Not Right";
 		}
 	} else {
@@ -62,7 +62,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			$_SESSION['msg'][] = "The Phone Must Be Unique";
 		}
 
-		if ( preg_match(" /^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/", $phone) ) {
+		if ( !preg_match(" /^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/", $phone) ) {
 			$_SESSION['msg'][] = "The Phone is Not Right";
 		}
 	} else {

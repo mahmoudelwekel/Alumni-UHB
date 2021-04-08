@@ -20,7 +20,6 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		$_SESSION['msg'][] = "You Must Select a College";
 	}
 
-
 	if ( empty($_SESSION['msg']) ) {
 		$stmt = $con->prepare("INSERT INTO departments(dept_name, college_id) VALUES (?, ?)");
 		$stmt->execute([$name, $college]);
@@ -45,7 +44,7 @@ $colleges = $stmt->fetchAll();
     <form method="post" action="<?= $_SERVER['PHP_SELF'] ?>">
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" required>
+            <input type="text" class="form-control" id="name" name="name" required value="<?= $_POST['name'] ?? "" ?>">
         </div>
 
 		<div class="form-group">

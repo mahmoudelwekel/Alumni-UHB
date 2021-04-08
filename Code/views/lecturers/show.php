@@ -2,7 +2,7 @@
 $page = "lecturers";
 require_once "../../init/init.php";
 
-$stmt = $con->prepare("Select lecturers.* , COUNT(courses.id), COUNT(lecturer_workshop.id), ( COUNT(courses.id) + COUNT(lecturer_workshop.id) ) as shares
+$stmt = $con->prepare("Select lecturers.*, (COUNT(DISTINCT courses.id) + COUNT( DISTINCT lecturer_workshop.id) ) as shares
 								From lecturers
 								LEFT JOIN courses
 								ON lecturers.id = courses.lecturer_id

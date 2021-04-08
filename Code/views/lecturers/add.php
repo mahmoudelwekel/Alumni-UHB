@@ -86,14 +86,8 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	}
 }
 
-if ( isset( $_SESSION['msg'] ) ) {
-	foreach ( $_SESSION['msg'] as $msg ) {
-		?>
-			<div class="alert alert-danger col-8 offset-2"><?= $msg ?></div>
-		<?php
-	}
-	unset( $_SESSION['msg'] );
-}
+getErrors();
+
 $stmt = $con->prepare("SELECT * FROM colleges");
 $stmt->execute();
 
@@ -102,25 +96,23 @@ $colleges = $stmt->fetchAll();
 ?>
 
 	<div class="container py-5">
-		<h3>
-			Add Lecturer
-		</h3>
+		<h3>Add Lecturer</h3>
 		<hr/>
 
 		<form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="ssn">SSN</label>
-				<input type="text" class="form-control" id="ssn" name="ssn" required>
+				<input type="text" class="form-control" id="ssn" name="ssn" required value="<?= $_POST['ssn'] ?? "" ?>">
 			</div>
 
 			<div class="form-group">
 				<label for="name">Name</label>
-				<input type="text" class="form-control" id="name" name="name" required>
+				<input type="text" class="form-control" id="name" name="name" required value="<?= $_POST['name'] ?? "" ?>">
 			</div>
 
 			<div class="form-group">
 				<label for="password">Password</label>
-				<input type="password" class="form-control" id="password" name="password" required>
+				<input type="password" class="form-control" id="password" name="password" >
 			</div>
 
 			<div class="form-group">
@@ -142,12 +134,12 @@ $colleges = $stmt->fetchAll();
 
 			<div class="form-group">
 				<label for="email">Email</label>
-				<input type="email" class="form-control" id="email" name="email" required>
+				<input type="email" class="form-control" id="email" name="email" value="<?= $_POST['email'] ?? "" ?>">
 			</div>
 
 			<div class="form-group">
 				<label for="phone">Phone</label>
-				<input type="text" class="form-control" id="phone" name="phone" required>
+				<input type="text" class="form-control" id="phone" name="phone" value="<?= $_POST['phone'] ?? "" ?>">
 			</div>
 
 			<div class="form-group">

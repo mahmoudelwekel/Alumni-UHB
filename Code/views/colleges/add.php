@@ -5,6 +5,7 @@ require_once"../../init/init.php";
 if ( !isAdmin() ) {
 	redirect("public");
 }
+
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	/** Validating the Name */
 	if( $_POST['name'] != "" ) {

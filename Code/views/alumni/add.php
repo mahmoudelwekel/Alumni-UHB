@@ -14,6 +14,10 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		if ( isExistIn($ssn, "alumni", "SSN") ) {
 			$_SESSION['msg'][] = "The SSN Must Be Unique";
 		}
+
+		if ( preg_match("/^[12]([0-9]{9})$/", $ssn) ) {
+			$_SESSION['msg'][] = "The SSN is Not Right";
+		}
 	} else {
 		$_SESSION['msg'][] = "You Must Enter The SSN";
 	}
@@ -55,7 +59,11 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		$phone = filter_var($_POST['phone'], FILTER_SANITIZE_STRING);
 
 		if ( isExistIn($phone, "alumni", "phone") ) {
-			$_SESSION['msg'][] = "The SSN Must Be Unique";
+			$_SESSION['msg'][] = "The Phone Must Be Unique";
+		}
+
+		if ( preg_match(" /^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/", $phone) ) {
+			$_SESSION['msg'][] = "The Phone is Not Right";
 		}
 	} else {
 		$_SESSION['msg'][] = "You Must Enter The Phone";
@@ -71,19 +79,12 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	}
 }
 
-if ( isset( $_SESSION['msg'] ) ) {
-	foreach ( $_SESSION['msg'] as $msg ) {
-		?>
-		<div class="alert alert-danger col-8 offset-2"><?= $msg ?></div>
-		<?php
-	}
-	unset( $_SESSION['msg'] );
-}
+getErrors();
+
 $stmt = $con->prepare("SELECT * FROM colleges");
 $stmt->execute();
 
 $colleges = $stmt->fetchAll();
-
 ?>
 
 	<div class="container py-5">
@@ -93,12 +94,12 @@ $colleges = $stmt->fetchAll();
 		<form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="ssn">SSN</label>
-				<input type="text" class="form-control" id="ssn" name="ssn" required>
+				<input type="text" class="form-control" id="ssn" name="ssn" required value="<?= $_POST['ssn'] ?? "" ?>">
 			</div>
 
 			<div class="form-group">
 				<label for="name">Name</label>
-				<input type="text" class="form-control" id="name" name="name" required>
+				<input type="text" class="form-control" id="name" name="name" required value="<?= $_POST['name'] ?? "" ?>">
 			</div>
 
 			<div class="form-group">
@@ -125,12 +126,12 @@ $colleges = $stmt->fetchAll();
 
 			<div class="form-group">
 				<label for="email">Email</label>
-				<input type="email" class="form-control" id="email" name="email" required>
+				<input type="email" class="form-control" id="email" name="email" required value="<?= $_POST['email'] ?? "" ?>">
 			</div>
 
 			<div class="form-group">
 				<label for="phone">Phone</label>
-				<input type="text" class="form-control" id="phone" name="phone" required>
+				<input type="text" class="form-control" id="phone" name="phone" required value="<?= $_POST['phone'] ?? "" ?>">
 			</div>
 
 			<button type="submit" class="btn btn-primary">Save</button>

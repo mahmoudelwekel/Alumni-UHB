@@ -31,7 +31,7 @@ getErrors();
     <form method="post" action="<?= $_SERVER['PHP_SELF'] ?>">
         <div class="form-group">
             <label for="title">Name</label>
-            <input type="text" class="form-control" id="title" name="name" required>
+            <input type="text" class="form-control" id="title" name="name" required value="<?= $_POST['name'] ?? "" ?>">
         </div>
 
 		<button type="submit" class="btn btn-primary ">Save</button>

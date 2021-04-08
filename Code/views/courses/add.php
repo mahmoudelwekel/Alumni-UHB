@@ -74,32 +74,32 @@ $lecturers = $stmt->fetchAll();
     <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
         <div class="form-group">
             <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" name="name" required>
+            <input type="text" class="form-control" id="title" name="name" required value="<?= $_POST['name'] ?? "" ?>">
         </div>
 
         <div class="form-group">
             <label for="location">Location</label>
-            <input type="text" class="form-control" id="location" name="location" required>
+            <input type="text" class="form-control" id="location" name="location" required value="<?= $_POST['location'] ?? "" ?>">
         </div>
 
         <div class="form-group">
             <label for="details">Details</label>
-			<textarea id="details" class="form-control" name="details" required></textarea>
+			<textarea id="details" class="form-control" name="details" required><?= $_POST['details'] ?? "" ?></textarea>
         </div>
 
         <div class="form-group">
 			<label for="start_date">Start Date</label>
-			<input type="datetime-local" class="form-control" id="start_date" name="start_date" required>
+			<input type="datetime-local" class="form-control" id="start_date" name="start_date" required value="<?= $_POST['start_date'] ?? "" ?>">
 		</div>
 
 		<div class="form-group">
 			<label for="end_date">End Date</label>
-			<input type="datetime-local" class="form-control" id="end_date" name="end_date" required>
+			<input type="datetime-local" class="form-control" id="end_date" name="end_date" required value="<?= $_POST['end_date'] ?? "" ?>">
 		</div>
 
 		<div class="form-group">
 			<label for="deadline">DeadLine</label>
-			<input type="date" class="form-control" id="deadline" name="deadline" required>
+			<input type="date" class="form-control" id="deadline" name="deadline" required value="<?= $_POST['deadline'] ?? "" ?>">
 		</div>
 
 		<div class="form-group">

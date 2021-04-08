@@ -1,9 +1,7 @@
 <?php require_once "../../init/init.php"; ?>
 
 <div class="container py-5">
-    <h3>
-        Update Profile
-    </h3>
+    <h3>Update Profile</h3>
     <hr />
 
     <form>

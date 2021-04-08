@@ -28,6 +28,7 @@ $stmt = $con->prepare("SELECT * FROM categories WHERE id = ? LIMIT 1");
 $stmt->execute([$_GET['id']]);
 $category = $stmt->fetch();
 
+getErrors();
 
 ?>
 
@@ -39,7 +40,7 @@ $category = $stmt->fetch();
 		<input type="hidden" name="id" value="<?= $category['id'] ?>">
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" value="<?= $category['catg_name'] ?>" required>
+            <input type="text" class="form-control" id="name" name="name" value="<?= $_POST['name'] ?? $category['catg_name'] ?>" required >
         </div>
         <button type="submit" class="btn btn-primary ">Save</button>
         <a href="index.php" class="btn btn-secondary ml-3">Close</a>

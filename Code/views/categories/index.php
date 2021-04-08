@@ -2,6 +2,10 @@
 $page = "categories";
 require_once "../../init/init.php";
 
+if ( !isAdmin() ) {
+	redirect("public");
+}
+
 $stmt = $con->prepare("SELECT * FROM categories");
 $stmt->execute();
 $categories = $stmt->fetchAll();
@@ -19,9 +23,7 @@ $categories = $stmt->fetchAll();
 				<tr>
 					<th>ID</th>
 					<th>Name</th>
-					<?php if ( isAdmin() ): ?>
-						<th></th>
-					<?php endif; ?>
+					<th></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -29,13 +31,11 @@ $categories = $stmt->fetchAll();
 					<tr>
 						<td><?= $category['id'] ?></td>
 						<td><?= $category['catg_name'] ?></td>
-						<?php if ( isAdmin() ): ?>
-							<td>
-								<a class="btn btn-sm mb-1 btn-dark" href="edit.php?id=<?= $category['id'] ?>">Edit</a>
-								<a class="btn btn-sm mb-1 btn-danger"
-								   href="delete.php?id=<?= $category['id'] ?>">Delete</a>
-							</td>
-						<?php endif; ?>
+						<td>
+							<a class="btn btn-sm mb-1 btn-dark" href="edit.php?id=<?= $category['id'] ?>">Edit</a>
+							<a class="btn btn-sm mb-1 btn-danger"
+							   href="delete.php?id=<?= $category['id'] ?>">Delete</a>
+						</td>
 					</tr>
 				<?php endforeach; ?>
 				</tbody>

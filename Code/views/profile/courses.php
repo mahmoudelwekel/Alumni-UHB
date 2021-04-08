@@ -16,7 +16,7 @@ if ( isAlumnus() ) {
 									ON lecturers.id = courses.lecturer_id
 									WHERE alumnus_id = ?");
 } elseif ( isLecturer() ) {
-	$stmt = $con->prepare("SELECT alumnus_course.*, lecturers.lec_name FROM courses
+	$stmt = $con->prepare("SELECT courses.*, lecturers.lec_name FROM courses
 									INNER JOIN lecturers
 									ON lecturers.id = courses.lecturer_id
 									WHERE lecturer_id = ?");

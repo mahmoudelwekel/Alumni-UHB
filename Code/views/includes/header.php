@@ -63,6 +63,7 @@
                     <?php else : ?>
 						<?php if(!isAdmin()): ?>
 							<a class="nav-item nav-link" href="<?= route("profile") ?>">My Profile</a>
+							<a class="nav-item nav-link" href="<?= route("profile/update.php") ?>">Update My Profile</a>
 						<?php endif; ?>
                         <a class="nav-item nav-link" href="<?= route("public/logout.php") ?>">Logout</a>
                     <?php endif; ?>

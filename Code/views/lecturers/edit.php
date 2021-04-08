@@ -66,7 +66,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		$_SESSION['msg'][] = "You Must Enter The Phone";
 	}
 
-	/** Validating the SSN */
+	/** Validating the CV */
 	$cv = $_FILES['cv'];
 	if( !empty( $_FILES['cv']['name'] ) ) {
 		$cvName	= rand(1000000, 9999999) . $cv['name'];

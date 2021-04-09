@@ -1,155 +1,166 @@
 <?php
 $page = "workshops";
 require_once"../../init/init.php";
+
+if ( isset($_GET['workshop_id']) && isAlumnus() ) {
+	$workshop_id = $_GET['workshop_id'];
+	$alumnus_id = $_SESSION['id'];
+
+	$stmt = $con->prepare("INSERT INTO alumnus_workshop(alumnus_id, workshop_id) VALUES(?, ?)");
+	$stmt->execute([$alumnus_id, $workshop_id]);
+	redirect("workshops");
+}
+
+if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+	$workshop_id = $_POST['workshop_id'];
+	$alumnus_id = $_SESSION['id'];
+	$comment = filter_var($_POST['comment'], FILTER_SANITIZE_STRING);
+
+	$stmt = $con->prepare("UPDATE alumnus_workshop SET comment = ? WHERE workshop_id = ? AND alumnus_id = ?");
+	$stmt->execute([$comment, $workshop_id, $alumnus_id]);
+
+	redirect("workshops");
+}
+
+
+$stmt = $con->prepare("SELECT workshops.*, categories.catg_name AS category FROM workshops
+								INNER JOIN categories
+								ON categories.id = workshops.category_id");
+$stmt->execute();
+$workshops = $stmt->fetchAll();
+
+for ( $i = 0; $i < sizeof($workshops); $i++ ) {
+	$id = $workshops[$i]['id'];
+
+	$stmt = $con->prepare("SELECT lecturer_workshop.*, lecturers.lec_name AS lecturer 
+									FROM lecturer_workshop
+									INNER JOIN lecturers
+									ON lecturers.id = lecturer_workshop.lecturer_id
+									WHERE workshop_id = ?");
+	$stmt->execute([$id]);
+
+	$lecturers = $stmt->fetchAll();
+	$_lecturers = "";
+	for ( $j = 0; $j < sizeof($lecturers); $j++ ) {
+		$_lecturers .= $lecturers[$i]['lecturer'];
+
+		if ( sizeof($lecturers) - $j > 2 ) {
+			$_lecturers .= ", ";
+		} elseif ( sizeof($lecturers) - $j == 2 ) {
+			$_lecturers .= " and ";
+		}
+	}
+
+	$workshops[$i]["lecturers"] = $_lecturers;
+}
+
+if ( isAlumnus() ) {
+	$stmt = $con->prepare("SELECT workshop_id FROM alumnus_workshop WHERE alumnus_id = ?");
+	$stmt->execute([$_SESSION['id']]);
+	$result = $stmt->fetchAll();
+	$myWorkshops = [];
+	foreach ( $result as $w ) {
+		$myWorkshops[] = $w['workshop_id'];
+	}
+} else {
+	$myWorkshops = [];
+}
+
+
 ?>
 
-<div class="" style="background-image:url('<?= asset("Images/bg/empty.jpg") ?>') ;
-background-repeat: no-repeat;
-    background-size: contain;
-    background-position: right;
-    background-color: #e5f1ed;">
+	<div class="" style="background-image:url('<?= asset("Images/bg/empty.jpg") ?>') ;
+			background-repeat: no-repeat;
+			background-size: contain;
+			background-position: right;
+			background-color: #e5f1ed;">
+		<div class="container h1 py-5">Courses</div>
+	</div>
 
-    <div class="container h1 py-5">
-        Workshop
-    </div>
-</div>
+	<div class="container  py-5">
 
-<div class="container  py-5">
+		<?php foreach ( $workshops as $workshop ): ?>
+			<div class="card shadow" style="background-image:url('<?= asset("Images/bg/empty.jpg") ?>') ;
+					background-repeat: no-repeat;
+					background-size: contain;
+					background-position: right;
+					background-color: #e5f1ed;">
+				<div class="card-body font-weight-bold">
+					<h4 class="card-title font-weight-bold h3 text-dark text-left"><?= $workshop['wshop_name'] ?></h4>
+					<hr/>
+					<p class="card-text text-decoration-none text-secondary  h5  font-weight-bold my-4">
+						<i class="icon fas fa-map-marker-alt "></i> <?= $workshop['location'] ?>
+					</p>
+					<div class="row card-text">
+						<div class="col h5  font-weight-bold no-text-wrap">
+							<i class="icon fas fa-layer-group "></i> <?= $workshop['category'] ?>
+						</div>
+						<div class="col h5  font-weight-bold no-text-wrap">
+							<i class="icon far fa-clock "></i> <?= $workshop['deadline'] ?>
+						</div>
+						<div class="col h5  font-weight-bold no-text-wrap">
+							<i class="icon fas fa-envelope-open-text "></i> <?= $workshop['details'] ?>
+						</div>
 
-    <div class="card shadow" style="background-image:url('<?= asset("Images/bg/empty.jpg") ?>') ;
-background-repeat: no-repeat;
-    background-size: contain;
-    background-position: right;
-    background-color: #e5f1ed;">
+						<?php if ( $workshop['deadline'] > date("Y-m-d") && isAlumnus() ): ?>
+							<div class="col h5  font-weight-bold no-text-wrap  text-center">
+								<a href="<?= $_SERVER['PHP_SELF'] ?>?workshop_id=<?= $workshop['id'] ?>"
+								   class="btn btn-sm btn-dark" type="submit">Apply</a>
+							</div>
+						<?php endif; ?>
 
-        <div class="card-body font-weight-bold">
-            <h4 class="card-title font-weight-bold h3 text-dark text-left">Workshop Title</h4>
-            <hr />
-            <p class="card-text text-decoration-none text-secondary  h5  font-weight-bold my-4">
-                <i class="icon fas fa-map-marker-alt "></i> Location
-            </p>
-            <div class="row card-text">
-                <div class="col h5  font-weight-bold no-text-wrap">
-                    <i class="icon fas fa-layer-group "></i> Category
-                </div>
-                <div class="col h5  font-weight-bold no-text-wrap">
-                    <i class="icon far fa-clock "></i> Time
-                </div>
-                <div class="col h5  font-weight-bold no-text-wrap">
-                    <i class="icon fas fa-envelope-open-text "></i> Details
-                </div>
-                <div class="col h5  font-weight-bold no-text-wrap  text-center">
-                    <button class="btn btn-sm btn-dark" type="submit">Apply</button>
-                </div>
-            </div>
-        </div>
-    </div>
+						<?php if ( $workshop['deadline'] < date("Y-m-d") && sizeof($workshop['comments']) ): ?>
+							<div class="col-12 ">
+								<h4 class="text-center">
+									<br/>
+									Comments
+									<hr class="w-50"/>
+								</h4>
 
-    <br />
-    <br />
-    <br />
+								<div class="SeeMore">
+									<?php foreach ( $workshop['comments'] as $comment ): ?>
+										<div class="media mb-3 bg-light shadow rounded p-3 item">
+											<a href="#"><img class="mr-3" src="<?= asset("Images/logo.png") ?>"
+															 width="30px"
+															 height="30px" alt="Generic placeholder image"></a>
+											<div class="media-body">
+												<h4 class=""><?= $comment['alu_name'] ?></h4>
+												<p class="text-muted"><?= $comment['comment'] ?></p>
+											</div>
+										</div>
+									<?php endforeach; ?>
+								</div>
+							</div>
+						<?php endif; ?>
+						<?php if ( in_array($workshop['id'], $myWorkshops) ): ?>
+							<div class="col-12 ">
+								<form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
+									<input type="hidden" name="workshop_id" value="<?= $workshop['id'] ?>">
+									<label for="comment">Add Comment</label>
+									<textarea name="comment" id="comment" class="form-control"></textarea>
+									<br>
+									<button class="btn btn-sm btn-dark" type="submit">Add Comment</button>
+								</form>
+							</div>
+						<?php endif; ?>
+					</div>
+				</div>
+			</div>
+			<br/>
+			<br/>
+		<?php endforeach; ?>
 
-    <div class="card shadow" style="background-image:url('<?= asset("Images/bg/empty.jpg") ?>') ;
-background-repeat: no-repeat;
-    background-size: contain;
-    background-position: right;
-    background-color: #e5f1ed;">
-
-        <div class="card-body font-weight-bold">
-            <div class="row card-text">
-                <div class="col-md-9 ">
-
-                    <h4 class="card-title font-weight-bold h3 text-dark text-left">Workshop Title</h4>
-                    <p class="card-text text-decoration-none text-secondary  h5  font-weight-bold my-4">
-                        <i class="icon fas fa-map-marker-alt "></i> Location
-                    </p>
-                    <div class="row card-text">
-                        <div class="col h5  font-weight-bold no-text-wrap">
-                            <i class="icon fas fa-layer-group "></i> Category
-                        </div>
-                        <div class="col h5  font-weight-bold no-text-wrap">
-                            <i class="icon far fa-clock "></i> Time
-                        </div>
-                        <div class="col h5  font-weight-bold no-text-wrap">
-                            <i class="icon fas fa-envelope-open-text "></i> Details
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-md-3 text-center pt-4">
-                    <input id="input-1-ltr-star-xs " name="input-1-ltr-star-xs" class="kv-ltr-theme-fas-star rating-loading" value="1" dir="ltr" data-size="xs">
-                    <button class="btn  btn-secondary mt-2" type="submit">Finished</button>
-
-
-                </div>
-
-
-            </div>
-
-            <hr />
-            <div class="col-12 ">
-
-                <h4 class="text-center">
-                    Comments
-                    <br />
-                    <i class="fas fa-chevron-down"></i>
-                </h4>
-
-                <div class="media mb-3 bg-light shadow rounded p-3">
-                    <a href="#"><img class="mr-3" src="<?= asset("Images/logo.png") ?>" width="30px" height="30px" alt="Generic placeholder image"></a>
-                    <div class="media-body">
-                        <h4 class="">Mahmoud Elwekel</h4>
-                        <p class=""> 14/3/2021 15:21:35</p>
-                        <p class="text-muted">Very nice</p>
-                    </div>
-                </div>
-
-                <div class="media mb-3 bg-light shadow rounded p-3">
-                    <a href="#"><img class="mr-3" src="<?= asset("Images/logo.png") ?>" width="30px" height="30px" alt="Generic placeholder image"></a>
-                    <div class="media-body">
-                        <h4 class="">Mahmoud Elwekel</h4>
-                        <p class=""> 14/3/2021 15:21:35</p>
-                        <p class="text-muted">Very nice</p>
-                    </div>
-                </div>
-
-                <div class="media mb-3 bg-light shadow rounded p-3">
-                    <a href="#"><img class="mr-3" src="<?= asset("Images/logo.png") ?>" width="30px" height="30px" alt="Generic placeholder image"></a>
-                    <div class="media-body">
-                        <h4 class="">Mahmoud Elwekel</h4>
-                        <p class=""> 14/3/2021 15:21:35</p>
-                        <p class="text-muted">Very nice</p>
-                    </div>
-                </div>
-
-                <div class="media mb-3 bg-light shadow rounded p-3">
-                    <a href="#"><img class="mr-3" src="<?= asset("Images/logo.png") ?>" width="30px" height="30px" alt="Generic placeholder image"></a>
-                    <div class="media-body">
-                        <h4 class="">Mahmoud Elwekel</h4>
-                        <p class=""> 14/3/2021 15:21:35</p>
-                        <p class="text-muted">Very nice</p>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-    </div>
-
-
-    <script>
-        $(document).ready(function() {
-            $('.kv-ltr-theme-fas-star').rating({
-                hoverOnClear: false,
-                theme: 'krajee-fas',
-                containerClass: 'is-star',
-                showCaption: false,
-                stars: 3,
-
-            });
-        });
-    </script>
-
-</div>
-
+		<script>
+			$(document).ready(function() {
+				$('.kv-ltr-theme-fas-star').rating({
+					hoverOnClear: false,
+					theme: 'krajee-fas',
+					containerClass: 'is-star',
+					showCaption: false,
+					stars: 5,
+					displayOnly: true
+				});
+			});
+		</script>
+	</div>
 <?php require_once"../includes/footer.php"; ?>

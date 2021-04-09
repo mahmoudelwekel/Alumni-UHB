@@ -56,7 +56,7 @@ $courses = $stmt->fetchAll();
 								<i class="icon fas fa-calendar-alt"></i> <?= $course['start_date'] ?>
 							</p>
 						</div>
-						<a href="#" class="card-footer font-weight-bold">
+						<a href="cerificate.php?course=<?= $course['crs_name'] ?>" target="_blank" class="card-footer font-weight-bold">
 							Certificate >>
 						</a>
 					</div>

@@ -195,9 +195,9 @@ for( $i = 0; $i < sizeof( $lecturers ); $i++ ) {
                         </span>
 					</div>
 					<br/>
-<!--					<a href="#" class="card-text text-right font-weight-bold">-->
-<!--						Details >>-->
-<!--					</a>-->
+					<a href="<?= uploads("cvs/" . $lecturer['cv']); ?>" TARGET="_blank" class="card-text text-right font-weight-bold">
+						CV >>
+					</a>
 				</div>
 			</div>
 			<?php endforeach; ?>

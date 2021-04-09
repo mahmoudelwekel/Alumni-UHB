@@ -59,7 +59,7 @@ for ( $i = 0; $i < sizeof( $lecturers ); $i++ ) {
 						<td><?= $lecturer['SSN'] ?></td>
 						<td><?= $lecturer['colg_name'] ?></td>
 						<td><?= $lecturer['dept_name'] ?></td>
-						<td><a class="btn btn-success" download href="<?= uploads("cvs/" . $lecturer['cv']); ?>">Download</a></td>
+						<td><a class="btn btn-success" href="<?= uploads("cvs/" . $lecturer['cv']); ?>">Download</a></td>
 						<td><?= $lecturer['email'] ?></td>
 						<td><?= $lecturer['phone'] ?></td>
 						<td><?= $lecturer['rate'] ?></td>

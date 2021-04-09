@@ -2,6 +2,10 @@
 $page = "workshops";
 require_once "../../init/init.php";
 
+if (!isAdmin()) {
+	redirect("workshops/show.php");
+}
+
 $stmt = $con->prepare("SELECT workshops.*, categories.catg_name AS category FROM workshops
 								INNER JOIN categories
 								ON categories.id = workshops.category_id");
@@ -50,9 +54,7 @@ for ( $i = 0; $i < sizeof($workshops); $i++ ) {
                     <th>DeadLine</th>
                     <th>Details</th>
                     <th>Lecturers</th>
-					<?php if( isAdmin() ): ?>
                     <th></th>
-					<?php endif; ?>
                 </tr>
             </thead>
             <tbody>
@@ -64,12 +66,10 @@ for ( $i = 0; $i < sizeof($workshops); $i++ ) {
                     <td><?= $workshop['deadline'] ?></td>
                     <td><?= $workshop['details'] ?></td>
                     <td><?= $workshop['lecturers'] ?></td>
-					<?php if ( isAdmin() ): ?>
 						<td>
 							<a class="btn btn-sm mb-1 btn-dark" href="edit.php?id=<?= $workshop['id'] ?>">Edit</a>
 							<a class="btn btn-sm mb-1 btn-danger" href="delete.php?id=<?= $workshop['id'] ?>">Delete</a>
 						</td>
-					<?php endif; ?>
                 </tr>
 			<?php endforeach; ?>
 

@@ -13,7 +13,7 @@ $stmt = $con->prepare("Select lecturers.*, (COUNT(DISTINCT courses.id) + COUNT( 
 $stmt->execute();
 $lecturers = $stmt->fetchAll();
 
-for( $i = 0; $i < sizeof( $lecturers ); $i++ ) {
+for ( $i = 0; $i < sizeof($lecturers); $i++ ) {
 	$id = $lecturers[$i]['id'];
 	$stmt = $con->prepare("SELECT SUM(ac) as total_sum
 										FROM ( SELECT courses.*, COUNT(alumnus_course.id) AS ac 
@@ -46,7 +46,6 @@ for( $i = 0; $i < sizeof( $lecturers ); $i++ ) {
 	$lecturers[$i]['learners'] = $courses_alumni + $workshops_alumni;
 }
 
-
 ?>
 
 	<div class="" style="background-image:url('<?= asset("Images/bg/empty.jpg") ?>') ;
@@ -61,28 +60,32 @@ for( $i = 0; $i < sizeof( $lecturers ); $i++ ) {
 
 	<div class="card-deck" style="flex-flow: column">
 		<div class="row">
-			<?php foreach ($lecturers as $lecturer): ?>
-			<div class="col-md-3" style="margin-bottom: 40px">
-				<div class="card Cardbackground" style="background-image:url('<?= asset("Images/bg/" . ( $lecturer['gender'] ? "female" : "male" ) . ".jpg") ?>') ;">
-					<div class="card-body" style="padding-top: 65%;">
-						<h5 class="card-title font-weight-bold h3 text-dark text-center"><?= $lecturer['lec_name'] ?></h5>
-						<hr/>
-						<div class="d-flex justify-content-around  text-center font-weight-bold">
-							<span>
-								<i class=" fas fa-share-alt fa-2x"></i>
-								<br/>
-								<?= $lecturer['shares'] ?>
-							</span>
-							<span>
-								<i class=" fas fa-users  fa-2x"></i>
-								<br/>
-								<?= $lecturer['learners'] ?>
-							</span>
+			<?php foreach ( $lecturers as $lecturer ): ?>
+				<div class="col-md-3" style="margin-bottom: 40px">
+					<div class="card Cardbackground"
+						 style="background-image:url('<?= asset("Images/bg/" . ($lecturer['gender'] ? "female" : "male") . ".jpg") ?>') ;">
+						<div class="card-body" style="padding-top: 65%;">
+							<h5 class="card-title font-weight-bold h3 text-dark text-center"><?= $lecturer['lec_name'] ?></h5>
+							<hr/>
+							<div class="d-flex justify-content-around  text-center font-weight-bold">
+								<span>
+									<i class=" fas fa-share-alt fa-2x"></i>
+									<br/>
+									<?= $lecturer['shares'] ?>
+								</span>
+									<span>
+									<i class=" fas fa-users  fa-2x"></i>
+									<br/>
+									<?= $lecturer['learners'] ?>
+								</span>
+							</div>
+							<br/>
+							<a href="<?= uploads("cvs/" . $lecturer['cv']); ?>" TARGET="_blank" class="card-text text-right font-weight-bold">
+								CV >>
+							</a>
 						</div>
-						<br/>
 					</div>
 				</div>
-			</div>
 			<?php endforeach; ?>
 
 		</div>

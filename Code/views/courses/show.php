@@ -101,10 +101,18 @@ if ( isAlumnus() ) {
 							<i class="icon fas fa-envelope-open-text "></i> <?= $course['details'] ?>
 						</div>
 
-						<?php if ( $course['deadline'] > date("Y-m-d") && isAlumnus() ): ?>
+						<?php if ( $course['deadline'] > date("Y-m-d") && isAlumnus() && !in_array($course['id'], $myCourses) ): ?>
 							<div class="col h5  font-weight-bold no-text-wrap  text-center">
 								<a href="<?= $_SERVER['PHP_SELF'] ?>?course_id=<?= $course['id'] ?>"
 								   class="btn btn-sm btn-dark" type="submit">Apply</a>
+							</div>
+						<?php elseif ( isAlumnus() && in_array($course['id'], $myCourses) ): ?>
+							<div class="col h5  font-weight-bold no-text-wrap  text-center">
+								<?php if ( courseState($course['id'], $_SESSION['id']) == "pending" ): ?>
+									<button class="btn btn-sm btn-dark">Pending</button>
+								<?php elseif ( courseState($course['id'], $_SESSION['id']) == "finished" ): ?>
+									<button class="btn btn-sm btn-dark">Finished</button>
+								<?php endif; ?>
 							</div>
 						<?php endif; ?>
 

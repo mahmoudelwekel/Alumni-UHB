@@ -123,6 +123,19 @@ function isLogInFromTable( $email, $password, $table ) {
 	return 0;
 }
 
+function courseState($course_id, $alumnus_id) {
+	global $con;
+	$stmt = $con->prepare("SELECT state FROM alumnus_course WHERE course_id = ? AND alumnus_id = ? LIMIT 1");
+	$stmt->execute([$course_id, $alumnus_id]);
+
+	if ( $stmt->rowCount() > 0 ) {
+		$result = $stmt->fetch();
+		return $result['state'];
+	} else {
+		return null;
+	}
+}
+
 function isAdmin() {
 	if ( isset( $_SESSION['type'] ) ) {
 		return $_SESSION['type'] == "admin";

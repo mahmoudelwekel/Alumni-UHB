@@ -85,7 +85,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	$gender = $_POST['gender'];
 
 	if ( empty( $_SESSION['msg'] ) ) {
-		$salt = md5( rand() );
+		$salt = substr( md5( rand() ), 0 , 10);
 		$password = sha1( $password . $salt );
 		$stmt = $con->prepare("INSERT INTO lecturers(SSN, lec_name, email, password, salt, phone, cv, department_id, gender) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		$stmt->execute([$ssn, $name, $email, $password, $salt, $phone, $cvName, $department, $gender]);

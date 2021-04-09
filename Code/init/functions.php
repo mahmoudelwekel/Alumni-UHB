@@ -107,7 +107,6 @@ function isLogInFromTable( $email, $password, $table ) {
 	$stmt = $con->prepare("SELECT salt FROM $table WHERE email = ? LIMIT 1");
 	$stmt->execute([$email]);
 	if ( $stmt->rowCount() > 0 ) {
-		echo "First Test";
 		$result = $stmt->fetch();
 		$salt = $result['salt'];
 

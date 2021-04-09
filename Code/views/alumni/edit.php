@@ -41,7 +41,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	if( $_POST['password'] != "" ) {
 		$password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
 
-		$salt = substr(md5( rand() ), 0, 10);
+		$salt = substr( md5( rand() ), 0, 10);
 		$password = sha1( $password . $salt );
 	} else {
 		$password = getColumn('alumni', "password", $id);

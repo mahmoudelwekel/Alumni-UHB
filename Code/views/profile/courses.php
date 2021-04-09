@@ -61,9 +61,6 @@ $courses = $stmt->fetchAll();
 						</a>
 					</div>
 				</div>
-				<div class="col-md-8">
-					<img class="card-img-top p-4" src="<?= asset("Images/certificate.jpg") ?>" alt="Card image cap">
-				</div>
 			<?php endforeach; ?>
 		</div>
 

@@ -14,14 +14,15 @@ if ( isAlumnus() ) {
 									ON alumnus_course.course_id = courses.id
 									INNER JOIN lecturers
 									ON lecturers.id = courses.lecturer_id
-									WHERE alumnus_id = ?");
+									WHERE alumnus_id = ? AND state = ?");
+	$stmt->execute([$id, "finished"]);
 } elseif ( isLecturer() ) {
 	$stmt = $con->prepare("SELECT courses.*, lecturers.lec_name FROM courses
 									INNER JOIN lecturers
 									ON lecturers.id = courses.lecturer_id
 									WHERE lecturer_id = ?");
+	$stmt->execute([$id]);
 }
-$stmt->execute([$id]);
 $courses = $stmt->fetchAll();
 ?>
 

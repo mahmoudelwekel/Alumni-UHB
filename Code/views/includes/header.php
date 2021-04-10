@@ -62,7 +62,8 @@
                         <a class="nav-item nav-link <?php setActive("login"); ?>" href="<?= route("public/login.php") ?>">Login</a>
                     <?php else : ?>
 						<?php if(!isAdmin()): ?>
-							<a class="nav-item nav-link" href="<?= route("profile") ?>">My Profile</a>
+							<a class="nav-item nav-link" href="<?= route("profile") ?>">My Requests</a>
+							<a class="nav-item nav-link" href="<?= route("profile/courses.php") ?>">My Courses</a>
 							<a class="nav-item nav-link" href="<?= route("profile/update.php") ?>">Update My Profile</a>
 						<?php endif; ?>
                         <a class="nav-item nav-link" href="<?= route("public/logout.php") ?>">Logout</a>

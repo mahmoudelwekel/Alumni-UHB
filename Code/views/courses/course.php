@@ -12,7 +12,7 @@ if ( !isset($_GET['id']) ) {
 
 if ( isset($_GET['alumnus_id']) ) {
 	$stmt = $con->prepare("UPDATE alumnus_course SET state = ? WHERE course_id = ? AND alumnus_id = ?");
-	$stmt->execute(["finished", $_GET['id'], $_GET['alumnus_id']]);
+	$stmt->execute([$_GET['state'], $_GET['id'], $_GET['alumnus_id']]);
 
 	redirect("courses/course.php?id=" . $_GET['id']);
 }
@@ -119,8 +119,10 @@ $alumni = $stmt->fetchAll();
 						<td><?= ucfirst($alumnus['state']) ?></td>
 						<td>
 							<?php if ( $alumnus['state'] == "pending" ): ?>
-								<a class="btn btn-sm mb-1 btn-dark"
-								   href="<?= route("courses/course.php?id=" . $course['id'] . "&alumnus_id=" . $alumnus['id']) ?>">Finish</a>
+								<a class="btn btn-sm mb-1 btn-dark" href="<?= route("courses/course.php?id=" . $course['id'] . "&alumnus_id=" . $alumnus['id'] . "&state=accepted") ?>">Accept</a>
+								<a class="btn btn-sm mb-1 btn-dark" href="<?= route("courses/course.php?id=" . $course['id'] . "&alumnus_id=" . $alumnus['id'] . "&state=refused") ?>">Refuse</a>
+							<?php elseif ( $alumnus['state'] != "finished" && $alumnus['state'] != "refused" ): ?>
+								<a class="btn btn-sm mb-1 btn-dark" href="<?= route("courses/course.php?id=" . $course['id'] . "&alumnus_id=" . $alumnus['id'] . "&state=finished") ?>">Finish</a>
 							<?php endif; ?>
 						</td>
 					</tr>

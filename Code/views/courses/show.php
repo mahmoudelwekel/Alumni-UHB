@@ -78,96 +78,114 @@ if ( isAlumnus() ) {
 
 	<div class="container  py-5">
 
-		<?php foreach ( $courses as $course ): ?>
-			<div class="card shadow" style="background-image:url('<?= asset("Images/bg/empty.jpg") ?>') ;
-					background-repeat: no-repeat;
-					background-size: contain;
-					background-position: right;
-					background-color: #e5f1ed;">
-				<div class="card-body font-weight-bold">
-					<h4 class="card-title font-weight-bold h3 text-dark text-left"><?= $course['crs_name'] ?></h4>
-					<hr/>
+<?php foreach ( $courses as $course ): ?>
+	<div class="card shadow" style="background-image:url('<?= asset("Images/bg/empty.jpg") ?>') ;
+			background-repeat: no-repeat;
+			background-size: contain;
+			background-position: right;
+			background-color: #e5f1ed;">
+		<div class="card-body font-weight-bold">
+			<h4 class="card-title font-weight-bold h3 text-dark text-left"><?= $course['crs_name'] ?></h4>
+			<hr/>
+			<!-- Location and Lecturer -->
+			<div class="row">
+				<div class="col-md-4">
 					<p class="card-text text-decoration-none text-secondary  h5  font-weight-bold my-4">
 						<i class="icon fas fa-map-marker-alt "></i> <?= $course['location'] ?>
 					</p>
-					<div class="row card-text">
-						<div class="col h5  font-weight-bold no-text-wrap">
-							<i class="icon fas fa-layer-group "></i> <?= $course['category'] ?>
-						</div>
-						<div class="col h5  font-weight-bold no-text-wrap">
-							<i class="icon far fa-clock "></i> <?= $course['deadline'] ?>
-						</div>
-						<div class="col h5  font-weight-bold no-text-wrap">
-							<i class="icon fas fa-envelope-open-text "></i> <?= $course['details'] ?>
-						</div>
+				</div>
+				<div class="col-md-8">
+					<p class="card-text text-decoration-none text-secondary  h5  font-weight-bold my-4">
+						<i class="icon fa fa-user "></i> <?= $course['lecturer'] ?>
+					</p>
+				</div>
 
-						<?php if ( $course['deadline'] > date("Y-m-d") && isAlumnus() && !in_array($course['id'], $myCourses) ): ?>
-							<div class="col h5  font-weight-bold no-text-wrap  text-center">
-								<a href="<?= $_SERVER['PHP_SELF'] ?>?course_id=<?= $course['id'] ?>"
-								   class="btn btn-sm btn-dark" type="submit">Apply</a>
-							</div>
-						<?php elseif ( isAlumnus() && in_array($course['id'], $myCourses) ): ?>
-							<div class="col h5  font-weight-bold no-text-wrap  text-center">
-								<?php if ( courseState($course['id'], $_SESSION['id']) == "pending" ): ?>
-									<button class="btn btn-sm btn-dark">Pending</button>
-								<?php elseif ( courseState($course['id'], $_SESSION['id']) == "finished" ): ?>
-									<button class="btn btn-sm btn-dark">Finished</button>
-								<?php endif; ?>
-							</div>
-						<?php endif; ?>
+			</div>
+			<div class="row card-text">
+				<!-- Category, Dates and Details -->
+				<div class="col h5 font-weight-bold no-text-wrap">
+					<i class="icon fas fa-layer-group "></i> <?= $course['category'] ?>
+				</div>
+				<div class="col h5 font-weight-bold no-text-wrap" title="Deadline">
+					<i class="icon far fa-clock "></i> <?= $course['deadline'] ?>
+				</div>
+				<div class="col h5 font-weight-bold no-text-wrap">
+					<p title="Start Date">
+						<i class="icon far fa-clock "></i> <?= $course['start_date'] ?>
+					</p>
 
-						<?php if ( $course['deadline'] < date("Y-m-d") && sizeof($course['comments']) ): ?>
-							<div class="col-12 ">
-								<h4 class="text-center">
-									<br/>
-									Comments
-									<hr class="w-50"/>
-								</h4>
+					<p title="End Date">
+						<i class="icon far fa-clock "></i> <?= $course['end_date'] ?>
+					</p>
+				</div>
+				<div class="col h5 font-weight-bold no-text-wrap">
+					<i class="icon fas fa-envelope-open-text "></i> <?= $course['details'] ?>
+				</div>
 
-								<div class="SeeMore">
-									<?php foreach ( $course['comments'] as $comment ): ?>
-										<div class="media mb-3 bg-light shadow rounded p-3 item">
-											<a href="#"><img class="mr-3" src="<?= asset("Images/logo.png") ?>"
-															 width="30px"
-															 height="30px" alt="Generic placeholder image"></a>
-											<div class="media-body">
-												<h4 class=""><?= $comment['alu_name'] ?></h4>
-												<p class="text-muted"><?= $comment['comment'] ?></p>
-											</div>
-										</div>
-									<?php endforeach; ?>
+				<!-- Label -->
+				<?php if ( $course['deadline'] > date("Y-m-d") && isAlumnus() && !in_array($course['id'], $myCourses) ): ?>
+				<div class="col h5  font-weight-bold no-text-wrap  text-center">
+					<a href="<?= $_SERVER['PHP_SELF'] ?>?course_id=<?= $course['id'] ?>"
+					   class="btn btn-sm btn-dark" type="submit">Apply</a>
+				</div>
+				<?php elseif ( isAlumnus() && in_array($course['id'], $myCourses) ): ?>
+				<div class="col h5  font-weight-bold no-text-wrap  text-center">
+					<button class="btn btn-sm btn-dark"><?= ucfirst(courseState($course['id'], $_SESSION['id'])) ?></button>
+				</div>
+				<?php endif; ?>
+
+				<?php if ( $course['deadline'] < date("Y-m-d") && sizeof($course['comments']) ): ?>
+				<div class="col-12 ">
+					<h4 class="text-center">
+						<br/>
+						Comments
+						<hr class="w-50"/>
+					</h4>
+
+					<div class="SeeMore">
+						<?php foreach ( $course['comments'] as $comment ): ?>
+							<div class="media mb-3 bg-light shadow rounded p-3 item">
+								<a href="#"><img class="mr-3" src="<?= asset("Images/logo.png") ?>"
+												 width="30px"
+												 height="30px" alt="Generic placeholder image"></a>
+								<div class="media-body">
+									<h4 class=""><?= $comment['alu_name'] ?></h4>
+									<p class="text-muted"><?= $comment['comment'] ?></p>
 								</div>
 							</div>
-						<?php endif; ?>
-						<?php if ( in_array($course['id'], $myCourses) ): ?>
-							<div class="col-12 ">
-								<form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
-									<input type="hidden" name="course_id" value="<?= $course['id'] ?>">
-									<label for="comment">Add Comment</label>
-									<textarea name="comment" id="comment" class="form-control"></textarea>
-									<br>
-									<button class="btn btn-sm btn-dark" type="submit">Add Comment</button>
-								</form>
-							</div>
-						<?php endif; ?>
+						<?php endforeach; ?>
 					</div>
 				</div>
+				<?php endif; ?>
+				<?php if ( in_array($course['id'], $myCourses) && courseState($course['id'], $_SESSION['id']) == "finished" ): ?>
+				<div class="col-12 ">
+					<form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
+						<input type="hidden" name="course_id" value="<?= $course['id'] ?>">
+						<label for="comment">Add Comment</label>
+						<textarea name="comment" id="comment" class="form-control"></textarea>
+						<br>
+						<button class="btn btn-sm btn-dark" type="submit">Add Comment</button>
+					</form>
+				</div>
+				<?php endif; ?>
 			</div>
-			<br/>
-			<br/>
-		<?php endforeach; ?>
-
-		<script>
-			$(document).ready(function() {
-				$('.kv-ltr-theme-fas-star').rating({
-					hoverOnClear: false,
-					theme: 'krajee-fas',
-					containerClass: 'is-star',
-					showCaption: false,
-					stars: 5,
-					displayOnly: true
-				});
-			});
-		</script>
+		</div>
 	</div>
-<?php require_once "../includes/footer.php"; ?>
+<br/>
+<br/>
+	<?php endforeach ?>
+
+	<script>
+		$(document).ready(function() {
+			$('.kv-ltr-theme-fas-star').rating({
+				hoverOnClear: false,
+				theme: 'krajee-fas',
+				containerClass: 'is-star',
+				showCaption: false,
+				stars: 5,
+				displayOnly: true
+			});
+		});
+	</script>
+	</div>
+	<?php require_once "../includes/footer.php"; ?>

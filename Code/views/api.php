@@ -171,7 +171,7 @@ if ( isset($_GET) ) {
 			<br/>
 			<br/>
 		<?php endforeach;
-	} elseif ( $_GET['type'] == "get_courses_by_category" ) {
+	} elseif ( $_GET['type'] == "get_workshops_by_category" ) {
 		if ( $_GET['category_id'] == "*" ) {
 			$stmt = $con->prepare("SELECT workshops.*, categories.catg_name AS category FROM workshops
 								INNER JOIN categories
@@ -321,5 +321,42 @@ if ( isset($_GET) ) {
 			<br/>
 		<?php
 		endforeach;
+	} elseif ( $_GET['type'] == "get_jobs_by_category" ) {
+		if ( $_GET['category_id'] == "*" ) {
+			$stmt = $con->prepare("SELECT * FROM jobs");
+			$stmt->execute();
+		} else {
+			$stmt = $con->prepare("SELECT * FROM jobs WHERE category_id = ?");
+			$stmt->execute([$_GET['category_id']]);
+		}
+		$jobs = $stmt->fetchAll();
+
+		foreach ($jobs as $job ): ?>
+			<div class="card shadow" style="background-image:url('<?= asset("Images/bg/empty.jpg") ?>') ;
+					background-repeat: no-repeat;
+					background-size: contain;
+					background-position: right;
+					background-color: #e5f1ed;">
+				<div class="card-body font-weight-bold">
+					<h4 class="card-title font-weight-bold h3 text-dark text-left"><?= $job['job_name'] ?></h4>
+					<hr/>
+					<p class="card-text text-decoration-none text-secondary  h5  font-weight-bold my-4">
+						<i class="icon fas fa-map-marker-alt "></i> <?= $job['company'] ?>
+					</p>
+					<div class="row card-text">
+						<div class="col h5  font-weight-bold no-text-wrap">
+							<i class="icon fas fa-envelope-open-text "></i> <?= $job['details'] ?>
+						</div>
+						<div class="col h5  font-weight-bold no-text-wrap  text-center">
+							<a href="<?= $job['link'] ?>" target="_blank"
+							   class="btn btn-sm btn-dark">Show</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br/>
+			<br/>
+		<?php endforeach;
+
 	}
 }

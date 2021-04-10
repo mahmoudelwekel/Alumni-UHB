@@ -42,9 +42,10 @@ if( $_SERVER['REQUEST_METHOD'] == "POST" ) {
 										SET job_name = ?, 
 										    company = ?,
 										    details = ?,
-										    link = ?
+										    link = ?,
+										    category_id = ?
 										WHERE id = ?");
-		$stmt->execute([$name, $company, $details, $link, $id]);
+		$stmt->execute([$name, $company, $details, $link, $_POST['category'], $id]);
 
 		redirect("jobs");
 	}
@@ -62,7 +63,9 @@ $stmt = $con->prepare("SELECT * FROM jobs WHERE id = ? LIMIT 1");
 $stmt->execute([$id]);
 $job = $stmt->fetch();
 
-
+$stmt = $con->prepare("SELECT * FROM categories");
+$stmt->execute();
+$categories = $stmt->fetchAll();
 ?>
 
 	<div class="container py-5">
@@ -86,6 +89,20 @@ $job = $stmt->fetch();
 			<div class="form-group">
 				<label for="details">Details</label>
 				<textarea class="form-control" id="details" name="details" rows="3" required><?= $_POST['details'] ?? $job['details'] ?></textarea>
+			</div>
+
+			<div class="form-group">
+				<label for="category">Category</label>
+				<select class="form-control" id="category" name="category">
+					<option value="0">...</option>
+					<?php foreach ($categories as $category): ?>
+						<option value="<?= $category['id'] ?>"
+								<?php if ( $category['id'] == $job['category_id'] ) echo "selected"; ?>
+						>
+							<?= $category['catg_name'] ?>
+						</option>
+					<?php endforeach; ?>
+				</select>
 			</div>
 
 			<button type="submit" class="btn btn-primary ">Save</button>

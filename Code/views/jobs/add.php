@@ -36,12 +36,15 @@ if( $_SERVER['REQUEST_METHOD'] == "POST" ) {
 	}
 
 	if ( empty($_SESSION['msg']) ) {
-		$stmt = $con->prepare("INSERT INTO jobs(job_name, company, details, link) VALUES (?, ?, ?, ?)");
-		$stmt->execute([$name, $company, $details, $link]);
+		$stmt = $con->prepare("INSERT INTO jobs(job_name, company, details, link, category_id) VALUES (?, ?, ?, ?, ?)");
+		$stmt->execute([$name, $company, $details, $link, $_POST['category']]);
 		redirect("jobs");
 	}
 }
 
+$stmt = $con->prepare("SELECT * FROM categories");
+$stmt->execute();
+$categories = $stmt->fetchAll();
 getErrors();
 ?>
 
@@ -66,6 +69,16 @@ getErrors();
             <label for="details">Details</label>
             <textarea class="form-control" id="details" name="details" rows="3" required><?= $_POST['details'] ?? "" ?></textarea>
         </div>
+
+		<div class="form-group">
+			<label for="category">Category</label>
+			<select class="form-control" id="category" name="category">
+				<option value="0">...</option>
+				<?php foreach ($categories as $category): ?>
+					<option value="<?= $category['id'] ?>"><?= $category['catg_name'] ?></option>
+				<?php endforeach; ?>
+			</select>
+		</div>
 
 		<button type="submit" class="btn btn-primary ">Save</button>
         <a href="index.php" class="btn btn-secondary ml-3">Close</a>

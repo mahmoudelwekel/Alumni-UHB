@@ -64,6 +64,22 @@ function getWorkshops( category_id ) {
 	});
 }
 
+function getJobs( category_id ) {
+	var data = {
+		type: "get_jobs_by_category",
+		category_id: category_id
+	};
+
+	$.ajax({
+		url: "../api.php",
+		type: "get",
+		data: data,
+		success: function( result ) {
+			$("#jobs").html(result);
+		}
+	});
+}
+
 function getDepartments( college_id ) {
 	var data = {
 		type: "get_departments_by_college",

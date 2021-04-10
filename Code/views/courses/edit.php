@@ -75,7 +75,6 @@ if ( isset( $_SESSION['msg'] ) ) {
 	unset( $_SESSION['msg'] );
 }
 
-
 $stmt = $con->prepare("SELECT * FROM categories");
 $stmt->execute();
 $categories = $stmt->fetchAll();

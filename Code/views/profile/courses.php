@@ -17,13 +17,24 @@ if ( isAlumnus() ) {
 									WHERE alumnus_id = ? AND state = ?");
 	$stmt->execute([$id, "finished"]);
 } elseif ( isLecturer() ) {
-	$stmt = $con->prepare("SELECT courses.*, lecturers.lec_name FROM courses
+	$stmt = $con->prepare("SELECT courses.*, lecturers.lec_name
+									FROM courses
 									INNER JOIN lecturers
 									ON lecturers.id = courses.lecturer_id
 									WHERE lecturer_id = ?");
 	$stmt->execute([$id]);
 }
 $courses = $stmt->fetchAll();
+
+if ( isLecturer() ) {
+	for ( $i = 0; $i < sizeof($courses); $i++ ) {
+		$stmt = $con->prepare("SELECT COUNT(DISTINCT alumnus_id) AS learners FROM alumnus_course WHERE course_id = ?");
+		$stmt->execute([$courses[$i]['id']]);
+		$c = $stmt->fetch();
+
+		$courses[$i]['learners'] = $c['learners'];
+	}
+}
 ?>
 
 	<div class="" style="background-image:url('<?= asset("Images/bg/empty.jpg") ?>') ;
@@ -54,8 +65,18 @@ $courses = $stmt->fetchAll();
 							<p class="card-text text-decoration-none text-secondary">
 								<i class="icon fas fa-calendar-alt"></i> <?= $course['start_date'] ?>
 							</p>
+							<?php if ( isLecturer() ): ?>
+								<p class="card-text text-decoration-none text-secondary">
+									<i class="icon fa fa-users"></i> <?= $course['learners'] ?>
+								</p>
+							<?php endif; ?>
 						</div>
-						<?php if ( $course['state'] == "finished" ): ?>
+						<?php if ( isAlumnus() && $course['state'] == "finished" ): ?>
+							<a href="cerificate.php?course=<?= $course['crs_name'] ?>" target="_blank"
+							   class="card-footer font-weight-bold">
+								Certificate >>
+							</a>
+						<?php elseif ( isLecturer() && $course['end_date'] > date("Y-m-d H:i:s") ): ?>
 							<a href="cerificate.php?course=<?= $course['crs_name'] ?>" target="_blank"
 							   class="card-footer font-weight-bold">
 								Certificate >>

@@ -14,48 +14,47 @@ if ( isAlumnus() ) {
 } elseif ( isLecturer() ) {
 	redirect("profile/courses.php");
 }
-$stmt->execute([$id , "finished"] );
+$stmt->execute([$id, "finished"]);
 $courses = $stmt->fetchAll();
 ?>
 
 
-<div class="" style="background-image:url('<?= asset("Images/bg/empty.jpg") ?>') ;
-	background-repeat: no-repeat;
-	background-size: contain;
-	background-position: right;
-	background-color: #e5f1ed;">
-	<div class="container h1 py-5">
-		My Requests
+	<div class="" style="background-image:url('<?= asset("Images/bg/empty.jpg") ?>') ;
+			background-repeat: no-repeat;
+			background-size: contain;
+			background-position: right;
+			background-color: #e5f1ed;">
+		<div class="container h1 py-5">
+			My Requests
+		</div>
 	</div>
-</div>
 
-<div class="container py-5">
-	<div class="row">
-		<?php foreach ( $courses as $course ): ?>
-			<div class="col-md-4">
-				<div class="card">
-					<img class="card-img-top p-4" src="<?= asset("Images/logo.png") ?>" alt="Card image cap">
-					<div class="card-body">
-						<h5 class="card-title font-weight-bold  text-primary"><?= $course['crs_name'] ?></h5>
-						<hr/>
-						<p class="card-text text-decoration-none text-secondary">
-							<i class="icon fas fa-user-tie "></i> <?= $course['lec_name'] ?>
-						</p>
-						<p class="card-text text-decoration-none text-secondary">
-							<i class="icon fas fa-map-marker-alt "></i> <?= $course['location'] ?>
-						</p>
-						<p class="card-text text-decoration-none text-secondary">
-							<i class="icon fas fa-calendar-alt"></i> <?= $course['start_date'] ?>
-						</p>
+	<div class="container py-5">
+		<div class="row">
+			<?php foreach ( $courses as $course ): ?>
+				<div class="col-md-4">
+					<div class="card">
+						<img class="card-img-top p-4" src="<?= asset("Images/logo.png") ?>" alt="Card image cap">
+						<div class="card-body">
+							<h5 class="card-title font-weight-bold  text-primary"><?= $course['crs_name'] ?></h5>
+							<hr/>
+							<p class="card-text text-decoration-none text-secondary">
+								<i class="icon fas fa-user-tie "></i> <?= $course['lec_name'] ?>
+							</p>
+							<p class="card-text text-decoration-none text-secondary">
+								<i class="icon fas fa-map-marker-alt "></i> <?= $course['location'] ?>
+							</p>
+							<p class="card-text text-decoration-none text-secondary">
+								<i class="icon fas fa-calendar-alt"></i> <?= $course['start_date'] ?>
+							</p>
+						</div>
+						<a class="card-footer font-weight-bold"><?= ucfirst($course['state']) ?></a>
 					</div>
-						<a class="card-footer font-weight-bold"><?= ucfirst( $course['state'] ) ?></a>
-
 				</div>
-			</div>
-		<?php endforeach; ?>
-	</div>
+			<?php endforeach; ?>
+		</div>
 
-</div>
+	</div>
 
 <?php
 require_once "../includes/footer.php";

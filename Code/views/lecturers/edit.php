@@ -48,14 +48,14 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		$salt = getColumn('lecturers', "salt", $id);
 	}
 
-	/** Validating the SSN */
+	/** Validating the Department */
 	if ( $_POST['department'] != 0 ) {
 		$department = $_POST['department'];
 	} else {
 		$_SESSION['msg'][] = "You Must Select a Department";
 	}
 
-	/** Validating the SSN */
+	/** Validating the Phone */
 	if( $_POST['phone'] != "" ) {
 		$phone = filter_var($_POST['phone'], FILTER_SANITIZE_STRING);
 
@@ -175,7 +175,7 @@ getErrors();
 			<label for="gender">Gender</label>
 			<select class="form-control" id="gender" name="gender">
 				<option value="0">Male</option>
-				<option value="1" <? if($lecturer['gender']) echo "selected"; ?> >Female</option>
+				<option value="1" <?php if($lecturer['gender']) echo "selected"; ?> >Female</option>
 			</select>
 		</div>
 

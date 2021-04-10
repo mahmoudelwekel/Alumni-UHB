@@ -12,10 +12,25 @@ if ( isAlumnus() ) {
 									ON lecturers.id = courses.lecturer_id
 									WHERE alumnus_id = ? AND state != ?");
 } elseif ( isLecturer() ) {
-	redirect("profile/courses.php");
+	$stmt = $con->prepare("SELECT courses.*, lecturers.lec_name
+									FROM courses
+									INNER JOIN lecturers
+									ON lecturers.id = courses.lecturer_id
+									WHERE lecturer_id = ? AND end_date < now()");
+	$stmt->execute([$id]);
 }
 $stmt->execute([$id, "finished"]);
 $courses = $stmt->fetchAll();
+
+if ( isLecturer() ) {
+	for ( $i = 0; $i < sizeof($courses); $i++ ) {
+		$stmt = $con->prepare("SELECT COUNT(DISTINCT alumnus_id) AS learners FROM alumnus_course WHERE course_id = ?");
+		$stmt->execute([$courses[$i]['id']]);
+		$c = $stmt->fetch();
+
+		$courses[$i]['learners'] = $c['learners'];
+	}
+}
 ?>
 
 
@@ -48,7 +63,11 @@ $courses = $stmt->fetchAll();
 								<i class="icon fas fa-calendar-alt"></i> <?= $course['start_date'] ?>
 							</p>
 						</div>
-						<a class="card-footer font-weight-bold"><?= ucfirst($course['state']) ?></a>
+						<?php if ( isAlumnus() ): ?>
+							<a class="card-footer font-weight-bold"><?= ucfirst($course['state']) ?></a>
+						<?php else: ?>
+							<a class="card-footer font-weight-bold"><?= $course['learners'] ?></a>
+						<?php endif; ?>
 					</div>
 				</div>
 			<?php endforeach; ?>

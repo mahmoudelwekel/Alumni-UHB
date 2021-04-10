@@ -1,6 +1,10 @@
 <?php
 $page = "jobs";
 require_once"../../init/init.php";
+
+if ( !isAdmin() ) {
+	redirect("jobs/show.php");
+}
 $stmt = $con->prepare("SELECT * FROM jobs");
 $stmt->execute();
 $jobs = $stmt->fetchAll();

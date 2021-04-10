@@ -72,30 +72,30 @@ for ( $i = 0; $i < sizeof($lecturers); $i++ ) {
 		<div class="carousel-item active" data-interval="3000">
 			<img src="<?= asset("Images/slider/slider1.jpg") ?>" class="d-block w-100 fullimg">
 			<div class="carousel-caption bg-dark  ">
-				<h4>Title 1</h4>
+				<h4>Mission</h4>
 				<hr>
 				<p>
-					Description 1
+					Qualified  Alumni ready to compete in the Labor market locally and internationally.
 				</p>
 			</div>
 		</div>
 		<div class="carousel-item" data-interval="3000">
 			<img src="<?= asset("Images/slider/slider2.jpg") ?>" class="d-block w-100 fullimg">
 			<div class="carousel-caption bg-dark  ">
-				<h4>Title 2</h4>
+				<h4>Vision</h4>
 				<hr>
 				<p>
-					Description 2
+					Enhancing the competitiveness of our alumni in the labor market through vocational training and job rehabilitation
 				</p>
 			</div>
 		</div>
 		<div class="carousel-item" data-interval="3000">
 			<img src="<?= asset("Images/slider/slider3.jpg") ?>" class="d-block w-100 fullimg">
 			<div class="carousel-caption bg-dark  ">
-				<h4>Title 3</h4>
+				<h4>Values</h4>
 				<hr>
 				<p>
-					Description 3
+					Helping alumni find employment and vocational training opportunities and preserve effective communication with alumni, employment and vocational training destinations.
 				</p>
 			</div>
 		</div>

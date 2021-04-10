@@ -106,9 +106,6 @@ if ( isAlumnus() ) {
 				<div class="col h5 font-weight-bold no-text-wrap">
 					<i class="icon fas fa-layer-group "></i> <?= $course['category'] ?>
 				</div>
-				<div class="col h5 font-weight-bold no-text-wrap" title="Deadline">
-					<i class="icon far fa-clock "></i> <?= $course['deadline'] ?>
-				</div>
 				<div class="col h5 font-weight-bold no-text-wrap">
 					<p title="Start Date">
 						<i class="icon far fa-clock "></i> <?= $course['start_date'] ?>

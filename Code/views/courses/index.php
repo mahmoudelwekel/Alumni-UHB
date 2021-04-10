@@ -44,7 +44,10 @@ $courses = $stmt->fetchAll();
 			<?php foreach ( $courses as $course ): ?>
 				<tr>
 					<td><?= $course['id'] ?></td>
-					<td><?= $course['crs_name'] ?></td>
+					<td>
+						<a style="color: inherit" href="<?= route( "courses/course.php?id=" . $course['id'])?>"
+						><?= $course['crs_name'] ?>
+						</a></td>
 					<td><?= $course['location'] ?></td>
 					<td><?= $course['details'] ?></td>
 					<td><?= $course['start_date'] ?></td>

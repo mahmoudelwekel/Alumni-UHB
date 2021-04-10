@@ -22,7 +22,6 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	redirect("workshops");
 }
 
-
 $stmt = $con->prepare("SELECT workshops.*, categories.catg_name AS category FROM workshops
 								INNER JOIN categories
 								ON categories.id = workshops.category_id");
@@ -50,8 +49,18 @@ for ( $i = 0; $i < sizeof($workshops); $i++ ) {
 			$_lecturers .= " and ";
 		}
 	}
-
 	$workshops[$i]["lecturers"] = $_lecturers;
+
+	$stmt = $con->prepare("SELECT * FROM lecturer_workshop where workshop_id = ? ORDER BY start_date ASC LIMIT 1");
+	$stmt->execute([$id]);
+	$start = $stmt->fetch();
+	$workshops[$i]["start_date"] = $start["start_date"];
+
+	$stmt = $con->prepare("SELECT * FROM lecturer_workshop where workshop_id = ? ORDER BY end_date DESC LIMIT 1");
+	$stmt->execute([$id]);
+	$end = $stmt->fetch();
+	$workshops[$i]["end_date"] = $end["end_date"];
+
 }
 
 if ( isAlumnus() ) {
@@ -105,8 +114,14 @@ if ( isAlumnus() ) {
 						<div class="col h5  font-weight-bold no-text-wrap">
 							<i class="icon fas fa-layer-group "></i> <?= $workshop['category'] ?>
 						</div>
-						<div class="col h5  font-weight-bold no-text-wrap">
-							<i class="icon far fa-clock "></i> <?= $workshop['deadline'] ?>
+						<div class="col h5 font-weight-bold no-text-wrap">
+							<p title="Start Date">
+								<i class="icon far fa-clock "></i> <?= $workshop['start_date'] ?>
+							</p>
+
+							<p title="End Date">
+								<i class="icon far fa-clock "></i> <?= $workshop['end_date'] ?>
+							</p>
 						</div>
 
 						<div class="col h5  font-weight-bold no-text-wrap">

@@ -26,13 +26,11 @@ if ( isAlumnus() ) {
 $courses = $stmt->fetchAll();
 ?>
 
-
 	<div class="" style="background-image:url('<?= asset("Images/bg/empty.jpg") ?>') ;
 			background-repeat: no-repeat;
 			background-size: contain;
 			background-position: right;
 			background-color: #e5f1ed;">
-
 		<div class="container h1 py-5">
 			Courses
 		</div>

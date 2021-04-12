@@ -136,7 +136,7 @@ $categories = $stmt->fetchAll();
 									</div>
 								<?php endif; ?>
 
-								<?php if ( $course['deadline'] < date("Y-m-d") && sizeof($course['comments']) ): ?>
+								<?php if ( isset($course['comments']) ): ?>
 									<div class="col-12 ">
 										<h4 class="text-center">
 											<br/>

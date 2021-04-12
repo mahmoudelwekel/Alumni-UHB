@@ -86,7 +86,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
                      salt = ?, 
                      phone = ?, 
                      cv = ?,
-                     department_id = ?
+                     department_id = ?,
 					 gender = ?
                      WHERE 
                      id = ?");

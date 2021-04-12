@@ -103,6 +103,7 @@ getErrors();
     <hr />
 
 	<form method="post" action="<?= $_SERVER['REQUEST_URI'] ?>">
+		<input type="hidden" name="id" value="<?= $workshop['id'] ?>">
 		<div class="form-group">
 			<label for="title">Title</label>
 			<input type="text" class="form-control" id="title" name="name" required value="<?= $workshop['wshop_name'] ?>">

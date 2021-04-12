@@ -2,7 +2,7 @@
 $page = "departments";
 require_once "../../init/init.php";
 
-if( isAdmin() ) {
+if( !isAdmin() ) {
 	redirect("public");
 }
 

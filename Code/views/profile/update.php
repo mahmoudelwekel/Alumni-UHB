@@ -22,7 +22,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		}
 
 		$phone = $_POST['phone'];
-		$department = $_POST['departments'];
+		$department = $_POST['department'];
 
 		$stmt = $con->prepare("UPDATE alumni SET 
 						 SSN = ?, 
@@ -52,7 +52,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			$salt = getColumn('lecturers', "salt", $id);
 		}
 		$phone = $_POST['phone'];
-		$department = $_POST['departments'];
+		$department = $_POST['department'];
 
 		$cv = $_FILES['cv'];
 		if( !empty( $_FILES['cv']['name'] ) ) {
@@ -77,8 +77,8 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
                      WHERE 
                      id = ?");
 		$stmt->execute([$ssn, $name, $email, $password, $salt, $phone, $cvName, $department, $gender, $id]);
-
 	}
+//	redirect("profile");
 }
 
 if ( isAlumnus() ) {
@@ -116,7 +116,7 @@ $departments = $stmt->fetchAll();
 	<h3>Update Profile</h3>
 	<hr/>
 
-	<form>
+	<form method="post" action="<?= $_SERVER['PHP_SELF'] ?>">
 		<?php if( isLecturer() || isAlumnus() ): ?>
 			<div class="form-group">
 				<label for="ssn">SSN</label>
@@ -131,7 +131,7 @@ $departments = $stmt->fetchAll();
 		</div>
 		<div class="form-group">
 			<label for="email">Email</label>
-			<input type="email" class="form-control" id="email" value="<?= $_POST['email'] ?? $user['email'] ?? "" ?>" required>
+			<input type="email" class="form-control" name="email" id="email" value="<?= $_POST['email'] ?? $user['email'] ?? "" ?>" required>
 		</div>
 
 		<div class="form-group">
@@ -142,7 +142,7 @@ $departments = $stmt->fetchAll();
 		<?php if ( isAlumnus() || isLecturer() ): ?>
 			<div class="form-group">
 				<label for="college">College</label>
-				<select class="form-control" id="college">
+				<select class="form-control" id="college" name="college">
 					<option value="0">...</option>
 					<?php foreach ( $colleges as $college ): ?>
 						<option
@@ -174,7 +174,7 @@ $departments = $stmt->fetchAll();
 				<label for="gender">Gender</label>
 				<select class="form-control" id="gender" name="gender">
 					<option value="0">Male</option>
-					<option value="1" <? if($user['gender']) echo "selected"; ?> >Female</option>
+					<option value="1" <?php if($user['gender']) echo "selected"; ?> >Female</option>
 				</select>
 			</div>
 

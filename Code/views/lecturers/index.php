@@ -15,16 +15,6 @@ $stmt->execute();
 
 $lecturers = $stmt->fetchAll();
 
-for ( $i = 0; $i < sizeof( $lecturers ); $i++ ) {
-	$id = $lecturers[$i]['id'];
-
-	$stmt = $con->prepare("SELECT AVG(rate) as rate FROM alumnus_lecturer_rate WHERE lecturer_id = ?");
-	$stmt->execute([$id]);
-
-	$rate = $stmt->fetch();
-	$lecturers[$i]['rate'] = $rate['rate'];
-}
-
 ?>
 
 <div class="container py-5">
@@ -47,7 +37,6 @@ for ( $i = 0; $i < sizeof( $lecturers ); $i++ ) {
                     <th>CV</th>
                     <th>Email</th>
                     <th>Phone</th>
-                    <th>rate</th>
                     <th></th>
                 </tr>
             </thead>
@@ -62,9 +51,7 @@ for ( $i = 0; $i < sizeof( $lecturers ); $i++ ) {
 						<td><a class="btn btn-success" href="<?= uploads("cvs/" . $lecturer['cv']); ?>">Download</a></td>
 						<td><?= $lecturer['email'] ?></td>
 						<td><?= $lecturer['phone'] ?></td>
-						<td><?= $lecturer['rate'] ?></td>
 						<td>
-						<!--<a class="btn btn-sm mb-1 btn-dark" href="--><?//= route("lecturers/show.php?id=" . $lecturer['id'] )?><!-- ">Details</a>-->
 							<a class="btn btn-sm mb-1 btn-dark" href="<?= route("lecturers/edit.php?id=" . $lecturer['id'] )?>">Edit</a>
 							<a class="btn btn-sm mb-1 btn-danger" href="<?= route("lecturers/delete.php?id=" . $lecturer['id'] )?>">Delete</a>
 						</td>

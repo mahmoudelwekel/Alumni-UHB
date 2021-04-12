@@ -93,6 +93,7 @@ $course = $stmt->fetch();
 		<h3>Add Course</h3>
 		<hr />
 		<form action="<?= $_SERVER['REQUEST_URI'] ?>" method="post">
+			<input type="hidden" name="id" value="<?= $course['id'] ?>">
 			<div class="form-group">
 				<label for="title">Title</label>
 				<input type="text" class="form-control" id="title" name="name" value="<?= $_POST['name'] ?? $course['crs_name'] ?>" required>
@@ -110,12 +111,12 @@ $course = $stmt->fetch();
 
 			<div class="form-group">
 				<label for="start_date">Start Date</label>
-				<input type="datetime-local" class="form-control" id="start_date" name="start_date" value="<?= $_POST['start_date'] ?? $course['start_date'] ?>" required>
+				<input type="datetime-local" class="form-control" id="start_date" name="start_date" value="<?= date('Y-m-d\TH:i',strtotime($_POST['start_date'] ?? $course['start_date'])) ?>" required>
 			</div>
 
 			<div class="form-group">
 				<label for="end_date">End Date</label>
-				<input type="datetime-local" class="form-control" id="end_date" name="end_date" value="<?= $_POST['end_date'] ?? $course['end_date'] ?>" required>
+				<input type="datetime-local" class="form-control" id="end_date" name="end_date" value="<?= date('Y-m-d\TH:i',strtotime($_POST['end_date'] ?? $course['end_date'])) ?>" required>
 			</div>
 
 			<div class="form-group">

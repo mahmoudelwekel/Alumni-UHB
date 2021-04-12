@@ -46,15 +46,6 @@ if ( isset($_GET) ) {
 		$courses = $stmt->fetchAll();
 		for ( $i = 0; $i < sizeof($courses); $i++ ) {
 			$id = $courses[$i]['id'];
-			$stmt = $con->prepare("SELECT AVG(rate) FROM alumnus_lecturer_rate WHERE course_id = ?");
-			$stmt->execute([$id]);
-			$avg = $stmt->fetch()['AVG(rate)'];
-
-			if ( $avg == null ) {
-				$avg = 0;
-			}
-
-			$courses[$i]['rate'] = $avg;
 
 			$stmt = $con->prepare("SELECT alumnus_course.*, alumni.alu_name 
 									FROM alumnus_course

@@ -36,7 +36,7 @@ $lecturers = $stmt->fetchAll();
 for ( $i = 0; $i < sizeof($lecturers); $i++ ) {
 	$id = $lecturers[$i]['id'];
 	$stmt = $con->prepare("SELECT SUM(ac) as total_sum
-										FROM ( SELECT courses.*, COUNT(alumnus_course.id) AS ac 
+										FROM ( SELECT courses.*, COUNT(DISTINCT alumnus_course.alumnus_id) AS ac 
 												FROM courses
 												INNER JOIN alumnus_course
                                                 ON alumnus_course.course_id = courses.id
@@ -49,7 +49,7 @@ for ( $i = 0; $i < sizeof($lecturers); $i++ ) {
 	}
 
 	$stmt = $con->prepare("SELECT SUM(aw) as total_sum
-										FROM ( SELECT workshops.*, COUNT(alumnus_workshop.id) AS aw 
+										FROM ( SELECT workshops.*, COUNT(DISTINCT alumnus_workshop.alumnus_id) AS aw 
 												FROM workshops
 												INNER JOIN alumnus_workshop
                                                 ON alumnus_workshop.workshop_id = workshops.id

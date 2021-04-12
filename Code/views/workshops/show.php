@@ -8,7 +8,7 @@ if ( isset($_GET['workshop_id']) && isAlumnus() ) {
 
 	$stmt = $con->prepare("INSERT INTO alumnus_workshop(alumnus_id, workshop_id) VALUES(?, ?)");
 	$stmt->execute([$alumnus_id, $workshop_id]);
-	redirect("workshops");
+//	redirect("workshops");
 }
 
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
@@ -138,10 +138,14 @@ $categories = $stmt->fetchAll();
 								<i class="icon fas fa-envelope-open-text "></i> <?= $workshop['details'] ?>
 							</div>
 
-							<?php if ( $workshop['deadline'] > date("Y-m-d") && isAlumnus() ): ?>
+							<?php if ( $workshop['deadline'] > date("Y-m-d") && isAlumnus() && !in_array($workshop['id'], $myWorkshops) ): ?>
 								<div class="col h5  font-weight-bold no-text-wrap  text-center">
 									<a href="<?= $_SERVER['REQUEST_URI'] ?>?workshop_id=<?= $workshop['id'] ?>"
 									   class="btn btn-sm btn-dark" type="submit">Apply</a>
+								</div>
+							<?php elseif ( isAlumnus() && in_array($workshop['id'], $myWorkshops) ): ?>
+								<div class="col h5  font-weight-bold no-text-wrap text-center">
+									<button class="btn btn-sm btn-dark"><?= ucfirst(workshopState($workshop['id'], $_SESSION['id'])) ?></button>
 								</div>
 							<?php endif; ?>
 

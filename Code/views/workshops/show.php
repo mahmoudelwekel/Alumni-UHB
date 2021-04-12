@@ -50,16 +50,6 @@ for ( $i = 0; $i < sizeof($workshops); $i++ ) {
 		}
 	}
 	$workshops[$i]["lecturers"] = $_lecturers;
-
-	$stmt = $con->prepare("SELECT * FROM lecturer_workshop where workshop_id = ? ORDER BY start_date ASC LIMIT 1");
-	$stmt->execute([$id]);
-	$start = $stmt->fetch();
-	$workshops[$i]["start_date"] = $start["start_date"];
-
-	$stmt = $con->prepare("SELECT * FROM lecturer_workshop where workshop_id = ? ORDER BY end_date DESC LIMIT 1");
-	$stmt->execute([$id]);
-	$end = $stmt->fetch();
-	$workshops[$i]["end_date"] = $end["end_date"];
 }
 
 if ( isAlumnus() ) {
@@ -127,11 +117,11 @@ $categories = $stmt->fetchAll();
 							</div>
 							<div class="col h5 font-weight-bold no-text-wrap">
 								<p title="Start Date">
-									<i class="icon far fa-clock "></i> <?= $workshop['start_date'] ?>
+									<i class="icon far fa-clock "></i> <?= date("Y-m-d", strtotime($workshop['start_date'] ) ) ?>
 								</p>
 
 								<p title="End Date">
-									<i class="icon far fa-clock "></i> <?= $workshop['end_date'] ?>
+									<i class="icon far fa-clock "></i> <?= date("Y-m-d", strtotime( $workshop['end_date'] ) ) ?>
 								</p>
 							</div>
 

@@ -124,7 +124,7 @@ getErrors();
 		<fieldset class="p-2 border rounded mb-3" id="lecturersContainer">
 			<legend style="width: auto!important;">Lecturers</legend>
 			<div class="form-row lecturerDiv" id="lecturerDiv">
-				<div class="col-4 mb-3">
+				<div class="col-3 mb-3">
 					<label for="lecturers">Lecturer</label>
 					<select class="form-control " data-live-search="true" name="lecturers[]">
 						<?php foreach ($lecturers as $lecturer) : ?>
@@ -132,18 +132,18 @@ getErrors();
 						<?php endforeach; ?>
 					</select>
 				</div>
-				<div class="col-2 mb-3">
+				<div class="col-3 mb-3">
 					<label for="lecturers_start">Start</label>
-					<input type="time" class="form-control" id="lecturers_start" name="lecturer_start[]" required>
+					<input type="datetime-local" class="form-control" id="lecturers_start" name="lecturer_start[]" required>
 				</div>
-				<div class="col-2 mb-3">
+				<div class="col-3 mb-3">
 					<label for="lecturers_end">End</label>
-					<input type="time" class="form-control" id="lecturers_end" name="lecturers_end[]" required>
+					<input type="datetime-local" class="form-control" id="lecturers_end" name="lecturers_end[]" required>
 				</div>
 				<div class="col-2 d-flex align-items-end mb-3">
 					<span  class="btn btn-primary btn-block addLecturer" onclick="addLecturer()"><i class="fas fa-plus"></i></span>
 				</div>
-				<div class="col-2 d-flex align-items-end mb-3">
+				<div class="col-1 d-flex align-items-end mb-3">
 					<span  class="btn btn-danger btn-block addLecturer" onclick="RemoveLecturer(this)"><i class="fas fa-times"></i></span>
 				</div>
 			</div>

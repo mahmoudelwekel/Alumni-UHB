@@ -59,6 +59,7 @@ function getWorkshops( category_id ) {
 		data: data,
 		success: function( result ) {
 			$("#workshops").html(result);
+			console.log(result);
 			render_comments();
 		}
 	});

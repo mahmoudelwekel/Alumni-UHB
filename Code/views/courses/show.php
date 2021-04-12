@@ -127,7 +127,7 @@ $categories = $stmt->fetchAll();
 								<!-- Label -->
 								<?php if ( $course['deadline'] > date("Y-m-d") && isAlumnus() && !in_array($course['id'], $myCourses) ): ?>
 									<div class="col h5  font-weight-bold no-text-wrap  text-center">
-										<a href="<?= $_SERVER['PHP_SELF'] ?>?course_id=<?= $course['id'] ?>"
+										<a href="<?= route("courses/show.php") ?>?course_id=<?= $course['id'] ?>"
 										   class="btn btn-sm btn-dark" type="submit">Apply</a>
 									</div>
 								<?php elseif ( isAlumnus() && in_array($course['id'], $myCourses) ): ?>
@@ -161,7 +161,7 @@ $categories = $stmt->fetchAll();
 								<?php endif; ?>
 								<?php if ( in_array($course['id'], $myCourses) && courseState($course['id'], $_SESSION['id']) == "finished" ): ?>
 									<div class="col-12 ">
-										<form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
+										<form action="<?= route("courses/show.php") ?>" method="post">
 											<input type="hidden" name="course_id" value="<?= $course['id'] ?>">
 											<label for="comment">Add Comment</label>
 											<textarea name="comment" id="comment" class="form-control"></textarea>

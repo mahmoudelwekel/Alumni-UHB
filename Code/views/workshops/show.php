@@ -50,6 +50,15 @@ for ( $i = 0; $i < sizeof($workshops); $i++ ) {
 		}
 	}
 	$workshops[$i]["lecturers"] = $_lecturers;
+
+	$stmt = $con->prepare("SELECT alumnus_workshop.*, alumni.alu_name 
+									FROM alumnus_workshop
+									INNER JOIN alumni 
+									ON alumni.id = alumnus_workshop.alumnus_id
+									WHERE workshop_id = ? AND comment is not null");
+	$stmt->execute([$id]);
+	$comments = $stmt->fetchAll();
+	$workshops[$i]['comments'] = $comments;
 }
 
 if ( isAlumnus() ) {
@@ -81,7 +90,7 @@ $categories = $stmt->fetchAll();
 	<div class="container  py-5">
 
 		<div id="filters" class="button-group">
-			<button onclick="getCourses('*')" class="button is-checked" data-filter="*">show all</button>
+			<button onclick="getWorkshops('all')" class="button is-checked">show all</button>
 			<?php foreach ( $categories as $category ): ?>
 				<button onclick="getWorkshops('<?= $category['id'] ?>')" class="button"
 						data-filter=".catg-<?= $category['id'] ?>"><?= $category['catg_name'] ?></button>
@@ -131,7 +140,7 @@ $categories = $stmt->fetchAll();
 
 							<?php if ( $workshop['deadline'] > date("Y-m-d") && isAlumnus() ): ?>
 								<div class="col h5  font-weight-bold no-text-wrap  text-center">
-									<a href="<?= $_SERVER['PHP_SELF'] ?>?workshop_id=<?= $workshop['id'] ?>"
+									<a href="<?= $_SERVER['REQUEST_URI'] ?>?workshop_id=<?= $workshop['id'] ?>"
 									   class="btn btn-sm btn-dark" type="submit">Apply</a>
 								</div>
 							<?php endif; ?>
@@ -161,7 +170,7 @@ $categories = $stmt->fetchAll();
 							<?php endif; ?>
 							<?php if ( in_array($workshop['id'], $myWorkshops) ): ?>
 								<div class="col-12 ">
-									<form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
+									<form action="<?= $_SERVER['REQUEST_URI'] ?>" method="post">
 										<input type="hidden" name="workshop_id" value="<?= $workshop['id'] ?>">
 										<label for="comment">Add Comment</label>
 										<textarea name="comment" id="comment" class="form-control"></textarea>

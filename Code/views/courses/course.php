@@ -49,9 +49,18 @@ $alumni = $stmt->fetchAll();
 			<div class="card-body font-weight-bold">
 				<h4 class="card-title font-weight-bold h3 text-dark text-left"><?= $course['crs_name'] ?></h4>
 				<hr/>
-				<p class="card-text text-decoration-none text-secondary  h5  font-weight-bold my-4">
-					<i class="icon fas fa-map-marker-alt "></i> <?= $course['location'] ?>
-				</p>
+				<div class="row">
+					<div class="col-md-4">
+						<p class="card-text text-decoration-none text-secondary  h5  font-weight-bold my-4">
+							<i class="icon fas fa-map-marker-alt "></i> <?= $course['location'] ?>
+						</p>
+					</div>
+					<div class="col-md-8">
+						<p class="card-text text-decoration-none text-secondary  h5  font-weight-bold my-4">
+							<i class="icon fa fa-user "></i> <?= $course['lecturer'] ?>
+						</p>
+					</div>
+				</div>
 				<div class="row card-text">
 					<div class="col h5  font-weight-bold no-text-wrap">
 						<i class="icon fas fa-layer-group "></i> <?= $course['category'] ?>
@@ -119,10 +128,13 @@ $alumni = $stmt->fetchAll();
 						<td><?= ucfirst($alumnus['state']) ?></td>
 						<td>
 							<?php if ( $alumnus['state'] == "pending" ): ?>
-								<a class="btn btn-sm mb-1 btn-dark" href="<?= route("courses/course.php?id=" . $course['id'] . "&alumnus_id=" . $alumnus['id'] . "&state=accepted") ?>">Accept</a>
-								<a class="btn btn-sm mb-1 btn-dark" href="<?= route("courses/course.php?id=" . $course['id'] . "&alumnus_id=" . $alumnus['id'] . "&state=refused") ?>">Refuse</a>
+								<a class="btn btn-sm mb-1 btn-dark"
+								   href="<?= route("courses/course.php?id=" . $course['id'] . "&alumnus_id=" . $alumnus['id'] . "&state=accepted") ?>">Accept</a>
+								<a class="btn btn-sm mb-1 btn-dark"
+								   href="<?= route("courses/course.php?id=" . $course['id'] . "&alumnus_id=" . $alumnus['id'] . "&state=refused") ?>">Refuse</a>
 							<?php elseif ( $alumnus['state'] != "finished" && $alumnus['state'] != "refused" ): ?>
-								<a class="btn btn-sm mb-1 btn-dark" href="<?= route("courses/course.php?id=" . $course['id'] . "&alumnus_id=" . $alumnus['id'] . "&state=finished") ?>">Finish</a>
+								<a class="btn btn-sm mb-1 btn-dark"
+								   href="<?= route("courses/course.php?id=" . $course['id'] . "&alumnus_id=" . $alumnus['id'] . "&state=finished") ?>">Finish</a>
 							<?php endif; ?>
 						</td>
 					</tr>

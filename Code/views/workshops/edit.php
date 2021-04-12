@@ -49,16 +49,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$category = $_POST['category'];
 	}
 
+	$start_date = date("Y-m-d H:i:s", strtotime( $_POST['start_date'] ) );
+	$end_date = date("Y-m-d H:i:s", strtotime( $_POST['end_date'] ) );
+
 	if ( empty( $_SESSION['msg'] ) ) {
 		$id = $_POST['id'];
 		$stmt = $con->prepare("UPDATE workshops
 										SET wshop_name = ?,
 										    deadline = ?,
+										    start_date = ?,
+										    end_date = ?,
 										    location = ?,
 										    details = ?,
 										    category_id = ?
 										WHERE id = ?)");
-		$stmt->execute([$name, $deadline, $location, $details, $category, $id]);
+		$stmt->execute([$name, $deadline, $start_date, $end_date, $location, $details, $category, $id]);
 
 		$stmt = $con->prepare("DELETE FROM lecturer_workshop WHERE workshop_id = ?");
 		$stmt->execute([$id]);
@@ -112,6 +117,16 @@ getErrors();
 		<div class="form-group">
 			<label for="location">Location</label>
 			<input type="text" class="form-control" id="location" name="location" required value="<?= $workshop['location'] ?>">
+		</div>
+
+		<div class="form-group">
+			<label for="start_date">Start Date</label>
+			<input type="datetime-local" class="form-control" id="start_date" name="start_date" value="<?= date('Y-m-d\TH:i',strtotime($_POST['start_date'] ?? $workshop['start_date'])) ?>" required>
+		</div>
+
+		<div class="form-group">
+			<label for="end_date">End Date</label>
+			<input type="datetime-local" class="form-control" id="end_date" name="end_date" value="<?= date('Y-m-d\TH:i',strtotime($_POST['end_date'] ?? $workshop['end_date'])) ?>" required>
 		</div>
 
 		<div class="form-group">

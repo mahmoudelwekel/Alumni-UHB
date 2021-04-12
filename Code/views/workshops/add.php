@@ -48,9 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$category = $_POST['category'];
 	}
 
+	$start_date = date("Y-m-d H:i:s", strtotime( $_POST['start_date'] ) );
+	$end_date = date("Y-m-d H:i:s", strtotime( $_POST['end_date'] ) );
+
 	if (empty($_SESSION['msg'])) {
-		$stmt = $con->prepare("INSERT INTO workshops(wshop_name, deadline, location, details, category_id) VALUES (?, ?, ?, ?, ?)");
-		$stmt->execute([$name, $deadline, $location, $details, $category]);
+		$stmt = $con->prepare("INSERT INTO workshops(wshop_name, deadline, start_date, end_date, location, details, category_id) VALUES (?, ?, ?, ?,?, ?, ?)");
+		$stmt->execute([$name, $deadline, $start_date, $end_date,$location, $details, $category]);
 
 		$id = $con->lastInsertId();
 		foreach ($lecturers as $lecturer) {
@@ -88,6 +91,16 @@ getErrors();
 		<div class="form-group">
 			<label for="location">Location</label>
 			<input type="text" class="form-control" id="location" name="location">
+		</div>
+
+		<div class="form-group">
+			<label for="start_date">Start Date</label>
+			<input type="datetime-local" class="form-control" id="start_date" name="start_date" required value="<?= $_POST['start_date'] ?? "" ?>">
+		</div>
+
+		<div class="form-group">
+			<label for="end_date">End Date</label>
+			<input type="datetime-local" class="form-control" id="end_date" name="end_date" required value="<?= $_POST['end_date'] ?? "" ?>">
 		</div>
 
 		<div class="form-group">

@@ -25,7 +25,7 @@ for ( $i = 0; $i < sizeof($workshops); $i++ ) {
 	$lecturers = $stmt->fetchAll();
 	$_lecturers = "";
 	for ( $j = 0; $j < sizeof($lecturers); $j++ ) {
-		$_lecturers .= $lecturers[$i]['lecturer'];
+		$_lecturers .= $lecturers[$j]['lecturer'];
 
 		if ( sizeof($lecturers) - $j > 2 ) {
 			$_lecturers .= ", ";

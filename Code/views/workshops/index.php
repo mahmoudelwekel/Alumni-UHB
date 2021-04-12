@@ -61,7 +61,7 @@ for ( $i = 0; $i < sizeof($workshops); $i++ ) {
 			<?php foreach ($workshops as $workshop): ?>
                 <tr>
                     <td><?= $workshop['id'] ?></td>
-                    <td><?= $workshop['wshop_name'] ?></td>
+					<td><a style="color: inherit" href="<?= route( "workshops/workshop.php?id=" . $workshop['id'])?>"><?= $workshop['wshop_name'] ?></a></td>
                     <td><?= $workshop['location'] ?></td>
                     <td><?= $workshop['deadline'] ?></td>
                     <td><?= $workshop['details'] ?></td>

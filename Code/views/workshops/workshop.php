@@ -22,7 +22,7 @@ $stmt = $con->prepare("SELECT
        						FROM 
        						     workshops
        						INNER JOIN categories
-       						ON categories.id = workshop.category_id
+       						ON categories.id = workshops.category_id
        						WHERE workshops.id = ?
        						LIMIT 1");
 $stmt->execute([$_GET['id']]);
@@ -99,17 +99,6 @@ $workshop["lecturers"] = $_lecturers;
 					<button class="btn btn-sm btn-dark">Finished</button>
 				<?php endif; ?>
 			</div>
-
-			<?php if ($workshop['deadline'] < date("Y-m-d") && sizeof($workshop['comments'])): ?>
-				<div class="col-12 ">
-					<h4 class="text-center">
-						<br/>
-						Comments
-						<hr class="w-50"/>
-					</h4>
-
-				</div>
-			<?php endif; ?>
 		</div>
 	</div>
 	<br/>

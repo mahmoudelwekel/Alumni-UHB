@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 										    location = ?,
 										    details = ?,
 										    category_id = ?
-										WHERE id = ?)");
+										WHERE id = ?");
 		$stmt->execute([$name, $deadline, $start_date, $end_date, $location, $details, $category, $id]);
 
 		$stmt = $con->prepare("DELETE FROM lecturer_workshop WHERE workshop_id = ?");

@@ -71,17 +71,9 @@ $alumni = $stmt->fetchAll();
 					<div class="col h5  font-weight-bold no-text-wrap">
 						<i class="icon fas fa-envelope-open-text "></i> <?= $course['details'] ?>
 					</div>
-
-					<?php if ( $course['deadline'] > date("Y-m-d") ): ?>
-						<div class="col h5  font-weight-bold no-text-wrap  text-center">
-							<button class="btn btn-sm btn-dark" type="submit">Open</button>
-						</div>
-					<?php else: ?>
-						<button class="btn btn-sm btn-dark">Finished</button>
-					<?php endif; ?>
 				</div>
 
-				<?php if ( $course['deadline'] < date("Y-m-d") && sizeof($course['comments']) ): ?>
+				<?php if ( $course['deadline'] < date("Y-m-d") && isset($course['comments']) ): ?>
 					<div class="col-12 ">
 						<h4 class="text-center">
 							<br/>

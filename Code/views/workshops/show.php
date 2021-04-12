@@ -84,7 +84,7 @@ $categories = $stmt->fetchAll();
 			background-size: contain;
 			background-position: right;
 			background-color: #e5f1ed;">
-		<div class="container h1 py-5">Courses</div>
+		<div class="container h1 py-5">Workshops</div>
 	</div>
 
 	<div class="container  py-5">

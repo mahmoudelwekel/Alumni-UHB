@@ -270,7 +270,7 @@ for ( $i = 0; $i < sizeof($lecturers); $i++ ) {
 										</div>
 									<?php endif; ?>
 
-									<?php if ( $workshop['deadline'] < date("Y-m-d") && sizeof($workshop['comments']) ): ?>
+									<?php if ( isset($workshop['comments']) ): ?>
 										<div class="col-12 ">
 											<h4 class="text-center">
 												<br/>

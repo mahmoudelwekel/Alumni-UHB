@@ -59,83 +59,76 @@ $workshop["lecturers"] = $_lecturers;
 
 ?>
 
-<div class="container py-5">
-	<div class="card shadow" style="background-image:url('<?= asset("Images/bg/empty.jpg") ?>') ;
-			background-repeat: no-repeat;
-			background-size: contain;
-			background-position: right;
-			background-color: #e5f1ed;">
-		<div class="card-body font-weight-bold">
-			<h4 class="card-title font-weight-bold h3 text-dark text-left"><?= $workshop['wshop_name'] ?></h4>
-			<hr/>
-			<div class="row">
-				<div class="col-md-4">
-					<p class="card-text text-decoration-none text-secondary  h5  font-weight-bold my-4">
-						<i class="icon fas fa-map-marker-alt "></i> <?= $workshop['location'] ?>
-					</p>
-				</div>
-				<div class="col-md-8">
-					<p class="card-text text-decoration-none text-secondary  h5  font-weight-bold my-4">
-						<i class="icon fa fa-user "></i> <?= $workshop['lecturers'] ?>
-					</p>
-				</div>
-
-			</div>			<div class="row card-text">
-				<div class="col h5  font-weight-bold no-text-wrap">
-					<i class="icon fas fa-layer-group "></i> <?= $workshop['category'] ?>
-				</div>
-				<div class="col h5  font-weight-bold no-text-wrap">
-					<i class="icon far fa-clock "></i> <?= $workshop['deadline'] ?>
-				</div>
-				<div class="col h5  font-weight-bold no-text-wrap">
-					<i class="icon fas fa-envelope-open-text "></i> <?= $workshop['details'] ?>
-				</div>
-
-				<?php if ($workshop['deadline'] > date("Y-m-d")): ?>
-					<div class="col h5  font-weight-bold no-text-wrap  text-center">
-						<button class="btn btn-sm btn-dark" type="submit">Open</button>
+	<div class="container py-5">
+		<div class="card shadow" style="background-image:url('<?= asset("Images/bg/empty.jpg") ?>') ;
+				background-repeat: no-repeat;
+				background-size: contain;
+				background-position: right;
+				background-color: #e5f1ed;">
+			<div class="card-body font-weight-bold">
+				<h4 class="card-title font-weight-bold h3 text-dark text-left"><?= $workshop['wshop_name'] ?></h4>
+				<hr/>
+				<div class="row">
+					<div class="col-md-4">
+						<p class="card-text text-decoration-none text-secondary  h5  font-weight-bold my-4">
+							<i class="icon fas fa-map-marker-alt "></i> <?= $workshop['location'] ?>
+						</p>
 					</div>
-				<?php else: ?>
-					<button class="btn btn-sm btn-dark">Finished</button>
-				<?php endif; ?>
+					<div class="col-md-8">
+						<p class="card-text text-decoration-none text-secondary  h5  font-weight-bold my-4">
+							<i class="icon fa fa-user "></i> <?= $workshop['lecturers'] ?>
+						</p>
+					</div>
+
+				</div>
+				<div class="row card-text">
+					<div class="col h5  font-weight-bold no-text-wrap">
+						<i class="icon fas fa-layer-group "></i> <?= $workshop['category'] ?>
+					</div>
+					<div class="col h5  font-weight-bold no-text-wrap">
+						<i class="icon far fa-clock "></i> <?= $workshop['deadline'] ?>
+					</div>
+					<div class="col h5  font-weight-bold no-text-wrap">
+						<i class="icon fas fa-envelope-open-text "></i> <?= $workshop['details'] ?>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-	<br/>
-	<br/>
+		<br/>
+		<br/>
 
-	<div class="table-responsive">
-		<table class="table table-striped table-hover table-bordered w-100">
-			<thead>
-			<tr>
-				<th>#</th>
-				<th>Name</th>
-				<th>State</th>
-				<th></th>
-			</tr>
-			</thead>
+		<div class="table-responsive">
+			<table class="table table-striped table-hover table-bordered w-100">
+				<thead>
+				<tr>
+					<th>#</th>
+					<th>Name</th>
+					<th>State</th>
+					<th></th>
+				</tr>
+				</thead>
 
-			<tbody>
-			<?php foreach ($alumni as $alumnus): ?>
-			<tr>
-				<td><?= $alumnus['id'] ?></td>
-				<td><?= $alumnus['alu_name'] ?></td>
-				<td><?= ucfirst($alumnus['state']) ?></td>
-				<td>
-					<?php if ($alumnus['state'] == "pending"): ?>
-					<a class="btn btn-sm mb-1 btn-dark"
-					   href="<?= route("workshops/workshop.php?id=" . $workshop['id'] . "&alumnus_id=" . $alumnus['id'] . "&state=accepted") ?>">Accept</a>
-					<a class="btn btn-sm mb-1 btn-dark"
-					   href="<?= route("workshops/workshop.php?id=" . $workshop['id'] . "&alumnus_id=" . $alumnus['id'] . "&state=refused") ?>">Refuse</a>
-					<?php elseif ($alumnus['state'] != "finished" && $alumnus['state'] != "refused"): ?>
-					<a class="btn btn-sm mb-1 btn-dark"
-					   href="<?= route("workshop/workshop.php?id=" . $workshop['id'] . "&alumnus_id=" . $alumnus['id'] . "&state=finished") ?>">Finish</a>
-					<?php endif; ?>
-				</td>
-			</tr>
-			<?php endforeach; ?>
-			</tbody>
-		</table>
+				<tbody>
+				<?php foreach ( $alumni as $alumnus ): ?>
+					<tr>
+						<td><?= $alumnus['id'] ?></td>
+						<td><?= $alumnus['alu_name'] ?></td>
+						<td><?= ucfirst($alumnus['state']) ?></td>
+						<td>
+							<?php if ( $alumnus['state'] == "pending" ): ?>
+								<a class="btn btn-sm mb-1 btn-dark"
+								   href="<?= route("workshops/workshop.php?id=" . $workshop['id'] . "&alumnus_id=" . $alumnus['id'] . "&state=accepted") ?>">Accept</a>
+								<a class="btn btn-sm mb-1 btn-dark"
+								   href="<?= route("workshops/workshop.php?id=" . $workshop['id'] . "&alumnus_id=" . $alumnus['id'] . "&state=refused") ?>">Refuse</a>
+							<?php elseif ( $alumnus['state'] != "finished" && $alumnus['state'] != "refused" ): ?>
+								<a class="btn btn-sm mb-1 btn-dark"
+								   href="<?= route("workshop/workshop.php?id=" . $workshop['id'] . "&alumnus_id=" . $alumnus['id'] . "&state=finished") ?>">Finish</a>
+							<?php endif; ?>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+				</tbody>
+			</table>
+		</div>
 	</div>
-</div>
 <?php require_once "../includes/footer.php"; ?>

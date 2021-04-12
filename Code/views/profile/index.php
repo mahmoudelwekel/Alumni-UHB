@@ -11,6 +11,16 @@ if ( isAlumnus() ) {
 									INNER JOIN lecturers
 									ON lecturers.id = courses.lecturer_id
 									WHERE alumnus_id = ? AND state != ?");
+	$stmt->execute([$id, "finished"]);
+	$courses = $stmt->fetchAll();
+
+	$stmt = $con->prepare("SELECT alumnus_workshop.*, workshops.wshop_name, workshops.location, workshops.start_date
+									FROM alumnus_workshop 
+									INNER JOIN workshops
+									ON alumnus_workshop.workshop_id = workshops.id
+									WHERE alumnus_id = ? AND state != ?");
+	$stmt->execute([$id, "finished"]);
+	$workshops = $stmt->fetchAll();
 } elseif ( isLecturer() ) {
 	$stmt = $con->prepare("SELECT courses.*, lecturers.lec_name
 									FROM courses
@@ -18,10 +28,11 @@ if ( isAlumnus() ) {
 									ON lecturers.id = courses.lecturer_id
 									WHERE lecturer_id = ? AND end_date < now()");
 	$stmt->execute([$id]);
+	$courses = $stmt->fetchAll();
+	$workshops = [];
 }
-$stmt->execute([$id, "finished"]);
-$courses = $stmt->fetchAll();
 
+// Get number of Learners
 if ( isLecturer() ) {
 	for ( $i = 0; $i < sizeof($courses); $i++ ) {
 		$stmt = $con->prepare("SELECT COUNT(DISTINCT alumnus_id) AS learners FROM alumnus_course WHERE course_id = ?");
@@ -31,6 +42,7 @@ if ( isLecturer() ) {
 		$courses[$i]['learners'] = $c['learners'];
 	}
 }
+
 ?>
 
 
@@ -67,6 +79,31 @@ if ( isLecturer() ) {
 							<a class="card-footer font-weight-bold"><?= ucfirst($course['state']) ?></a>
 						<?php else: ?>
 							<a class="card-footer font-weight-bold"><?= $course['learners'] ?></a>
+						<?php endif; ?>
+					</div>
+				</div>
+			<?php endforeach; ?>
+		</div>
+
+		<div class="row">
+			<?php foreach ( $workshops as $workshop ): ?>
+				<div class="col-md-4">
+					<div class="card">
+						<img class="card-img-top p-4" src="<?= asset("Images/logo.png") ?>" alt="Card image cap">
+						<div class="card-body">
+							<h5 class="card-title font-weight-bold  text-primary"><?= $workshop['wshop_name'] ?></h5>
+							<hr/>
+							<p class="card-text text-decoration-none text-secondary">
+								<i class="icon fas fa-map-marker-alt "></i> <?= $workshop['location'] ?>
+							</p>
+							<p class="card-text text-decoration-none text-secondary">
+								<i class="icon fas fa-calendar-alt"></i> <?= $workshop['start_date'] ?>
+							</p>
+						</div>
+						<?php if ( isAlumnus() ): ?>
+							<a class="card-footer font-weight-bold"><?= ucfirst($workshop['state']) ?></a>
+						<?php else: ?>
+							<a class="card-footer font-weight-bold"><?= $workshop['learners'] ?></a>
 						<?php endif; ?>
 					</div>
 				</div>

@@ -299,7 +299,7 @@ if ( isset($_GET) ) {
 								</div>
 							</div>
 						<?php endif; ?>
-						<?php if ( in_array($workshop['id'], $myWorkshops) ): ?>
+						<?php if ( in_array($workshop['id'], $myWorkshops)  && workshopState($workshop['id'], $_SESSION['id']) == "finished" ): ?>
 							<div class="col-12 ">
 								<form action="<?= route("workshops/show.php") ?>" method="post">
 									<input type="hidden" name="workshop_id" value="<?= $workshop['id'] ?>">

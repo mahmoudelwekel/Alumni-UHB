@@ -1,5 +1,5 @@
 <?php
-$page = "courses";
+$page = "workshops";
 require_once "../../init/init.php";
 
 if ( !isAdmin() ) {
@@ -124,12 +124,12 @@ $workshop["lecturers"] = $_lecturers;
 				<td>
 					<?php if ($alumnus['state'] == "pending"): ?>
 					<a class="btn btn-sm mb-1 btn-dark"
-					   href="<?= route("courses/course.php?id=" . $workshop['id'] . "&alumnus_id=" . $alumnus['id'] . "&state=accepted") ?>">Accept</a>
+					   href="<?= route("workshops/workshop.php?id=" . $workshop['id'] . "&alumnus_id=" . $alumnus['id'] . "&state=accepted") ?>">Accept</a>
 					<a class="btn btn-sm mb-1 btn-dark"
-					   href="<?= route("courses/course.php?id=" . $workshop['id'] . "&alumnus_id=" . $alumnus['id'] . "&state=refused") ?>">Refuse</a>
+					   href="<?= route("workshops/workshop.php?id=" . $workshop['id'] . "&alumnus_id=" . $alumnus['id'] . "&state=refused") ?>">Refuse</a>
 					<?php elseif ($alumnus['state'] != "finished" && $alumnus['state'] != "refused"): ?>
 					<a class="btn btn-sm mb-1 btn-dark"
-					   href="<?= route("courses/course.php?id=" . $workshop['id'] . "&alumnus_id=" . $alumnus['id'] . "&state=finished") ?>">Finish</a>
+					   href="<?= route("workshop/workshop.php?id=" . $workshop['id'] . "&alumnus_id=" . $alumnus['id'] . "&state=finished") ?>">Finish</a>
 					<?php endif; ?>
 				</td>
 			</tr>

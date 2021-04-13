@@ -76,7 +76,7 @@ if ( isLecturer() ) {
 							   class="card-footer font-weight-bold">
 								Certificate >>
 							</a>
-						<?php elseif ( isLecturer() && $course['end_date'] > date("Y-m-d H:i:s") ): ?>
+						<?php elseif ( isLecturer() && $course['end_date'] < date("Y-m-d H:i:s") ): ?>
 							<a href="cerificate.php?course=<?= $course['crs_name'] ?>" target="_blank"
 							   class="card-footer font-weight-bold">
 								Certificate >>

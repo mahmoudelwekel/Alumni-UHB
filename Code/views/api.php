@@ -166,7 +166,6 @@ if ( isset($_GET) ) {
 			<br/>
 		<?php endforeach;
 	} elseif ( $_GET['type'] == "get_workshops_by_category" ) {
-		echo $_GET['category_id'];
 		if ( $_GET['category_id'] == "all" ) {
 			echo "test";
 			$stmt = $con->prepare("SELECT workshops.*, categories.catg_name AS category 
@@ -352,6 +351,42 @@ if ( isset($_GET) ) {
 			<br/>
 			<br/>
 		<?php endforeach;
+	} elseif ( $_GET['type'] == "put_rate_course" ) {
+		if ( isAlumnus() ) {
+			$stmt = $con->prepare("SELECT course_id FROM alumnus_course WHERE alumnus_id = ?");
+			$stmt->execute([$_SESSION['id']]);
+			$result = $stmt->fetchAll();
+			$myCourses = [];
+			foreach ( $result as $c ) {
+				$myCourses[] = $c['course_id'];
+			}
+			if( in_array($_GET['course_id'], $myCourses )
+					&& courseState($_GET['course_id'], $_SESSION['id']) == "finished" ) {
+				$stmt = $con->prepare("UPDATE alumnus_course SET rate = ? WHERE alumnus_id = ? AND course_id = ?");
+				$stmt->execute([ $_GET['rate_value'], $_SESSION['id'], $_GET['course_id']]);
+
+				$stmt = $con->prepare("SELECT AVG(rate) FROM alumnus_course WHERE course_id = ?");
+				$stmt->execute([ $_GET['course_id'] ]);
+				$result = $stmt->fetch();
+
+				$ret = [
+					"type" => "succeeded",
+					"details" => $result['AVG(rate)']
+				];
+
+			} else {
+				$ret = [
+					"type" => "failed",
+					"details" => "You are not Allowed to Rate this Course."
+				];
+			}
+		} else {
+			$ret = [
+					"type" => "failed",
+					"details" => "You are not Allowed to Rate."
+			];
+		}
+		echo json_encode($ret);
 
 	}
 }

@@ -97,6 +97,41 @@ function getDepartments( college_id ) {
 	});
 }
 
+function renderStars() {
+	$('.kv-ltr-theme-fas-star').rating({
+		//hoverOnClear: false,
+		theme: 'krajee-fas',
+		containerClass: 'is-star',
+		showCaption: false,
+		stars: 5
+	});
+}
+
+renderStars();
+
+function rate_course(input) {
+	var data = {
+		type: "put_rate_course",
+		course_id: input.name.replace("rate-", ""),
+		rate_value: input.value
+	};
+
+	$.ajax({
+		url: "../api.php",
+		type: "get",
+		data: data,
+		success: function( result ) {
+			result = JSON.parse( result );
+			if ( result['type'] === "failed" ) {
+				alert(result['details']);
+			} else if ( result['type'] === "succeeded" ) {
+				$(input).val(result['details']);
+				renderStars();
+			}
+		}
+	});
+}
+
 // change is-checked class on buttons
 $('.button-group').each(function( i, buttonGroup ) {
 	var $buttonGroup = $(buttonGroup);

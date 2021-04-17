@@ -36,6 +36,14 @@ $courses = $stmt->fetchAll();
 for ( $i = 0; $i < sizeof($courses); $i++ ) {
 	$id = $courses[$i]['id'];
 
+	$stmt = $con->prepare("SELECT AVG(rate) FROM alumnus_course WHERE course_id = ?");
+	$stmt->execute([$id]);
+	$avg = $stmt->fetch()['AVG(rate)'];
+	if ( $avg == null ) {
+		$avg = 0;
+	}
+	$courses[$i]['rate'] = $avg;
+
 	$stmt = $con->prepare("SELECT alumnus_course.*, alumni.alu_name 
 									FROM alumnus_course
 									INNER JOIN alumni 
@@ -77,7 +85,8 @@ $categories = $stmt->fetchAll();
 		<div id="filters" class="button-group">
 			<button onclick="getCourses('*')" class="button is-checked" data-filter="*">show all</button>
 			<?php foreach ( $categories as $category ): ?>
-				<button onclick="getCourses('<?= $category['id'] ?>')" class="button" data-filter=".catg-<?= $category['id'] ?>"><?= $category['catg_name'] ?></button>
+				<button onclick="getCourses('<?= $category['id'] ?>')" class="button"
+						data-filter=".catg-<?= $category['id'] ?>"><?= $category['catg_name'] ?></button>
 			<?php endforeach; ?>
 		</div>
 
@@ -99,10 +108,15 @@ $categories = $stmt->fetchAll();
 										<i class="icon fas fa-map-marker-alt "></i> <?= $course['location'] ?>
 									</p>
 								</div>
-								<div class="col-md-8">
+								<div class="col-md-5">
 									<p class="card-text text-decoration-none text-secondary  h5  font-weight-bold my-4">
 										<i class="icon fa fa-user "></i> <?= $course['lecturer'] ?>
 									</p>
+								</div>
+								<div class="col-md-3">
+									<input name="rate-<?= $course['id'] ?>"
+										   class="kv-ltr-theme-fas-star rating-loading" value="<?= $course['rate'] ?>" dir="ltr"
+										   data-size="xs" onchange="rate_course(this)">
 								</div>
 
 							</div>
@@ -123,6 +137,7 @@ $categories = $stmt->fetchAll();
 								<div class="col h5 font-weight-bold no-text-wrap">
 									<i class="icon fas fa-envelope-open-text "></i> <?= $course['details'] ?>
 								</div>
+
 
 								<!-- Label -->
 								<?php if ( $course['deadline'] > date("Y-m-d") && isAlumnus() && !in_array($course['id'], $myCourses) ): ?>
@@ -182,14 +197,7 @@ $categories = $stmt->fetchAll();
 
 	<script>
 		$(document).ready(function() {
-			$('.kv-ltr-theme-fas-star').rating({
-				hoverOnClear: false,
-				theme: 'krajee-fas',
-				containerClass: 'is-star',
-				showCaption: false,
-				stars: 5,
-				displayOnly: true
-			});
+
 		});
 	</script>
 <?php require_once "../includes/footer.php"; ?>

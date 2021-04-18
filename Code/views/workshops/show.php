@@ -59,6 +59,14 @@ for ( $i = 0; $i < sizeof($workshops); $i++ ) {
 	$stmt->execute([$id]);
 	$comments = $stmt->fetchAll();
 	$workshops[$i]['comments'] = $comments;
+
+	$stmt = $con->prepare("SELECT AVG(rate) FROM alumnus_workshop WHERE workshop_id = ?");
+	$stmt->execute([$id]);
+	$avg = $stmt->fetch()['AVG(rate)'];
+	if ( $avg == null ) {
+		$avg = 0;
+	}
+	$workshops[$i]['rate'] = $avg;
 }
 
 if ( isAlumnus() ) {
@@ -113,10 +121,17 @@ $categories = $stmt->fetchAll();
 									<i class="icon fas fa-map-marker-alt "></i> <?= $workshop['location'] ?>
 								</p>
 							</div>
-							<div class="col-md-8">
+							<div class="col-md-5">
 								<p class="card-text text-decoration-none text-secondary  h5  font-weight-bold my-4">
 									<i class="icon fa fa-user "></i> <?= $workshop['lecturers'] ?>
 								</p>
+							</div>
+							<div class="col-md-3">
+								<div id="rate-<?= $workshop['id'] ?>">
+									<input name="rate-<?= $workshop['id'] ?>"
+										   class="kv-ltr-theme-fas-star rating-loading" value="<?= $workshop['rate'] ?>" dir="ltr"
+										   data-size="xs" onchange="rate_workshop(this)">
+								</div>
 							</div>
 
 						</div>

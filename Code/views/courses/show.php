@@ -110,16 +110,18 @@ $categories = $stmt->fetchAll();
 								</div>
 								<div class="col-md-5">
 									<p class="card-text text-decoration-none text-secondary  h5  font-weight-bold my-4">
-										<i class="icon fa fa-user "></i> <?= $course['lecturer'] ?>
+									<i class="icon fa fa-user "></i> <?= $course['lecturer'] ?>
 									</p>
 								</div>
 								<div class="col-md-3">
-									<input name="rate-<?= $course['id'] ?>"
-										   class="kv-ltr-theme-fas-star rating-loading" value="<?= $course['rate'] ?>" dir="ltr"
-										   data-size="xs" onchange="rate_course(this)">
+									<div id="rate-<?= $course['id'] ?>">
+										<input name="rate-<?= $course['id'] ?>"
+											   class="kv-ltr-theme-fas-star rating-loading" value="<?= $course['rate'] ?>" dir="ltr"
+											   data-size="xs" onchange="rate_course(this)">
+									</div>
 								</div>
-
 							</div>
+
 							<div class="row card-text">
 								<!-- Category, Dates and Details -->
 								<div class="col h5 font-weight-bold no-text-wrap">

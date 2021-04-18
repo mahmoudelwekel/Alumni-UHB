@@ -56,6 +56,14 @@ if ( isset($_GET) ) {
 			$stmt->execute([$id]);
 			$comments = $stmt->fetchAll();
 			$courses[$i]['comments'] = $comments;
+
+			$stmt = $con->prepare("SELECT AVG(rate) FROM alumnus_course WHERE course_id = ?");
+			$stmt->execute([$id]);
+			$avg = $stmt->fetch()['AVG(rate)'];
+			if ( $avg == null ) {
+				$avg = 0;
+			}
+			$courses[$i]['rate'] = $avg;
 		}
 
 		if ( isAlumnus() ) {
@@ -87,13 +95,21 @@ if ( isset($_GET) ) {
 									<i class="icon fas fa-map-marker-alt "></i> <?= $course['location'] ?>
 								</p>
 							</div>
-							<div class="col-md-8">
+							<div class="col-md-5">
 								<p class="card-text text-decoration-none text-secondary  h5  font-weight-bold my-4">
 									<i class="icon fa fa-user "></i> <?= $course['lecturer'] ?>
 								</p>
 							</div>
-
+							<div class="col-md-3">
+								<div id="rate-<?= $course['id'] ?>">
+									<input name="rate-<?= $course['id'] ?>"
+										   class="kv-ltr-theme-fas-star rating-loading" value="<?= $course['rate'] ?>"
+										   dir="ltr"
+										   data-size="xs" onchange="rate_course(this)">
+								</div>
+							</div>
 						</div>
+
 						<div class="row card-text">
 							<!-- Category, Dates and Details -->
 							<div class="col h5 font-weight-bold no-text-wrap">
@@ -214,6 +230,14 @@ if ( isset($_GET) ) {
 			$stmt->execute([$id]);
 			$comments = $stmt->fetchAll();
 			$workshops[$i]['comments'] = $comments;
+
+			$stmt = $con->prepare("SELECT AVG(rate) FROM alumnus_workshop WHERE workshop_id = ?");
+			$stmt->execute([$id]);
+			$avg = $stmt->fetch()['AVG(rate)'];
+			if ( $avg == null ) {
+				$avg = 0;
+			}
+			$workshops[$i]['rate'] = $avg;
 		}
 
 		if ( isAlumnus() ) {
@@ -243,24 +267,32 @@ if ( isset($_GET) ) {
 								<i class="icon fas fa-map-marker-alt "></i> <?= $workshop['location'] ?>
 							</p>
 						</div>
-						<div class="col-md-8">
+						<div class="col-md-5">
 							<p class="card-text text-decoration-none text-secondary  h5  font-weight-bold my-4">
 								<i class="icon fa fa-user "></i> <?= $workshop['lecturers'] ?>
 							</p>
 						</div>
-
+						<div class="col-md-3">
+							<div id="rate-<?= $workshop['id'] ?>">
+								<input name="rate-<?= $workshop['id'] ?>"
+									   class="kv-ltr-theme-fas-star rating-loading" value="<?= $workshop['rate'] ?>"
+									   dir="ltr"
+									   data-size="xs" onchange="rate_workshop(this)">
+							</div>
+						</div>
 					</div>
+
 					<div class="row card-text">
 						<div class="col h5  font-weight-bold no-text-wrap">
 							<i class="icon fas fa-layer-group "></i> <?= $workshop['category'] ?>
 						</div>
 						<div class="col h5 font-weight-bold no-text-wrap">
 							<p title="Start Date">
-								<i class="icon far fa-clock "></i> <?= date("Y-m-d", strtotime($workshop['start_date'] ) ) ?>
+								<i class="icon far fa-clock "></i> <?= date("Y-m-d", strtotime($workshop['start_date'])) ?>
 							</p>
 
 							<p title="End Date">
-								<i class="icon far fa-clock "></i> <?= date("Y-m-d", strtotime( $workshop['end_date'] ) ) ?>
+								<i class="icon far fa-clock "></i> <?= date("Y-m-d", strtotime($workshop['end_date'])) ?>
 							</p>
 						</div>
 
@@ -298,7 +330,7 @@ if ( isset($_GET) ) {
 								</div>
 							</div>
 						<?php endif; ?>
-						<?php if ( in_array($workshop['id'], $myWorkshops)  && workshopState($workshop['id'], $_SESSION['id']) == "finished" ): ?>
+						<?php if ( in_array($workshop['id'], $myWorkshops) && workshopState($workshop['id'], $_SESSION['id']) == "finished" ): ?>
 							<div class="col-12 ">
 								<form action="<?= route("workshops/show.php") ?>" method="post">
 									<input type="hidden" name="workshop_id" value="<?= $workshop['id'] ?>">
@@ -325,7 +357,7 @@ if ( isset($_GET) ) {
 		}
 		$jobs = $stmt->fetchAll();
 
-		foreach ($jobs as $job ): ?>
+		foreach ( $jobs as $job ): ?>
 			<div class="card shadow" style="background-image:url('<?= asset("Images/bg/empty.jpg") ?>') ;
 					background-repeat: no-repeat;
 					background-size: contain;
@@ -360,24 +392,23 @@ if ( isset($_GET) ) {
 			foreach ( $result as $c ) {
 				$myCourses[] = $c['course_id'];
 			}
-			if( in_array($_GET['course_id'], $myCourses )
+			if ( in_array($_GET['course_id'], $myCourses)
 					&& courseState($_GET['course_id'], $_SESSION['id']) == "finished" ) {
 				$stmt = $con->prepare("UPDATE alumnus_course SET rate = ? WHERE alumnus_id = ? AND course_id = ?");
-				$stmt->execute([ $_GET['rate_value'], $_SESSION['id'], $_GET['course_id']]);
+				$stmt->execute([$_GET['rate_value'], $_SESSION['id'], $_GET['course_id']]);
 
 				$stmt = $con->prepare("SELECT AVG(rate) FROM alumnus_course WHERE course_id = ?");
-				$stmt->execute([ $_GET['course_id'] ]);
+				$stmt->execute([$_GET['course_id']]);
 				$result = $stmt->fetch();
 
 				$ret = [
-					"type" => "succeeded",
-					"details" => $result['AVG(rate)']
+						"type" => "succeeded",
+						"details" => $result['AVG(rate)']
 				];
-
 			} else {
 				$ret = [
-					"type" => "failed",
-					"details" => "You are not Allowed to Rate this Course."
+						"type" => "failed",
+						"details" => "You are not Allowed to Rate this Course."
 				];
 			}
 		} else {
@@ -387,6 +418,40 @@ if ( isset($_GET) ) {
 			];
 		}
 		echo json_encode($ret);
+	} elseif ( $_GET['type'] == "put_rate_workshop" ) {
+		if ( isAlumnus() ) {
+			$stmt = $con->prepare("SELECT workshop_id FROM alumnus_workshop WHERE alumnus_id = ?");
+			$stmt->execute([$_SESSION['id']]);
+			$result = $stmt->fetchAll();
+			$myworkshops = [];
+			foreach ( $result as $c ) {
+				$myworkshops[] = $c['workshop_id'];
+			}
+			if ( in_array($_GET['workshop_id'], $myworkshops)
+					&& workshopState($_GET['workshop_id'], $_SESSION['id']) == "finished" ) {
+				$stmt = $con->prepare("UPDATE alumnus_workshop SET rate = ? WHERE alumnus_id = ? AND workshop_id = ?");
+				$stmt->execute([$_GET['rate_value'], $_SESSION['id'], $_GET['workshop_id']]);
 
+				$stmt = $con->prepare("SELECT AVG(rate) FROM alumnus_workshop WHERE workshop_id = ?");
+				$stmt->execute([$_GET['workshop_id']]);
+				$result = $stmt->fetch();
+
+				$ret = [
+						"type" => "succeeded",
+						"details" => $result['AVG(rate)']
+				];
+			} else {
+				$ret = [
+						"type" => "failed",
+						"details" => "You are not Allowed to Rate this Workshop."
+				];
+			}
+		} else {
+			$ret = [
+					"type" => "failed",
+					"details" => "You are not Allowed to Rate."
+			];
+		}
+		echo json_encode($ret);
 	}
 }

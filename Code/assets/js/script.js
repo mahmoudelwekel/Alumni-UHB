@@ -43,6 +43,7 @@ function getCourses( category_id ) {
 		success: function( result ) {
 			$("#courses").html(result);
 			render_comments();
+			renderStars();
 		}
 	});
 }
@@ -61,6 +62,7 @@ function getWorkshops( category_id ) {
 			$("#workshops").html(result);
 			console.log(result);
 			render_comments();
+			renderStars();
 		}
 	});
 }
@@ -125,7 +127,41 @@ function rate_course(input) {
 			if ( result['type'] === "failed" ) {
 				alert(result['details']);
 			} else if ( result['type'] === "succeeded" ) {
-				$(input).val(result['details']);
+				alert("Thanks for Your Rating, Course Rating now is: " + result['details']);
+				$("#rate-" + data["course_id"]).html(
+					'<input name="rate-' + data['course_id'] + '"\n' +
+					'class="kv-ltr-theme-fas-star rating-loading" value="' + result['details'] +'" dir="ltr"\n' +
+					'data-size="xs" onchange="rate_course(this)">'
+				);
+
+				renderStars();
+			}
+		}
+	});
+}
+
+function rate_workshop(input) {
+	var data = {
+		type: "put_rate_workshop",
+		workshop_id: input.name.replace("rate-", ""),
+		rate_value: input.value
+	};
+
+	$.ajax({
+		url: "../api.php",
+		type: "get",
+		data: data,
+		success: function( result ) {
+			result = JSON.parse( result );
+			if ( result['type'] === "failed" ) {
+				alert(result['details']);
+			} else if ( result['type'] === "succeeded" ) {
+				alert("Thanks for Your Rating, Workshop Rating now is: " + result['details']);
+				$("#rate-" + data["workshop_id"]).html(
+					'<input name="rate-' + data['workshop_id'] + '"\n' +
+					'class="kv-ltr-theme-fas-star rating-loading" value="' + result['details'] +'" dir="ltr"\n' +
+					'data-size="xs" onchange="rate_workshop(this)">'
+				);
 				renderStars();
 			}
 		}
